@@ -43,29 +43,12 @@ public class PlayerController : MonoBehaviour
     // リセット処理
     public void Reset()
     {
-        // Awake();
-
+        // 座標の初期化
         this.transform.localPosition = this.initPos;
-
-        // 初期設定
-        this.maxSpeed = 5f;
-        this.jumpPower = 500f;
-        this.backwardForce = new Vector2(-4.5f, 5.4f);
-        this.whatIsGround = 1 << LayerMask.NameToLayer("Ground");
-
         this.canJump2nd = true;
 
-        // Transformの初期化
-        // this.transform.localScale = new Vector3(1, 1, 1);
-
-        // Rigidbody2D
-        this.mRigidbody2D.gravityScale = 3f;
-        this.mRigidbody2D.fixedAngle = true;
+        // 加速度の初期化
         mRigidbody2D.velocity = Vector2.zero;
-
-        // BoxCollider2D
-        this.mBoxcollier2D.size = new Vector2(1, 2.5f);
-        this.mBoxcollier2D.offset = new Vector2(0, -0.25f);
 
         // Animator
         this.mAnimator.applyRootMotion = false;
@@ -97,10 +80,12 @@ public class PlayerController : MonoBehaviour
         mAnimator.SetFloat("Vertical", mRigidbody2D.velocity.y);
         mAnimator.SetBool("isGround", mIsGround);
 
+        // ジャンプ可能か
         if (jump && (mIsGround || canJump2nd))
         {
             mAnimator.SetTrigger("Jump");
             SendMessage("Jump", SendMessageOptions.DontRequireReceiver);
+
             mRigidbody2D.velocity = new Vector2(mRigidbody2D.velocity.x, 0);    // 落下速度リセット
             mRigidbody2D.AddForce(Vector2.up * jumpPower);
             if (!mIsGround)
