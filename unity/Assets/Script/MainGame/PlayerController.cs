@@ -11,8 +11,8 @@ public class PlayerController : MonoBehaviour
         Invincible, // 無敵中
     }
 
-    [SerializeField] private float maxSpeed = 10f;
-    [SerializeField] private float jumpPower = 1000f;
+    [SerializeField] private float maxSpeed = 8f;
+    [SerializeField] private float jumpPower = 800f;
     [SerializeField] private Vector2 backwardForce = new Vector2(-4.5f, 5.4f);
 
     // 地面オブジェクトはどのLayerか
@@ -42,8 +42,8 @@ public class PlayerController : MonoBehaviour
         Awake();
 
         // 初期設定
-        this.maxSpeed = 10f;
-        this.jumpPower = 1000;
+        this.maxSpeed = 8f;
+        this.jumpPower = 800f;
         this.backwardForce = new Vector2(-4.5f, 5.4f);
         this.whatIsGround = 1 << LayerMask.NameToLayer("Ground");
 
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         this.transform.localScale = new Vector3(1, 1, 1);
 
         // Rigidbody2D
-        this.mRigidbody2D.gravityScale = 3.5f;
+        this.mRigidbody2D.gravityScale = 3f;
         this.mRigidbody2D.fixedAngle = true;
 
         // BoxCollider2D

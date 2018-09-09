@@ -666,6 +666,33 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4712610584146064, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712610584146064, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712610584146064, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
+        type: 2}
+      propertyPath: jumpPower
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
+        type: 2}
+      propertyPath: maxSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 50916404938107468, guid: b17aa88f2e3a9445580d1da6e97a0cac,
+        type: 2}
+      propertyPath: m_GravityScale
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
   m_IsPrefabParent: 0
