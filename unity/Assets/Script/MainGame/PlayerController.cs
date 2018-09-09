@@ -4,12 +4,20 @@ using System.Collections;
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public class PlayerController : MonoBehaviour
 {
+    private enum State
+    {
+        Normal,     // 通常状態
+        Damaged,    // ダメージ中
+        Invincible, // 無敵中
+    }
+
     [SerializeField] private float maxSpeed = 10f;
     [SerializeField] private float jumpPower = 1000f;
     [SerializeField] private Vector2 backwardForce = new Vector2(-4.5f, 5.4f);
 
     // 地面オブジェクトはどのLayerか
     [SerializeField] private LayerMask whatIsGround;
+
 
     private Animator mAnimator;
     private BoxCollider2D mBoxcollier2D;
@@ -18,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private const float mCenterY = 1.5f;
 
     private State mState = State.Normal;
+    private bool canJump2nd = true;         // 2段ジャンプ可能化
 
     // 初期化処理
     private void Awake()
@@ -79,11 +88,16 @@ public class PlayerController : MonoBehaviour
         mAnimator.SetFloat("Vertical", mRigidbody2D.velocity.y);
         mAnimator.SetBool("isGround", mIsGround);
 
-        if (jump && mIsGround)
+        if (jump && (mIsGround || canJump2nd))
         {
             mAnimator.SetTrigger("Jump");
             SendMessage("Jump", SendMessageOptions.DontRequireReceiver);
+            mRigidbody2D.velocity = new Vector2(mRigidbody2D.velocity.x, 0);    // 落下速度リセット
             mRigidbody2D.AddForce(Vector2.up * jumpPower);
+            if (!mIsGround)
+            {
+                this.canJump2nd = false;
+            }
         }
     }
 
@@ -96,6 +110,12 @@ public class PlayerController : MonoBehaviour
 
         mIsGround = Physics2D.OverlapArea(groundCheck + groundArea, groundCheck - groundArea, whatIsGround);
         mAnimator.SetBool("isGround", mIsGround);
+
+        // 2段ジャンプ可能になったかどうか
+        if (!canJump2nd && mIsGround)
+        {
+            canJump2nd = true;
+        }
     }
 
     // 当たり判定処理(その場所にいるかどうか)
@@ -109,7 +129,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // 
+    // ダメージ処理
     private IEnumerator INTERNAL_OnDamage()
     {
         mAnimator.Play(mIsGround ? "Damage" : "AirDamage");
@@ -129,15 +149,11 @@ public class PlayerController : MonoBehaviour
         mState = State.Invincible;
     }
 
+    // 無敵終了処理
     private void OnFinishedInvincibleMode()
     {
         mState = State.Normal;
     }
 
-    private enum State
-    {
-        Normal,
-        Damaged,
-        Invincible,
-    }
+
 }

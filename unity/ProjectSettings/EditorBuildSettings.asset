@@ -7,9 +7,20 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/UnityChan2D/Demo/Scenes/Start.unity
+    guid: b763c98f277cc420aa68ceb3fc0daf82
   - enabled: 1
     path: Assets/UnityChan2D/Demo/Scenes/Loading 1-1.unity
+    guid: a35423fc824db4fcab5346624a89eadd
   - enabled: 1
     path: Assets/UnityChan2D/Demo/Scenes/Intro 1-1.unity
+    guid: b624da3e00d714908a6ad67aba8ddba4
   - enabled: 1
     path: Assets/UnityChan2D/Demo/Scenes/World 1-1.unity
+    guid: bc1bc11bd56944cb68646a65a5fff077
+  - enabled: 1
+    path: Assets/Scenes/Test.unity
+    guid: 4c9a32a07f0694019a4d50fdb28635e3
+  - enabled: 1
+    path: Assets/Scenes/MainGame.unity
+    guid: b2e97000ac2e54dba889e427e1082174
+  m_configObjects: {}
