@@ -162,8 +162,8 @@ public class drawPhysicsLine : MonoBehaviour {
             point2 = point1;
         }
 
-        setPoint.x = (float)(point2.x + 5*lineWidth * 0.5f * Mathf.Cos(Mathf.Deg2Rad * aim));
-        setPoint.y = (float)(point2.y + 5*lineWidth * 0.5f * Mathf.Sin(Mathf.Deg2Rad * aim));
+        setPoint.x = (float)(point2.x + lineWidth * 0.5f * Mathf.Cos(Mathf.Deg2Rad * aim));
+        setPoint.y = (float)(point2.y + lineWidth * 0.5f * Mathf.Sin(Mathf.Deg2Rad * aim));
 
         return setPoint;
     }
