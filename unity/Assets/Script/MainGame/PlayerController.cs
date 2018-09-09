@@ -11,8 +11,8 @@ public class PlayerController : MonoBehaviour
         Invincible, // 無敵中
     }
 
-    [SerializeField] private float maxSpeed = 8f;
-    [SerializeField] private float jumpPower = 800f;
+    [SerializeField] private float maxSpeed = 5f;
+    [SerializeField] private float jumpPower = 500f;
     [SerializeField] private Vector2 backwardForce = new Vector2(-4.5f, 5.4f);
 
     // 地面オブジェクトはどのLayerか
@@ -28,31 +28,40 @@ public class PlayerController : MonoBehaviour
     private State mState = State.Normal;
     private bool canJump2nd = true;         // 2段ジャンプ可能化
 
+    private Vector3 initPos = Vector3.zero;
+
     // 初期化処理
     private void Awake()
     {
         mAnimator = GetComponent<Animator>();
         mBoxcollier2D = GetComponent<BoxCollider2D>();
         mRigidbody2D = GetComponent<Rigidbody2D>();
+
+        this.initPos = this.transform.localPosition;
     }
 
     // リセット処理
-    private void Reset()
+    public void Reset()
     {
-        Awake();
+        // Awake();
+
+        this.transform.localPosition = this.initPos;
 
         // 初期設定
-        this.maxSpeed = 8f;
-        this.jumpPower = 800f;
+        this.maxSpeed = 5f;
+        this.jumpPower = 500f;
         this.backwardForce = new Vector2(-4.5f, 5.4f);
         this.whatIsGround = 1 << LayerMask.NameToLayer("Ground");
 
+        this.canJump2nd = true;
+
         // Transformの初期化
-        this.transform.localScale = new Vector3(1, 1, 1);
+        // this.transform.localScale = new Vector3(1, 1, 1);
 
         // Rigidbody2D
         this.mRigidbody2D.gravityScale = 3f;
         this.mRigidbody2D.fixedAngle = true;
+        mRigidbody2D.velocity = Vector2.zero;
 
         // BoxCollider2D
         this.mBoxcollier2D.size = new Vector2(1, 2.5f);
