@@ -9,6 +9,11 @@ public class MainGameManager : MonoBehaviour
     [SerializeField] private Text textOrigin;
 
     // 初期化処理
+    private void Awake()
+    {
+    }
+
+    // 初期化処理
     private void Start()
     {
         this.textOrigin.gameObject.SetActive(false);
