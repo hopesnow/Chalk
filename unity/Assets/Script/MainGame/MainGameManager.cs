@@ -21,7 +21,7 @@ public class MainGameManager : MonoBehaviour
         this.mainCamera.orthographicSize = 3.6f;
 
         // ゴール判定
-        this.player.IsGoal.ObserveEveryValueChanged(x => x.Value).Distinct().Subscribe(goal =>
+        this.player.IsGoal.ObserveEveryValueChanged(x => x.Value).Subscribe(goal =>
         {
             if (goal)
             {
@@ -30,6 +30,7 @@ public class MainGameManager : MonoBehaviour
         });
 
         Log("GameStart... !");
+        Log("Fキーでリセット");
     }
 
     // 更新処理
@@ -49,7 +50,7 @@ public class MainGameManager : MonoBehaviour
         this.textOrigin.gameObject.SetActive(true);
 
         var log = Instantiate(this.textOrigin, this.textOrigin.transform.parent);
-        log.transform.SetAsLastSibling();
+        log.transform.SetAsFirstSibling();
         log.text = str;
 
         this.textOrigin.gameObject.SetActive(false);

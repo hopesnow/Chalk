@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
         // ゴールフラグの初期化
         IsGoal.Value = false;
         this.mState = State.Normal;
+        this.mAnimator.SetTrigger("Reset");
     }
 
     // 更新処理
@@ -138,11 +139,12 @@ public class PlayerController : MonoBehaviour
             mState = State.Damaged;
             StartCoroutine(INTERNAL_OnDamage());
         }
-        else if (other.tag == "Goal")
+        else if (other.tag == "Goal" && this.mState != State.Goal)
         {
             // TODO: ゴール処理
             IsGoal.Value = true;
             this.mState = State.Goal;
+            this.mAnimator.SetTrigger("Clear");
         }
     }
 
