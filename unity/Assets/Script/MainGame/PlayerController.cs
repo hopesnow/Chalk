@@ -59,15 +59,25 @@ public class PlayerController : MonoBehaviour
         this.mAnimator.applyRootMotion = false;
 
         // ゴールフラグの初期化
+        IsGoal.Value = false;
+        this.mState = State.Normal;
     }
 
     // 更新処理
     private void Update()
     {
-        if (mState != State.Damaged && mState != State.Goal)
+        if (mState != State.Damaged)
         {
-            float x = Input.GetAxis("Horizontal");
-            bool jump = Input.GetButtonDown("Jump");
+            float x = 0;
+            bool jump = false;
+
+            // ゴールしていなければ操作受付
+            if (!IsGoal.Value)
+            {
+                x = Input.GetAxis("Horizontal");
+                jump = Input.GetButtonDown("Jump");
+            }
+
             Move(x, jump);
         }
     }
@@ -132,6 +142,7 @@ public class PlayerController : MonoBehaviour
         {
             // TODO: ゴール処理
             IsGoal.Value = true;
+            this.mState = State.Goal;
         }
     }
 
