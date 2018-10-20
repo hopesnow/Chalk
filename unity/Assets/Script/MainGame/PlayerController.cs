@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UniRx;
 using System.Collections;
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(BoxCollider2D))]
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour
         Normal,     // 通常状態
         Damaged,    // ダメージ中
         Invincible, // 無敵中
+        Goal,       // ゴールした
     }
 
     [SerializeField] private float maxSpeed = 5f;
@@ -17,7 +19,6 @@ public class PlayerController : MonoBehaviour
 
     // 地面オブジェクトはどのLayerか
     [SerializeField] private LayerMask whatIsGround;
-
 
     private Animator mAnimator;
     private BoxCollider2D mBoxcollier2D;
@@ -30,6 +31,9 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 initPos = Vector3.zero;
 
+    // ゴールしたフラグ
+    public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
+
     // 初期化処理
     private void Awake()
     {
@@ -38,6 +42,7 @@ public class PlayerController : MonoBehaviour
         mRigidbody2D = GetComponent<Rigidbody2D>();
 
         this.initPos = this.transform.localPosition;
+        IsGoal.Value = false;
     }
 
     // リセット処理
@@ -52,12 +57,14 @@ public class PlayerController : MonoBehaviour
 
         // Animator
         this.mAnimator.applyRootMotion = false;
+
+        // ゴールフラグの初期化
     }
 
     // 更新処理
     private void Update()
     {
-        if (mState != State.Damaged)
+        if (mState != State.Damaged && mState != State.Goal)
         {
             float x = Input.GetAxis("Horizontal");
             bool jump = Input.GetButtonDown("Jump");
@@ -120,6 +127,11 @@ public class PlayerController : MonoBehaviour
         {
             mState = State.Damaged;
             StartCoroutine(INTERNAL_OnDamage());
+        }
+        else if (other.tag == "Goal")
+        {
+            // TODO: ゴール処理
+            IsGoal.Value = true;
         }
     }
 

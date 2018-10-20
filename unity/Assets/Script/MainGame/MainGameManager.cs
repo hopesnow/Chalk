@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UniRx;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MainGameManager : MonoBehaviour
@@ -19,6 +20,15 @@ public class MainGameManager : MonoBehaviour
         this.textOrigin.gameObject.SetActive(false);
         this.mainCamera.orthographicSize = 3.6f;
 
+        // ゴール判定
+        this.player.IsGoal.ObserveEveryValueChanged(x => x.Value).Distinct().Subscribe(goal =>
+        {
+            if (goal)
+            {
+                Log("Player Goal.");
+            }
+        });
+
         Log("GameStart... !");
     }
 
@@ -29,11 +39,13 @@ public class MainGameManager : MonoBehaviour
         {
             this.player.Reset();
             Log("GameReset... !");
-        }
+        }                                                                            
     }
 
     public void Log(string str)
     {
+        Debug.LogFormat("{0}", str);
+
         this.textOrigin.gameObject.SetActive(true);
 
         var log = Instantiate(this.textOrigin, this.textOrigin.transform.parent);
