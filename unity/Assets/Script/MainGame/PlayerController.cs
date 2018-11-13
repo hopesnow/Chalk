@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float jumpPower = 500f;
     [SerializeField] private Vector2 backwardForce = new Vector2(-4.5f, 5.4f);
+    [SerializeField] private JoystickInfo joystick;
 
     // 地面オブジェクトはどのLayerか
     [SerializeField] private LayerMask whatIsGround;
