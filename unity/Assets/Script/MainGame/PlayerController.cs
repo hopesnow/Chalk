@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     // チョークオブジェクト
     [SerializeField] private Transform chalk;
 
+    [SerializeField] private int playerNo;
+
     private Animator mAnimator;
     private BoxCollider2D mBoxcollier2D;
     private Rigidbody2D mRigidbody2D;
@@ -86,6 +88,14 @@ public class PlayerController : MonoBehaviour
     }
 
     /** ********************************************************************************
+     * @summary プレイヤー番号の割り当て
+     ***********************************************************************************/
+    public void SetPlayerNo(int no)
+    {
+        this.playerNo = no;
+    }
+
+    /** ********************************************************************************
      * @summary 更新処理
      ***********************************************************************************/
     private void Update()
@@ -104,8 +114,8 @@ public class PlayerController : MonoBehaviour
 
                     if (!IsGoal.Value)
                     {
-                        x = Input.GetAxis("Horizontal");
-                        jump = Input.GetButtonDown("Jump");
+                        x = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));
+                        jump = Input.GetButtonDown(string.Format("Player{0} Jump", playerNo));
                     }
 
                     Move(x, jump);
@@ -228,6 +238,14 @@ public class PlayerController : MonoBehaviour
     private void OnFinishedInvincibleMode()
     {
         charaState = CharacterState.Normal;
+    }
+
+    /** ********************************************************************************
+     * @summary プレイヤー番号出力
+     ***********************************************************************************/
+    public int GetPlayerNo()
+    {
+        return playerNo;
     }
 
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class MainGameManager : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private PlayerController player;
+    [SerializeField] private PlayerController[] players;
 
     [SerializeField] private Text textOrigin;
 
@@ -17,17 +17,23 @@ public class MainGameManager : MonoBehaviour
     // 初期化処理
     private void Start()
     {
-        this.textOrigin.gameObject.SetActive(false);
-        this.mainCamera.orthographicSize = 3.6f;
-
-        // ゴール判定
-        this.player.IsGoal.ObserveEveryValueChanged(x => x.Value).Subscribe(goal =>
+        PlayerController[] test = FindObjectsOfType<PlayerController>();
+        players = test;
+        for (int i = 0; i < players.Length; i++)
         {
-            if (goal)
+            PlayerController player = players[i];
+            this.textOrigin.gameObject.SetActive(false);
+            this.mainCamera.orthographicSize = 3.6f;
+
+            // ゴール判定
+            player.IsGoal.ObserveEveryValueChanged(x => x.Value).Subscribe(goal =>
             {
-                Log("Player Goal.");
-            }
-        });
+                if (goal)
+                {
+                    Log(string.Format("Player{0} Goal.", player.GetPlayerNo()+1));
+                }
+            });
+        }
 
         Log("GameStart... !");
         Log("Fキーでリセット");
@@ -38,8 +44,12 @@ public class MainGameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Pause"))
         {
-            this.player.Reset();
-            Log("GameReset... !");
+            for (int i = 0; i < players.Length; i++)
+            {
+                PlayerController player = players[i];
+                player.Reset();
+                Log("GameReset... !");
+            }
         }                                                                            
     }
 
