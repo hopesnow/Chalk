@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float jumpPower = 500f;
+    [SerializeField] private float chalkSpeed = 0.1f;
     [SerializeField] private Vector2 backwardForce = new Vector2(-4.5f, 5.4f);
     [SerializeField] private JoystickInfo joystick;
 
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     // チョークオブジェクト
     [SerializeField] private Transform chalk;
+    [SerializeField] private DrawPhysicsLine drawLine;
 
     [SerializeField] private int playerNo;
 
@@ -84,7 +86,6 @@ public class PlayerController : MonoBehaviour
 
         // 入力方法の初期化
         this.inputState = InputState.Character;
-        // this.inputState = InputState.Chalk;  // DEBUG
     }
 
     /** ********************************************************************************
@@ -100,6 +101,38 @@ public class PlayerController : MonoBehaviour
      ***********************************************************************************/
     private void Update()
     {
+        float moveVec = 0;
+        bool jump = false;
+
+        // 操作切り替え
+        if (Input.GetButtonDown(string.Format("Player{0} Chalk", playerNo)))
+        {
+            // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
+            if (this.inputState != InputState.Chalk)
+            {
+                this.inputState = InputState.Chalk;
+                return;
+            }
+        }
+        else if (Input.GetButtonDown(string.Format("Player{0} Character", playerNo)))
+        {
+            // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
+            if (this.inputState != InputState.Eraser)
+            {
+                this.inputState = InputState.Eraser;
+                return;
+            }
+        }
+        else if (Input.GetButtonDown(string.Format("Player{0} Eraser", playerNo)))
+        {
+            // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
+            if (this.inputState != InputState.Character)
+            {
+                this.inputState = InputState.Character;
+                return;
+            }
+        }
+
         // 操作状態
         switch (this.inputState)
         {
@@ -109,22 +142,49 @@ public class PlayerController : MonoBehaviour
                 // ダメージを受けていないかどうか
                 if (charaState != CharacterState.Damaged)
                 {
-                    float x = 0;
-                    bool jump = false;
-
                     if (!IsGoal.Value)
                     {
-                        x = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));
+                        moveVec = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));
                         jump = Input.GetButtonDown(string.Format("Player{0} Jump", playerNo));
                     }
-
-                    Move(x, jump);
                 }
 
                 break;
 
             // チョークの操作
             case InputState.Chalk:
+                if (Input.GetButtonDown(string.Format("Player{0} Chalk", playerNo)))
+                {
+                    this.drawLine.SetStartPos(this.chalk.localPosition);
+                }
+
+                // 移動具合をみる
+                float chalkX = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));
+                float chalkY = Input.GetAxis(string.Format("Player{0} Vertical", playerNo));
+
+                // 小さい数字は丸める
+                if (Mathf.Abs(chalkX) < 0.1f)
+                {
+                    chalkX = 0;
+                }
+
+                if (Mathf.Abs(chalkY) < 0.1f)
+                {
+                    chalkY = 0;
+                }
+
+                // 変化がなければ行わない処理
+                if (chalkX != 0f || chalkY != 0f)
+                {
+                    // 座標移動
+                    this.chalk.localPosition = this.chalk.localPosition + new Vector3(chalkX * chalkSpeed, chalkY * chalkSpeed);
+
+                    if (Input.GetButton(string.Format("Player{0} Chalk", playerNo)))
+                    {
+                        // 線を引く
+                        this.drawLine.DragLine(this.chalk.localPosition);
+                    }
+                }
 
                 break;
 
@@ -137,6 +197,9 @@ public class PlayerController : MonoBehaviour
                 
                 break;
         }
+
+        // 移動系処理
+        Move(moveVec, jump);
     }
 
     /** ********************************************************************************

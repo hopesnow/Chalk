@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class drawPhysicsLine : MonoBehaviour {
-
-
-    public GameObject linePrefab;
+public class DrawPhysicsLine : MonoBehaviour
+{
+    [SerializeField] private GameObject linePrefab;
     public float lineLength = 0.2f;
     public float lineWidth = 0.1f;
     private List<Vector2> linePoints;
@@ -13,18 +12,79 @@ public class drawPhysicsLine : MonoBehaviour {
     private Vector3 touchPos;
     private GameObject newLine;
 
-    void Start()
+    /** ********************************************************************************
+     * @summary 初期化処理
+     ***********************************************************************************/
+    private void Start()
     {
         linePoints = new List<Vector2>();
         newLine = null;
     }
 
-    void Update()
+    /** ********************************************************************************
+     * @summary 更新処理
+     ***********************************************************************************/
+    private void Update()
     {
-        drawLine();
+        // マウスでの判定
+        drawLineMouse();
     }
 
-    void drawLine()
+    /** ********************************************************************************
+     * @summary 線の初期地点を設定する
+     *          基本的にはコントローラーでの判定用
+     ***********************************************************************************/
+    public void SetStartPos(Vector3 initPos)
+    {
+        this.touchPos = initPos;
+        this.touchPos.z = 0;
+        ClearLines();
+    }
+
+    /** ********************************************************************************
+     * @summary 線を引く
+     *          基本的にはコントローラーでの判定用
+     ***********************************************************************************/
+    public void DragLine(Vector3 currentPos)
+    {
+        Vector3 startPos = this.touchPos;
+        Vector3 endPos = currentPos;
+        endPos.z = 0;
+        if (linePoints.Count == 0)
+        {
+            linePoints.Add(startPos);
+        }
+
+        // lineLength以上、カーソルが移動していたら
+        if ((endPos - startPos).magnitude > lineLength)
+        {
+            if (newLine == null)
+            {
+                newLine = Instantiate(linePrefab);
+                newLine.name = "Line" + linePoints.Count;
+            }
+
+            LineRenderer line = newLine.GetComponent<LineRenderer>();// write line
+            line.startColor = Color.white;
+            line.positionCount = 2;
+            line.startWidth = lineWidth;//0.2f;
+
+            // 線の始点、終点設定
+            line.SetPosition(0, startPos);
+            line.SetPosition(1, endPos);
+
+            // 線のその他情報の設定
+            Rigidbody2D rigid2D = newLine.GetComponent<Rigidbody2D>();
+            rigid2D.gravityScale = 0f;
+            newLine.transform.parent = this.transform;
+            PolygonCollider2D polygon = newLine.GetComponent<PolygonCollider2D>();
+            linePoints.Add(endPos);
+            WriteLine2D(line, polygon);
+            touchPos = endPos;
+        }
+    }
+
+    private void drawLineMouse()
     {
 
         if (Input.GetMouseButtonDown(0))
@@ -86,7 +146,7 @@ public class drawPhysicsLine : MonoBehaviour {
         }
     }
 
-    void WriteLine2D(LineRenderer lRend, PolygonCollider2D polygon)
+    private void WriteLine2D(LineRenderer lRend, PolygonCollider2D polygon)
     {
         lRend.positionCount = linePoints.Count;
         for (int i = 0; i + 1 <= linePoints.Count;i++)
@@ -108,17 +168,20 @@ public class drawPhysicsLine : MonoBehaviour {
 
         //コリジョン設定
         /*gameObject.GetComponent<PolygonCollider2D>()*/polygon.points = setPointList.ToArray();
-
-
     }
 
-    void ClearLines()
+    /** ********************************************************************************
+     * @summary 線をクリアする
+     ***********************************************************************************/
+    public void ClearLines()
     {
-        linePoints.Clear();// Clear List
+        linePoints.Clear();
         Destroy(newLine);
     }
 
-    //設定地点を計算する
+    /** ********************************************************************************
+     * @summary 設定地点を計算する
+     ***********************************************************************************/
     private Vector2 CalcSetPoint(int i, List<Vector2> pointList, bool isBottomPoint)
     {
 
@@ -168,7 +231,9 @@ public class drawPhysicsLine : MonoBehaviour {
         return setPoint;
     }
 
-    //p2からp1への角度を求める
+    /** ********************************************************************************
+     * @summary p2からp1への角度を求める
+     ***********************************************************************************/
     private float GetAim(Vector2 p1, Vector2 p2)
     {
         Vector2 a = new Vector2(1, 0);
