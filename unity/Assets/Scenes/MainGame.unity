@@ -197,7 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   linePrefab: {fileID: 1452244833010088, guid: 2f8af60398cde44cf9b929cc9cbb822d, type: 2}
   lineLength: 0.2
-  lineWidth: 0.05
+  lineWidth: 0.02
 --- !u!4 &72885941
 Transform:
   m_ObjectHideFlags: 0
@@ -1021,7 +1021,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2050166293}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30}
 --- !u!212 &1239800010
 SpriteRenderer:
@@ -1550,7 +1550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   linePrefab: {fileID: 1452244833010088, guid: 2f8af60398cde44cf9b929cc9cbb822d, type: 2}
   lineLength: 0.2
-  lineWidth: 0.05
+  lineWidth: 0.02
 --- !u!1 &1947422954
 GameObject:
   m_ObjectHideFlags: 0
@@ -1651,8 +1651,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 72885941}
-  - {fileID: 1672208936}
   - {fileID: 1239800009}
+  - {fileID: 1672208936}
   m_Father: {fileID: 665950109}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
