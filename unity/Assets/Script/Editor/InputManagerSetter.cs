@@ -1,17 +1,14 @@
-﻿#if UNITY_EDITOR
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
-using System.Collections;
- 
-/// <summary>
-/// InputManagerを自動的に設定してくれるクラス
-/// </summary>
-public class InputManagerSetter {
- 
- 
-    /// <summary>
-    /// インプットマネージャーを再設定します。
-    /// </summary>
+
+/** ********************************************************************************
+ * @summary InputManagerを自動的に設定してくれるクラス
+ ***********************************************************************************/
+public class InputManagerSetter
+{
+    /** ********************************************************************************
+     * @summary インプットマネージャーを再設定する
+     ***********************************************************************************/
     [MenuItem("Util/Reset InputManager")]
     public static void ResetInputManager()
     {
@@ -57,19 +54,19 @@ public class InputManagerSetter {
         // 決定
         {
             var name = "OK";
-            inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, "z", "joystick button 0"));
+            inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, "z", "joystick button 1"));
         }
  
         // キャンセル
         {
             var name = "Cancel";
-            inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, "x", "joystick button 1"));
+            inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, "x", "joystick button 0"));
         }
  
         // ポーズ
         {
             var name = "Pause";
-            inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, "escape", "joystick button 7"));
+            inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, "escape", "joystick button 4"));
         }
     }
  
@@ -105,28 +102,28 @@ public class InputManagerSetter {
         {
             var axis = new InputAxis();
             var name = string.Format("Player{0} Chalk", playerIndex);
-            var button = string.Format("joystick {0} button 0", joystickNum);
+            var button = string.Format("joystick {0} button 2", joystickNum);
             inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, button, chalkKey));
         }
         // 黒板消し
         {
             var axis = new InputAxis();
             var name = string.Format("Player{0} Eraser", playerIndex);
-            var button = string.Format("joystick {0} button 1", joystickNum);
+            var button = string.Format("joystick {0} button 3", joystickNum);
             inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, button, eraserKey));
         }
         // キャラクター
         {
             var axis = new InputAxis();
             var name = string.Format("Player{0} Character", playerIndex);
-            var button = string.Format("joystick {0} button 2", joystickNum);
+            var button = string.Format("joystick {0} button 1", joystickNum);
             inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, button, characterKey));
         }
         // ジャンプ
         {
             var axis = new InputAxis();
             var name = string.Format("Player{0} Jump", playerIndex);
-            var button = string.Format("joystick {0} button 3", joystickNum);
+            var button = string.Format("joystick {0} button 0", joystickNum);
             inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, button, jumpKey));
         }
     }
@@ -155,20 +152,20 @@ public class InputManagerSetter {
             downKey = "s";
             leftKey = "a";
             rightKey = "d";
-            jumpKey = "x";
-            characterKey = "c";
-            eraserKey = "e";
-            chalkKey = "q";
+            jumpKey = "f";
+            characterKey = "e";
+            eraserKey = "q";
+            chalkKey = "r";
             break;
         case 1:
             upKey = "i";
             downKey = "k";
             leftKey = "j";
             rightKey = "l";
-            jumpKey = ",";
-            characterKey = ".";
-            eraserKey = "o";
-            chalkKey = "u";
+            jumpKey = ";";
+            characterKey = "o";
+            eraserKey = "u";
+            chalkKey = "p";
             break;
         case 2:
             upKey = "up";
@@ -204,5 +201,3 @@ public class InputManagerSetter {
         }
     }
 }
- 
-#endif

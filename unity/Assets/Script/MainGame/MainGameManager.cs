@@ -36,7 +36,7 @@ public class MainGameManager : MonoBehaviour
         }
 
         Log("GameStart... !");
-        Log("Fキーでリセット");
+        Log("ESCキーでリセット");
     }
 
     // 更新処理

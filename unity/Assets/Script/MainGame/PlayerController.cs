@@ -117,18 +117,18 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetButtonDown(string.Format("Player{0} Character", playerNo)))
         {
             // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
-            if (this.inputState != InputState.Eraser)
+            if (this.inputState != InputState.Character)
             {
-                this.inputState = InputState.Eraser;
+                this.inputState = InputState.Character;
                 return;
             }
         }
         else if (Input.GetButtonDown(string.Format("Player{0} Eraser", playerNo)))
         {
             // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
-            if (this.inputState != InputState.Character)
+            if (this.inputState != InputState.Eraser)
             {
-                this.inputState = InputState.Character;
+                this.inputState = InputState.Eraser;
                 return;
             }
         }
