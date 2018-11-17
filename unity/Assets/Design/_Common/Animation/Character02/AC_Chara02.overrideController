@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: AC_Chara02
+  m_Controller: {fileID: 9100000, guid: b266d2374891d4049a2d5c6ccaafc7ef, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: d6fce61fd71682e40822cf9dbb0b94c7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: baeccabb56a1ac94bb72b4ae516958ce, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c4503d31f7311304cb1cab61d6d87fdb, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2db3ad4c9d187bb4b8e94b4df0c59ad1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c3ef052cb48534c0685dcb178748610e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 90e20aa279a792844b6d4db8d1fc6c7f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f19dc8c85aca3474cae72ceff171609e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 41702fcb44c315e4abddb94b3e2d0a09, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 77ed71524c53449cbb038d7aa6886d50, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 31094144ecee4f745a8fcab4916cdde1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: bea614b38db32416e99299ae68381db0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 99250e948455b47429ffd1cd527cfaa9, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 73cdf727352707a459ac7db0f9c39542, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3b6574e22c5736b4b91a67ad38371b52, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 9a1d3a006085bf44a8de539876fa09ac, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2e268946ce0b95b4f99b8cc54634f3cd, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 21c5001677b80e14e80a614a3c17ce7f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: aa35fe0439d14914883025ee47f8dbc0, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b1b5daece17854b12b0979a5f09c6e2b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6ab5a0b31092b4142a85134f80517342, type: 2}
