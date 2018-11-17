@@ -5,7 +5,15 @@ using System.Collections;
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public class PlayerController : MonoBehaviour
 {
-    private enum State
+    private enum InputState
+    {
+        Character,
+        Chalk,
+        Eraser,
+        None,
+    }
+
+    private enum CharacterState
     {
         Normal,     // 通常状態
         Damaged,    // ダメージ中
@@ -21,21 +29,27 @@ public class PlayerController : MonoBehaviour
     // 地面オブジェクトはどのLayerか
     [SerializeField] private LayerMask whatIsGround;
 
+    // チョークオブジェクト
+    [SerializeField] private Transform chalk;
+
     private Animator mAnimator;
     private BoxCollider2D mBoxcollier2D;
     private Rigidbody2D mRigidbody2D;
     private bool mIsGround;
     private const float mCenterY = 1.5f;
 
-    private State mState = State.Normal;
-    private bool canJump2nd = true;         // 2段ジャンプ可能化
+    private InputState inputState = InputState.Character;       // 入力したときの状態
+    private CharacterState charaState = CharacterState.Normal;  // キャラクターの動作に関わる状態
+    private bool canJump2nd = true;                             // 2段ジャンプ可能か
 
-    private Vector3 initPos = Vector3.zero;
+    private Vector3 initPos = Vector3.zero; // リセット時の初期座標
 
     // ゴールしたフラグ
     public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
 
-    // 初期化処理
+    /** ********************************************************************************
+     * @summary 初期化処理
+     ***********************************************************************************/
     private void Awake()
     {
         mAnimator = GetComponent<Animator>();
@@ -46,7 +60,9 @@ public class PlayerController : MonoBehaviour
         IsGoal.Value = false;
     }
 
-    // リセット処理
+    /** ********************************************************************************
+     * @summary リセット処理
+     ***********************************************************************************/
     public void Reset()
     {
         // 座標の初期化
@@ -61,30 +77,61 @@ public class PlayerController : MonoBehaviour
 
         // ゴールフラグの初期化
         IsGoal.Value = false;
-        this.mState = State.Normal;
+        this.charaState = CharacterState.Normal;
         this.mAnimator.SetTrigger("Reset");
+
+        // 入力方法の初期化
+        this.inputState = InputState.Character;
+        // this.inputState = InputState.Chalk;  // DEBUG
     }
 
-    // 更新処理
+    /** ********************************************************************************
+     * @summary 更新処理
+     ***********************************************************************************/
     private void Update()
     {
-        if (mState != State.Damaged)
+        // 操作状態
+        switch (this.inputState)
         {
-            float x = 0;
-            bool jump = false;
+            // キャラクターの操作
+            case InputState.Character:
 
-            // ゴールしていなければ操作受付
-            if (!IsGoal.Value)
-            {
-                x = Input.GetAxis("Horizontal");
-                jump = Input.GetButtonDown("Jump");
-            }
+                // ダメージを受けていないかどうか
+                if (charaState != CharacterState.Damaged)
+                {
+                    float x = 0;
+                    bool jump = false;
 
-            Move(x, jump);
+                    if (!IsGoal.Value)
+                    {
+                        x = Input.GetAxis("Horizontal");
+                        jump = Input.GetButtonDown("Jump");
+                    }
+
+                    Move(x, jump);
+                }
+
+                break;
+
+            // チョークの操作
+            case InputState.Chalk:
+
+                break;
+
+            // 黒板消しの操作
+            case InputState.Eraser:
+
+                break;
+
+            default:
+                
+                break;
         }
     }
 
-    // 移動処理
+    /** ********************************************************************************
+     * @summary 移動処理
+     ***********************************************************************************/
     private void Move(float move, bool jump)
     {
         if (Mathf.Abs(move) > 0)
@@ -114,7 +161,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // 更新処理
+    /** ********************************************************************************
+     * @summary 更新処理
+     ***********************************************************************************/
     private void FixedUpdate()
     {
         Vector2 pos = transform.position;
@@ -131,25 +180,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // 当たり判定処理(その場所にいるかどうか)
+    /** ********************************************************************************
+     * @summary 当たり判定処理(その場所にいるかどうか)
+     ***********************************************************************************/
     private void OnTriggerStay2D(Collider2D other)
     {
         // あたってるオブジェクトがDamageObjectで通常ステートのときのみ当たり判定処理をおこなう
-        if (other.tag == "DamageObject" && mState == State.Normal)
+        if (other.tag == "DamageObject" && charaState == CharacterState.Normal)
         {
-            mState = State.Damaged;
+            charaState = CharacterState.Damaged;
             StartCoroutine(INTERNAL_OnDamage());
         }
-        else if (other.tag == "Goal" && this.mState != State.Goal)
+        else if (other.tag == "Goal" && this.charaState != CharacterState.Goal)
         {
             // TODO: ゴール処理
             IsGoal.Value = true;
-            this.mState = State.Goal;
+            this.charaState = CharacterState.Goal;
             this.mAnimator.SetTrigger("Clear");
         }
     }
 
-    // ダメージ処理
+    /** ********************************************************************************
+     * @summary ダメージ処理
+     ***********************************************************************************/
     private IEnumerator INTERNAL_OnDamage()
     {
         mAnimator.Play(mIsGround ? "Damage" : "AirDamage");
@@ -166,13 +219,15 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
         mAnimator.SetTrigger("Invincible Mode");
-        mState = State.Invincible;
+        charaState = CharacterState.Invincible;
     }
 
-    // 無敵終了処理
+    /** ********************************************************************************
+     * @summary 無敵終了処理
+     ***********************************************************************************/
     private void OnFinishedInvincibleMode()
     {
-        mState = State.Normal;
+        charaState = CharacterState.Normal;
     }
 
 
