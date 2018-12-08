@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float chalkSpeed = 0.1f;
     [SerializeField] private float chalkDrawSpeePower = 0.25f;   // チョーク書き込み中の移動速度倍率
     [SerializeField] private Vector2 backwardForce = new Vector2(-4.5f, 5.4f);
-    [SerializeField] private JoystickInfo joystick;
     [SerializeField] private SpriteRenderer characterSprite;
 
     // 地面オブジェクトはどのLayerか
