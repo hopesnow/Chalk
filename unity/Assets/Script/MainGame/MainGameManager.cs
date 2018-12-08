@@ -42,7 +42,7 @@ public class MainGameManager : MonoBehaviour
     // 更新処理
     private void Update()
     {
-        if (Input.GetButtonDown("Pause"))
+        if (Input.GetButtonDown("DebugReset"))
         {
             for (int i = 0; i < players.Length; i++)
             {
@@ -50,7 +50,11 @@ public class MainGameManager : MonoBehaviour
                 player.Reset();
                 Log("GameReset... !");
             }
-        }                                                                            
+        }
+        if (Input.GetButtonDown("Pause"))
+        {
+            Debug.Log("Pause");
+        }
     }
 
     public void Log(string str)

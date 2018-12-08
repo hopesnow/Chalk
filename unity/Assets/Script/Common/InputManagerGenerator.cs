@@ -77,6 +77,8 @@ public class InputAxis
         axis.type = AxisType.JoystickAxis;
         axis.axis = axisNum;
         axis.joyNum = joystickNum;
+        if((axis != null) && (axisNum == 2))
+            axis.invert = true;
 
         return axis;
     }
