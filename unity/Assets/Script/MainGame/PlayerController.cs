@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float jumpPower = 500f;
     [SerializeField] private float chalkSpeed = 0.1f;
+    [SerializeField] private float chalkDrawSpeePower = 0.25f;   // チョーク書き込み中の移動速度倍率
     [SerializeField] private Vector2 backwardForce = new Vector2(-4.5f, 5.4f);
     [SerializeField] private JoystickInfo joystick;
     [SerializeField] private SpriteRenderer characterSprite;
@@ -43,7 +44,7 @@ public class PlayerController : MonoBehaviour
     private bool mIsGround;
     private const float mCenterY = 1.5f;
 
-    private InputState inputState = InputState.Character;       // 入力したときの状態
+    private InputState inputState = InputState.None;       // 入力したときの状態
     private CharacterState charaState = CharacterState.Normal;  // キャラクターの動作に関わる状態
     private bool canJump2nd = true;                             // 2段ジャンプ可能か
 
@@ -65,6 +66,8 @@ public class PlayerController : MonoBehaviour
 
         this.initPos = this.transform.localPosition;
         IsGoal.Value = false;
+
+        ChangeState(InputState.Character);
     }
 
     /** ********************************************************************************
@@ -88,7 +91,8 @@ public class PlayerController : MonoBehaviour
         this.mAnimator.SetTrigger("Reset");
 
         // 入力方法の初期化
-        this.inputState = InputState.Character;
+        // this.inputState = InputState.Character;
+        ChangeState(InputState.Character);
     }
 
     /** ********************************************************************************
@@ -128,6 +132,7 @@ public class PlayerController : MonoBehaviour
         // 操作状態
         switch (this.inputState)
         {
+            /****************************************************************************************************/
             // キャラクターの操作
             case InputState.Character:
 
@@ -143,6 +148,7 @@ public class PlayerController : MonoBehaviour
 
                 break;
 
+            /****************************************************************************************************/
             // チョークの操作
             case InputState.Chalk:
                 if (Input.GetButtonDown(string.Format("Player{0} Chalk", playerNo)))
@@ -153,6 +159,8 @@ public class PlayerController : MonoBehaviour
                 // 移動具合をみる
                 float chalkX = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));
                 float chalkY = Input.GetAxis(string.Format("Player{0} Vertical", playerNo));
+
+                Debug.LogFormat("chalkX: {0}, chalkY: {1}", chalkX, chalkY);
 
                 // 小さい数字は丸める
                 if (Mathf.Abs(chalkX) < 0.1f)
@@ -168,10 +176,13 @@ public class PlayerController : MonoBehaviour
                 // 変化がなければ行わない処理
                 if (chalkX != 0f || chalkY != 0f)
                 {
-                    // 座標移動
-                    this.chalk.localPosition = this.chalk.localPosition + new Vector3(chalkX * chalkSpeed, chalkY * chalkSpeed);
+                    var isDrawing = Input.GetButton(string.Format("Player{0} Chalk", playerNo));
 
-                    if (Input.GetButton(string.Format("Player{0} Chalk", playerNo)))
+                    // 座標移動
+                    float power = isDrawing ? this.chalkDrawSpeePower : 1.0f;   // 書いてるときは移動速度倍率をかける
+                    this.chalk.localPosition = this.chalk.localPosition + new Vector3(chalkX * chalkSpeed * power, chalkY * chalkSpeed * power);
+
+                    if(isDrawing)
                     {
                         // 線を引く
                         this.drawLine.DragLine(this.chalk.localPosition);
@@ -180,14 +191,17 @@ public class PlayerController : MonoBehaviour
 
                 break;
 
+            /****************************************************************************************************/
             // 黒板消しの操作
             case InputState.Eraser:
 
                 break;
 
             default:
-                
+
                 break;
+
+            /****************************************************************************************************/
         }
 
         // 移動系処理
