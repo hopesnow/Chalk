@@ -157,30 +157,43 @@ public class PlayerController : MonoBehaviour
                 }
 
                 // 移動具合をみる
-                float chalkX = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));
-                float chalkY = Input.GetAxis(string.Format("Player{0} Vertical", playerNo));
+                float chalkX = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));  // 入力値 1 〜 0
+                float chalkY = Input.GetAxis(string.Format("Player{0} Vertical", playerNo));    // 入力値 1 〜 0
 
-                Debug.LogFormat("chalkX: {0}, chalkY: {1}", chalkX, chalkY);
-
-                // 小さい数字は丸める
-                if (Mathf.Abs(chalkX) < 0.1f)
+                // 両方共数値が入っていればmagnitudeが1になるように計算する
+                float calcX = 0;
+                float calcY = 0;
+                if (Mathf.Abs(chalkX) > 0 && Mathf.Abs(chalkY) > 0)
                 {
-                    chalkX = 0;
+                    float tmp = Mathf.Sqrt(chalkX * chalkX + chalkY * chalkY);
+                    calcX = chalkX / tmp;
+                    calcY = chalkY / tmp;
+                }
+                else
+                {
+                    calcX = chalkX;
+                    calcY = chalkY;
                 }
 
-                if (Mathf.Abs(chalkY) < 0.1f)
+                // 小さい数字は丸める
+                if (Mathf.Abs(calcX) < 0.02f)
                 {
-                    chalkY = 0;
+                    calcX = 0;
+                }
+
+                if (Mathf.Abs(calcY) < 0.02f)
+                {
+                    calcY = 0;
                 }
 
                 // 変化がなければ行わない処理
-                if (chalkX != 0f || chalkY != 0f)
+                if (calcX != 0f || calcY != 0f)
                 {
                     var isDrawing = Input.GetButton(string.Format("Player{0} Chalk", playerNo));
 
                     // 座標移動
                     float power = isDrawing ? this.chalkDrawSpeePower : 1.0f;   // 書いてるときは移動速度倍率をかける
-                    this.chalk.localPosition = this.chalk.localPosition + new Vector3(chalkX * chalkSpeed * power, chalkY * chalkSpeed * power);
+                    this.chalk.localPosition = this.chalk.localPosition + new Vector3(calcX * chalkSpeed * power, calcY * chalkSpeed * power);
 
                     if(isDrawing)
                     {
