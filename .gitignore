@@ -28,3 +28,5 @@ unity/obj/
 unity/unity.CSharp.Editor.Plugins.csproj
 unity/unity.Editor.Plugins.csproj
 unity/Assembly-CSharp-Editor-firstpass.csproj
+
+*~$*.xlsx
