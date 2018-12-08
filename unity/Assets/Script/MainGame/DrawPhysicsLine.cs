@@ -5,8 +5,9 @@ using UnityEngine;
 public class DrawPhysicsLine : MonoBehaviour
 {
     [SerializeField] private GameObject linePrefab;
-    public float lineLength = 0.2f;
-    public float lineWidth = 0.1f;
+    [SerializeField] private float lineLength = 0.2f;
+    [SerializeField] private float lineWidth = 0.1f;
+    [SerializeField] private Color lineColor = Color.white;
     private List<Vector2> linePoints;
 
     private Vector3 touchPos;
@@ -65,7 +66,8 @@ public class DrawPhysicsLine : MonoBehaviour
             }
 
             LineRenderer line = newLine.GetComponent<LineRenderer>();// write line
-            line.startColor = Color.white;
+            line.startColor = this.lineColor;
+            line.endColor = this.lineColor;
             line.positionCount = 2;
             line.startWidth = lineWidth;//0.2f;
 
@@ -125,7 +127,8 @@ public class DrawPhysicsLine : MonoBehaviour
                     newLine.name = "Line" + linePoints.Count;
                 }
                 LineRenderer lRend = newLine.GetComponent<LineRenderer>();// write line
-                lRend.startColor = Color.white;
+                lRend.startColor = this.lineColor;
+                lRend.endColor = this.lineColor;
                 lRend.positionCount = 2;
                 lRend.startWidth = lineWidth;//0.2f;
                 Vector3 startVec = startPos;

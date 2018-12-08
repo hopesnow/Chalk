@@ -198,6 +198,7 @@ MonoBehaviour:
   linePrefab: {fileID: 1452244833010088, guid: 2f8af60398cde44cf9b929cc9cbb822d, type: 2}
   lineLength: 0.2
   lineWidth: 0.02
+  lineColor: {r: 1, g: 0.5803922, b: 0.8901961, a: 1}
 --- !u!4 &72885941
 Transform:
   m_ObjectHideFlags: 0
@@ -480,6 +481,10 @@ Prefab:
         type: 2}
       propertyPath: chalkSpeed
       value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350876489691220, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
+      propertyPath: m_Name
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
@@ -888,7 +893,7 @@ GameObject:
   - component: {fileID: 956320221}
   - component: {fileID: 956320222}
   m_Layer: 0
-  m_Name: Chalk01
+  m_Name: Chalk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1368,7 +1373,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1589966253}
   m_Layer: 0
-  m_Name: Player1
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1558,7 +1563,7 @@ GameObject:
   - component: {fileID: 1902790044}
   - component: {fileID: 1902790045}
   m_Layer: 0
-  m_Name: ChalkLine01
+  m_Name: ChalkLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1591,6 +1596,7 @@ MonoBehaviour:
   linePrefab: {fileID: 1452244833010088, guid: 2f8af60398cde44cf9b929cc9cbb822d, type: 2}
   lineLength: 0.2
   lineWidth: 0.02
+  lineColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1947422954
 GameObject:
   m_ObjectHideFlags: 0
