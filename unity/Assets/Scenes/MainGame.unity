@@ -471,6 +471,16 @@ Prefab:
       propertyPath: characterSprite
       value: 
       objectReference: {fileID: 1239302742}
+    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
+        type: 2}
+      propertyPath: chalkDrawSpeePower
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
+        type: 2}
+      propertyPath: chalkSpeed
+      value: 0.08
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
   m_IsPrefabParent: 0
@@ -883,7 +893,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &956320221
 Transform:
   m_ObjectHideFlags: 0
@@ -1001,6 +1011,16 @@ Prefab:
       propertyPath: characterSprite
       value: 
       objectReference: {fileID: 1750295527}
+    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
+        type: 2}
+      propertyPath: chalkDrawSpeePower
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
+        type: 2}
+      propertyPath: chalkSpeed
+      value: 0.08
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
   m_IsPrefabParent: 0
@@ -1024,7 +1044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1239800009
 Transform:
   m_ObjectHideFlags: 0
