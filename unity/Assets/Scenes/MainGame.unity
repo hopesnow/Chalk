@@ -466,6 +466,11 @@ Prefab:
       propertyPath: drawLine
       value: 
       objectReference: {fileID: 1902790045}
+    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
+        type: 2}
+      propertyPath: characterSprite
+      value: 
+      objectReference: {fileID: 1239302742}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
   m_IsPrefabParent: 0
@@ -991,9 +996,19 @@ Prefab:
       propertyPath: drawLine
       value: 
       objectReference: {fileID: 72885940}
+    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
+        type: 2}
+      propertyPath: characterSprite
+      value: 
+      objectReference: {fileID: 1750295527}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
   m_IsPrefabParent: 0
+--- !u!212 &1239302742 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 212628008505054034, guid: b17aa88f2e3a9445580d1da6e97a0cac,
+    type: 2}
+  m_PrefabInternal: {fileID: 248767541}
 --- !u!1 &1239800008
 GameObject:
   m_ObjectHideFlags: 0
@@ -1463,6 +1478,11 @@ Camera:
 --- !u!4 &1672208936 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4712610584146064, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1231320872}
+--- !u!212 &1750295527 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 212628008505054034, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
     type: 2}
   m_PrefabInternal: {fileID: 1231320872}
 --- !u!1 &1769708975

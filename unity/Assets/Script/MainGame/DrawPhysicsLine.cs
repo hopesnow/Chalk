@@ -184,9 +184,8 @@ public class DrawPhysicsLine : MonoBehaviour
      ***********************************************************************************/
     private Vector2 CalcSetPoint(int i, List<Vector2> pointList, bool isBottomPoint)
     {
-
         Vector2 point1, point2;
-        Debug.Log("pointList.Count=" + pointList.Count + ", i=" + i);
+        // Debug.Log("pointList.Count=" + pointList.Count + ", i=" + i);
 
         if (i <= 0)
         {

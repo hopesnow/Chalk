@@ -30,7 +30,7 @@ public class MainGameManager : MonoBehaviour
             {
                 if (goal)
                 {
-                    Log(string.Format("Player{0} Goal.", player.GetPlayerNo()+1));
+                    Log(string.Format("Player{0} Goal.", player.PlayerNo + 1));
                 }
             });
         }

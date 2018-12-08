@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float chalkSpeed = 0.1f;
     [SerializeField] private Vector2 backwardForce = new Vector2(-4.5f, 5.4f);
     [SerializeField] private JoystickInfo joystick;
+    [SerializeField] private SpriteRenderer characterSprite;
 
     // 地面オブジェクトはどのLayerか
     [SerializeField] private LayerMask whatIsGround;
@@ -50,6 +51,8 @@ public class PlayerController : MonoBehaviour
 
     // ゴールしたフラグ
     public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
+
+    public int PlayerNo { get { return this.playerNo; } set { this.playerNo = value; } }
 
     /** ********************************************************************************
      * @summary 初期化処理
@@ -89,14 +92,6 @@ public class PlayerController : MonoBehaviour
     }
 
     /** ********************************************************************************
-     * @summary プレイヤー番号の割り当て
-     ***********************************************************************************/
-    public void SetPlayerNo(int no)
-    {
-        this.playerNo = no;
-    }
-
-    /** ********************************************************************************
      * @summary 更新処理
      ***********************************************************************************/
     private void Update()
@@ -108,27 +103,24 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown(string.Format("Player{0} Chalk", playerNo)))
         {
             // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
-            if (this.inputState != InputState.Chalk)
+            if (ChangeState(InputState.Chalk))
             {
-                this.inputState = InputState.Chalk;
                 return;
             }
         }
         else if (Input.GetButtonDown(string.Format("Player{0} Character", playerNo)))
         {
             // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
-            if (this.inputState != InputState.Character)
+            if (ChangeState(InputState.Character))
             {
-                this.inputState = InputState.Character;
                 return;
             }
         }
         else if (Input.GetButtonDown(string.Format("Player{0} Eraser", playerNo)))
         {
             // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
-            if (this.inputState != InputState.Eraser)
+            if (ChangeState(InputState.Eraser))
             {
-                this.inputState = InputState.Eraser;
                 return;
             }
         }
@@ -304,12 +296,43 @@ public class PlayerController : MonoBehaviour
     }
 
     /** ********************************************************************************
-     * @summary プレイヤー番号出力
+     * @summary 操作の切り替え
      ***********************************************************************************/
-    public int GetPlayerNo()
+    private bool ChangeState(InputState newState)
     {
-        return playerNo;
+        // 違う場合のみ切り替える
+        if (this.inputState != newState)
+        {
+            this.inputState = newState;
+            Color prevColor;
+            switch (this.inputState)
+            {
+                case InputState.Chalk:
+                    this.chalk.gameObject.SetActive(true);
+                    prevColor = this.characterSprite.color;
+                    this.characterSprite.color = new Color(prevColor.r, prevColor.g, prevColor.b, 0.5f);
+
+                    break;
+
+                case InputState.Character:
+                    this.chalk.gameObject.SetActive(false);
+                    prevColor = this.characterSprite.color;
+                    this.characterSprite.color = new Color(prevColor.r, prevColor.g, prevColor.b, 1.0f);
+
+                    break;
+
+                case InputState.Eraser:
+                    this.chalk.gameObject.SetActive(false);
+                    prevColor = this.characterSprite.color;
+                    this.characterSprite.color = new Color(prevColor.r, prevColor.g, prevColor.b, 0.5f);
+
+                    break;
+            }
+
+            // 切り替わったときはtrueで返す
+            return true;
+        }
+
+        return false;
     }
-
-
 }

@@ -120,11 +120,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 3
   jumpPower: 400
+  chalkSpeed: 0.1
   backwardForce: {x: -4.5, y: 5.4}
   joystick: {fileID: 0}
+  characterSprite: {fileID: 212628008505054034}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  chalk: {fileID: 0}
+  drawLine: {fileID: 0}
+  playerNo: 0
 --- !u!212 &212628008505054034
 SpriteRenderer:
   m_ObjectHideFlags: 1
