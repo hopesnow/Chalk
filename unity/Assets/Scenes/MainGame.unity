@@ -475,12 +475,12 @@ Prefab:
     - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
       propertyPath: chalkDrawSpeePower
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
       propertyPath: chalkSpeed
-      value: 0.08
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1350876489691220, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
       propertyPath: m_Name
@@ -1019,12 +1019,12 @@ Prefab:
     - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
       propertyPath: chalkDrawSpeePower
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
       propertyPath: chalkSpeed
-      value: 0.08
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
