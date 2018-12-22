@@ -1,37 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class DrawPhysicsLine : PreloadPrefab<DrawPhysicsLine>
+/** ********************************************************************************
+ * @summary チョークの線をひく用のクラス
+ ***********************************************************************************/
+public class DrawPhysicsLine : MonoBehaviour
 {
     [SerializeField] private GameObject linePrefab;
     [SerializeField] private float lineLength = 0.2f;
     [SerializeField] private float lineWidth = 0.1f;
     [SerializeField] private Color lineColor = Color.white;
+
+
     private List<Vector2> linePoints = new List<Vector2>();
-
     private Vector3 touchPos;
-    private GameObject newLine;
-
-    private bool isWriting;
+    private GameObject newLine; // 現在引いてる線
 
     /** ********************************************************************************
      * @summary 初期化処理
      ***********************************************************************************/
     private void Start()
     {
-        linePoints = new List<Vector2>();
-        newLine = null;
-        this.isWriting = true;
-    }
-
-    /** ********************************************************************************
-     * @summary 更新処理
-     ***********************************************************************************/
-    private void Update()
-    {
-        // マウスでの判定
-        // drawLineMouse();
+        this.linePoints = new List<Vector2>();
+        this.newLine = null;
     }
 
     /** ********************************************************************************
@@ -43,6 +34,10 @@ public class DrawPhysicsLine : PreloadPrefab<DrawPhysicsLine>
         this.touchPos = initPos;
         this.touchPos.z = 0;
         // ClearLines();
+
+        // 二本め以降引くための処理
+        this.linePoints.Clear();
+        this.newLine = null;
     }
 
     /** ********************************************************************************
@@ -51,10 +46,6 @@ public class DrawPhysicsLine : PreloadPrefab<DrawPhysicsLine>
      ***********************************************************************************/
     public void DragLine(Vector3 currentPos)
     {
-        // かけるときだけ処理を行う
-        if (!this.isWriting)
-            return;
-        
         Vector3 startPos = this.touchPos;
         Vector3 endPos = currentPos;
         endPos.z = 0;
@@ -93,76 +84,6 @@ public class DrawPhysicsLine : PreloadPrefab<DrawPhysicsLine>
         }
     }
 
-    /** ********************************************************************************
-     * @summary 書くのを終了するときに呼ぶ
-     ***********************************************************************************/
-    public void EndDraw()
-    {
-        this.isWriting = false;
-    }
-
-    private void drawLineMouse()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            touchPos.z = 0;
-            // ClearLines();
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-
-            Vector3 startPos = touchPos;
-            if(linePoints.Count==0)
-                linePoints.Add(startPos);
-            Vector3 endPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            endPos.z = 0;
-
-            if ((endPos - startPos).magnitude > lineLength)
-            {
-                /*
-                GameObject obj = Instantiate(linePrefab, transform.position, transform.rotation) as GameObject;
-                obj.transform.position = (startPos + endPos) / 2;
-                obj.transform.right = (endPos - startPos).normalized;
-
-                obj.transform.localScale = new Vector3((endPos - startPos).magnitude, lineWidth, lineWidth);
-
-                obj.transform.parent = this.transform;
-
-                touchPos = endPos;
-                */
-                //test
-
-                //GameObject newLine = new GameObject("Line"+linePoints.Count);
-                if (newLine == null)
-                {
-                    newLine = Instantiate(linePrefab);
-                    newLine.name = "Line" + linePoints.Count;
-                }
-                LineRenderer lRend = newLine.GetComponent<LineRenderer>();// write line
-                lRend.startColor = this.lineColor;
-                lRend.endColor = this.lineColor;
-                lRend.positionCount = 2;
-                lRend.startWidth = lineWidth;//0.2f;
-                Vector3 startVec = startPos;
-                Vector3 endVec = endPos;
-                lRend.SetPosition(0, startVec);
-                lRend.SetPosition(1, endVec);
-                Rigidbody2D rigid2D = newLine.GetComponent<Rigidbody2D>();
-                rigid2D.gravityScale = 0f;
-                newLine.transform.parent = this.transform;
-                PolygonCollider2D polygon = newLine.GetComponent<PolygonCollider2D>();
-
-
-                linePoints.Add(endPos);
-                WriteLine2D(lRend, polygon);
-                touchPos = endPos;
-                //
-            }
-        }
-    }
-
     private void WriteLine2D(LineRenderer lRend, PolygonCollider2D polygon)
     {
         lRend.positionCount = linePoints.Count;
@@ -192,9 +113,8 @@ public class DrawPhysicsLine : PreloadPrefab<DrawPhysicsLine>
      ***********************************************************************************/
     public void ClearLines()
     {
-        // linePoints.Clear();
-        // Destroy(newLine);
-        Release();
+        linePoints.Clear();
+        Destroy(newLine);
     }
 
     /** ********************************************************************************

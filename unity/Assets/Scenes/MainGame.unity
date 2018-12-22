@@ -168,51 +168,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 20, y: 1}
   m_EdgeRadius: 0
---- !u!1 &72885939
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 72885941}
-  - component: {fileID: 72885940}
-  m_Layer: 0
-  m_Name: ChalkLine02
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &72885940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 72885939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1abfd9bf03484b2b93da6a8556e54b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  origin: {fileID: 0}
-  linePrefab: {fileID: 1452244833010088, guid: 2f8af60398cde44cf9b929cc9cbb822d, type: 2}
-  lineLength: 0.2
-  lineWidth: 0.02
-  lineColor: {r: 1, g: 0.5803922, b: 0.8901961, a: 1}
---- !u!4 &72885941
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 72885939}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2050166293}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &110427175
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,6 +441,16 @@ Prefab:
     - target: {fileID: 1350876489691220, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
+        type: 2}
+      propertyPath: chalkPos.x
+      value: -0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
+        type: 2}
+      propertyPath: chalkPos.y
+      value: 0.22
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
@@ -785,7 +750,6 @@ Transform:
   - {fileID: 1472147605}
   - {fileID: 1589966253}
   - {fileID: 2050166293}
-  - {fileID: 1268601932}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -996,7 +960,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4712610584146064, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
@@ -1012,7 +976,7 @@ Prefab:
         type: 2}
       propertyPath: drawLine
       value: 
-      objectReference: {fileID: 72885940}
+      objectReference: {fileID: 1581456439}
     - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
       propertyPath: characterSprite
@@ -1027,6 +991,16 @@ Prefab:
         type: 2}
       propertyPath: chalkSpeed
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
+        type: 2}
+      propertyPath: chalkPos.x
+      value: -0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
+        type: 2}
+      propertyPath: chalkPos.y
+      value: 0.22
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
@@ -1063,7 +1037,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2050166293}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30}
 --- !u!212 &1239800010
 SpriteRenderer:
@@ -1110,34 +1084,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!1 &1268601931
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1268601932}
-  m_Layer: 0
-  m_Name: ChalkLineManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1268601932
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1268601931}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 665950109}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1291118446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,6 +1340,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 0
+--- !u!1 &1581456438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1581456440}
+  - component: {fileID: 1581456439}
+  m_Layer: 0
+  m_Name: ChalkLine02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1581456439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1581456438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1abfd9bf03484b2b93da6a8556e54b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linePrefab: {fileID: 1452244833010088, guid: 2f8af60398cde44cf9b929cc9cbb822d, type: 2}
+  lineLength: 0.2
+  lineWidth: 0.02
+  lineColor: {r: 1, g: 0.5803922, b: 0.8901961, a: 1}
+--- !u!4 &1581456440
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1581456438}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2050166293}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1589966252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1623,7 +1613,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1abfd9bf03484b2b93da6a8556e54b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  origin: {fileID: 0}
   linePrefab: {fileID: 1452244833010088, guid: 2f8af60398cde44cf9b929cc9cbb822d, type: 2}
   lineLength: 0.2
   lineWidth: 0.02
@@ -1727,9 +1716,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 72885941}
-  - {fileID: 1239800009}
+  - {fileID: 1581456440}
   - {fileID: 1672208936}
+  - {fileID: 1239800009}
   m_Father: {fileID: 665950109}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

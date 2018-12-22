@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
     // チョークオブジェクト
     [SerializeField] private Transform chalk;
+    [SerializeField] private Vector3 chalkPos;
     [SerializeField] private DrawPhysicsLine drawLine;
 
     [SerializeField] private int playerNo;
@@ -49,12 +50,11 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 initPos = Vector3.zero; // リセット時の初期座標
 
-    private DrawPhysicsLine currentLine;
-
     // ゴールしたフラグ
     public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
 
     public int PlayerNo { get { return this.playerNo; } set { this.playerNo = value; } }
+    public Vector3 ChalkPos { get { return this.chalk.localPosition + chalkPos; } }
 
     /** ********************************************************************************
      * @summary 初期化処理
@@ -69,8 +69,6 @@ public class PlayerController : MonoBehaviour
         IsGoal.Value = false;
 
         ChangeState(InputState.Character);
-
-        this.drawLine.Load(this.transform, 5, false);
     }
 
     /** ********************************************************************************
@@ -156,21 +154,7 @@ public class PlayerController : MonoBehaviour
             case InputState.Chalk:
                 if (Input.GetButtonDown(string.Format("Player{0} Chalk", playerNo)))
                 {
-                    if (this.currentLine == null)
-                    {
-                        this.currentLine = this.drawLine.GetPrefab(this.transform);
-                    }
-
-                    this.currentLine.SetStartPos(this.chalk.localPosition);
-                }
-                else if (Input.GetButtonUp(string.Format("Player{0} Chalk", playerNo)))
-                {
-                    // 離した時
-                    if (this.currentLine != null)
-                    {
-                        // this.currentLine.Release();
-                        this.currentLine = null;
-                    }
+                    this.drawLine.SetStartPos(ChalkPos);
                 }
 
                 // 移動具合をみる
@@ -215,8 +199,7 @@ public class PlayerController : MonoBehaviour
                     if(isDrawing)
                     {
                         // 線を引く
-                        // this.drawLine.DragLine(this.chalk.localPosition);
-                        this.currentLine.DragLine(this.chalk.localPosition);
+                        this.drawLine.DragLine(ChalkPos);
                     }
                 }
 

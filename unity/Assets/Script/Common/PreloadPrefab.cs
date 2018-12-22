@@ -147,7 +147,6 @@ public class PreloadPrefab<T> : MonoBehaviour where T : PreloadPrefab<T>
 
     /** ********************************************************************************
      * @brief   プレハブ状態
-     * @author  Masashi Tagami (m-tagami@landho.co.jp)
      ***********************************************************************************/
     public class PrefabStatus
     {
