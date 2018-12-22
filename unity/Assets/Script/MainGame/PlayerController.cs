@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 initPos = Vector3.zero; // リセット時の初期座標
 
+    private DrawPhysicsLine currentLine;
+
     // ゴールしたフラグ
     public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
 
@@ -67,6 +69,8 @@ public class PlayerController : MonoBehaviour
         IsGoal.Value = false;
 
         ChangeState(InputState.Character);
+
+        this.drawLine.Load(this.transform, 5, false);
     }
 
     /** ********************************************************************************
@@ -103,7 +107,7 @@ public class PlayerController : MonoBehaviour
         bool jump = false;
 
         // 操作切り替え
-        if (Input.GetButtonDown(string.Format("Player{0} Chalk", playerNo)))
+        if (Input.GetButtonDown(string.Format("Player{0} Chalk", this.playerNo)))
         {
             // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
             if (ChangeState(InputState.Chalk))
@@ -152,7 +156,21 @@ public class PlayerController : MonoBehaviour
             case InputState.Chalk:
                 if (Input.GetButtonDown(string.Format("Player{0} Chalk", playerNo)))
                 {
-                    this.drawLine.SetStartPos(this.chalk.localPosition);
+                    if (this.currentLine == null)
+                    {
+                        this.currentLine = this.drawLine.GetPrefab(this.transform);
+                    }
+
+                    this.currentLine.SetStartPos(this.chalk.localPosition);
+                }
+                else if (Input.GetButtonUp(string.Format("Player{0} Chalk", playerNo)))
+                {
+                    // 離した時
+                    if (this.currentLine != null)
+                    {
+                        // this.currentLine.Release();
+                        this.currentLine = null;
+                    }
                 }
 
                 // 移動具合をみる
@@ -197,7 +215,8 @@ public class PlayerController : MonoBehaviour
                     if(isDrawing)
                     {
                         // 線を引く
-                        this.drawLine.DragLine(this.chalk.localPosition);
+                        // this.drawLine.DragLine(this.chalk.localPosition);
+                        this.currentLine.DragLine(this.chalk.localPosition);
                     }
                 }
 

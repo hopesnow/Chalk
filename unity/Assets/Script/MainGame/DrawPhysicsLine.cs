@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DrawPhysicsLine : MonoBehaviour
+public class DrawPhysicsLine : PreloadPrefab<DrawPhysicsLine>
 {
     [SerializeField] private GameObject linePrefab;
     [SerializeField] private float lineLength = 0.2f;
     [SerializeField] private float lineWidth = 0.1f;
     [SerializeField] private Color lineColor = Color.white;
-    private List<Vector2> linePoints;
+    private List<Vector2> linePoints = new List<Vector2>();
 
     private Vector3 touchPos;
     private GameObject newLine;
+
+    private bool isWriting;
 
     /** ********************************************************************************
      * @summary 初期化処理
@@ -20,6 +22,7 @@ public class DrawPhysicsLine : MonoBehaviour
     {
         linePoints = new List<Vector2>();
         newLine = null;
+        this.isWriting = true;
     }
 
     /** ********************************************************************************
@@ -28,7 +31,7 @@ public class DrawPhysicsLine : MonoBehaviour
     private void Update()
     {
         // マウスでの判定
-        drawLineMouse();
+        // drawLineMouse();
     }
 
     /** ********************************************************************************
@@ -39,7 +42,7 @@ public class DrawPhysicsLine : MonoBehaviour
     {
         this.touchPos = initPos;
         this.touchPos.z = 0;
-        ClearLines();
+        // ClearLines();
     }
 
     /** ********************************************************************************
@@ -48,6 +51,10 @@ public class DrawPhysicsLine : MonoBehaviour
      ***********************************************************************************/
     public void DragLine(Vector3 currentPos)
     {
+        // かけるときだけ処理を行う
+        if (!this.isWriting)
+            return;
+        
         Vector3 startPos = this.touchPos;
         Vector3 endPos = currentPos;
         endPos.z = 0;
@@ -86,14 +93,21 @@ public class DrawPhysicsLine : MonoBehaviour
         }
     }
 
+    /** ********************************************************************************
+     * @summary 書くのを終了するときに呼ぶ
+     ***********************************************************************************/
+    public void EndDraw()
+    {
+        this.isWriting = false;
+    }
+
     private void drawLineMouse()
     {
-
         if (Input.GetMouseButtonDown(0))
         {
             touchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             touchPos.z = 0;
-            ClearLines();
+            // ClearLines();
         }
 
         if (Input.GetMouseButton(0))
@@ -178,8 +192,9 @@ public class DrawPhysicsLine : MonoBehaviour
      ***********************************************************************************/
     public void ClearLines()
     {
-        linePoints.Clear();
-        Destroy(newLine);
+        // linePoints.Clear();
+        // Destroy(newLine);
+        Release();
     }
 
     /** ********************************************************************************
