@@ -33,8 +33,8 @@ public class PlayerController : MonoBehaviour
 
     // チョークオブジェクト
     [SerializeField] private Transform chalk;
-    [SerializeField] private Vector3 chalkPos;
     [SerializeField] private DrawPhysicsLine drawLine;
+    [SerializeField] private Transform chalkMask;
 
     // 黒板消しオブジェクト
     [SerializeField] private Transform eraser;
@@ -53,11 +53,16 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 initPos = Vector3.zero; // リセット時の初期座標
 
+    private float chalkAmount = 0f;                 // 残量
+    private bool canDrawing = false;                // 書き直し用フラグ
+    private const float LimitChalkAmount = 100f;    // チョーク量の上限
+    private const float ChargeChalkAmount = 0.1f;   // チョークの補充量
+    private const float MinimumChalkAmount = 20f;   // 最低限必要なチョーク量
+
     // ゴールしたフラグ
     public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
 
     public int PlayerNo { get { return this.playerNo; } set { this.playerNo = value; } }
-    public Vector3 ChalkPos { get { return this.chalk.localPosition + chalkPos; } }
 
     /** ********************************************************************************
      * @summary 初期化処理
@@ -70,6 +75,8 @@ public class PlayerController : MonoBehaviour
 
         this.initPos = this.transform.localPosition;
         IsGoal.Value = false;
+
+        this.chalkAmount = LimitChalkAmount;  // チョーク量初期値に
 
         ChangeState(InputState.Character);
     }
@@ -106,6 +113,12 @@ public class PlayerController : MonoBehaviour
     {
         float moveVec = 0;
         bool jump = false;
+
+        this.chalkAmount += ChargeChalkAmount;
+        if (this.chalkAmount > LimitChalkAmount)
+        {
+            this.chalkAmount = LimitChalkAmount;
+        }
 
         // 操作切り替え
         if (Input.GetButtonDown(string.Format("Player{0} Chalk", this.playerNo)))
@@ -157,7 +170,8 @@ public class PlayerController : MonoBehaviour
             case InputState.Chalk:
                 if (Input.GetButtonDown(string.Format("Player{0} Chalk", playerNo)))
                 {
-                    this.drawLine.SetStartPos(ChalkPos);
+                    this.drawLine.SetStartPos(this.chalk.localPosition);
+                    this.canDrawing = true;
                 }
 
                 var calcChalk = CalculateToolMove();
@@ -171,10 +185,16 @@ public class PlayerController : MonoBehaviour
                     float power = isDrawing ? this.chalkDrawSpeePower : 1.0f;   // 書いてるときは移動速度倍率をかける
                     this.chalk.localPosition = this.chalk.localPosition + new Vector3(calcChalk.x * chalkSpeed * power, calcChalk.y * chalkSpeed * power);
 
-                    if(isDrawing)
+                    if (isDrawing && this.chalkAmount >= MinimumChalkAmount && canDrawing)
                     {
                         // 線を引く
-                        this.drawLine.DragLine(ChalkPos);
+                        this.chalkAmount -= 1f;
+                        this.drawLine.DragLine(this.chalk.localPosition);
+                    }
+                    else
+                    {
+                        // 燃料切れだったりしたら再度ボタンを押し直すまでかけないようにする
+                        this.canDrawing = false;
                     }
                 }
 
@@ -183,7 +203,6 @@ public class PlayerController : MonoBehaviour
             /****************************************************************************************************/
             // 黒板消しの操作
             case InputState.Eraser:
-
                 var calcEraser = CalculateToolMove();
                 this.eraser.GetComponent<ErasePhysicsLine>().isErase = false;
 
@@ -197,7 +216,6 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetButtonDown(string.Format("Player{0} Eraser", playerNo)))
                 {
                     this.eraser.GetComponent<ErasePhysicsLine>().isErase = true;
-                    // TODO: Erase処理
                 }
 
                 break;
@@ -211,6 +229,9 @@ public class PlayerController : MonoBehaviour
 
         // 移動系処理
         Move(moveVec, jump);
+
+        // 表示の更新
+        this.chalkMask.localScale = new Vector3(1f, Mathf.Clamp(this.chalkAmount / LimitChalkAmount, 0f, 1f), 1f);
     }
 
     /** ********************************************************************************
