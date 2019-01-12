@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DamageObject
   - Goal
+  - Line
   layers:
   - Default
   - TransparentFX

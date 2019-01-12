@@ -185,6 +185,7 @@ public class PlayerController : MonoBehaviour
             case InputState.Eraser:
 
                 var calcEraser = CalculateToolMove();
+                this.eraser.GetComponent<ErasePhysicsLine>().isErase = false;
 
                 // 変化がなければ行わない
                 if (calcEraser.x != 0f || calcEraser.y != 0f)
@@ -195,6 +196,7 @@ public class PlayerController : MonoBehaviour
                 // オブジェクトを消す処理
                 if (Input.GetButtonDown(string.Format("Player{0} Eraser", playerNo)))
                 {
+                    this.eraser.GetComponent<ErasePhysicsLine>().isErase = true;
                     // TODO: Erase処理
                 }
 
