@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: AC_Chara03
+  m_Controller: {fileID: 9100000, guid: b266d2374891d4049a2d5c6ccaafc7ef, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: d6fce61fd71682e40822cf9dbb0b94c7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: d4850ddf7247c9c45b48bb519e2b8198, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c4503d31f7311304cb1cab61d6d87fdb, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6eadd2b4983399d4c9d955627a69f295, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c3ef052cb48534c0685dcb178748610e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ce8f36f042e3e3e43881eecd993b9e87, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f19dc8c85aca3474cae72ceff171609e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2b30a8721f0a5704d95d2e3e974e6743, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 77ed71524c53449cbb038d7aa6886d50, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e62bef9a7296688478f3e385d23a9b45, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: bea614b38db32416e99299ae68381db0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 575bc19089e077a49a601cc9a26bd021, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 73cdf727352707a459ac7db0f9c39542, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 91f3a61993f29ba4797972170777a4b2, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 9a1d3a006085bf44a8de539876fa09ac, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5792198f192525441b85d0e67a6fe314, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 21c5001677b80e14e80a614a3c17ce7f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 643ba392c02a39d44b041d216b4e068c, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b1b5daece17854b12b0979a5f09c6e2b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5e5fcb71046c71c42b878df35aa0058b, type: 2}
