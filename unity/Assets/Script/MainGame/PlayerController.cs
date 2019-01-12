@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector3 chalkPos;
     [SerializeField] private DrawPhysicsLine drawLine;
 
+    // 黒板消しオブジェクト
+    [SerializeField] private Transform eraser;
+
     [SerializeField] private int playerNo;
 
     private Animator mAnimator;
@@ -157,44 +160,16 @@ public class PlayerController : MonoBehaviour
                     this.drawLine.SetStartPos(ChalkPos);
                 }
 
-                // 移動具合をみる
-                float chalkX = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));  // 入力値 1 〜 0
-                float chalkY = Input.GetAxis(string.Format("Player{0} Vertical", playerNo));    // 入力値 1 〜 0
-
-                // 両方共数値が入っていればmagnitudeが1になるように計算する
-                float calcX = 0;
-                float calcY = 0;
-                if (Mathf.Abs(chalkX) > 0 && Mathf.Abs(chalkY) > 0)
-                {
-                    float tmp = Mathf.Sqrt(chalkX * chalkX + chalkY * chalkY);
-                    calcX = chalkX / tmp;
-                    calcY = chalkY / tmp;
-                }
-                else
-                {
-                    calcX = chalkX;
-                    calcY = chalkY;
-                }
-
-                // 小さい数字は丸める
-                if (Mathf.Abs(calcX) < 0.02f)
-                {
-                    calcX = 0;
-                }
-
-                if (Mathf.Abs(calcY) < 0.02f)
-                {
-                    calcY = 0;
-                }
+                var calcChalk = CalculateToolMove();
 
                 // 変化がなければ行わない処理
-                if (calcX != 0f || calcY != 0f)
+                if (calcChalk.x != 0f || calcChalk.y != 0f)
                 {
                     var isDrawing = Input.GetButton(string.Format("Player{0} Chalk", playerNo));
 
                     // 座標移動
                     float power = isDrawing ? this.chalkDrawSpeePower : 1.0f;   // 書いてるときは移動速度倍率をかける
-                    this.chalk.localPosition = this.chalk.localPosition + new Vector3(calcX * chalkSpeed * power, calcY * chalkSpeed * power);
+                    this.chalk.localPosition = this.chalk.localPosition + new Vector3(calcChalk.x * chalkSpeed * power, calcChalk.y * chalkSpeed * power);
 
                     if(isDrawing)
                     {
@@ -209,6 +184,20 @@ public class PlayerController : MonoBehaviour
             // 黒板消しの操作
             case InputState.Eraser:
 
+                var calcEraser = CalculateToolMove();
+
+                // 変化がなければ行わない
+                if (calcEraser.x != 0f || calcEraser.y != 0f)
+                {
+                    this.eraser.localPosition = this.eraser.localPosition + new Vector3(calcEraser.x * chalkSpeed, calcEraser.y * chalkSpeed);
+                }
+
+                // オブジェクトを消す処理
+                if (Input.GetButtonDown(string.Format("Player{0} Eraser", playerNo)))
+                {
+                    // TODO: Erase処理
+                }
+
                 break;
 
             default:
@@ -220,6 +209,44 @@ public class PlayerController : MonoBehaviour
 
         // 移動系処理
         Move(moveVec, jump);
+    }
+
+    /** ********************************************************************************
+     * @summary チョークなどの移動処理
+     ***********************************************************************************/
+    private Vector2 CalculateToolMove()
+    {
+        // 移動具合をみる
+        float orgX = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));  // 入力値 1 〜 0
+        float orgY = Input.GetAxis(string.Format("Player{0} Vertical", playerNo));    // 入力値 1 〜 0
+
+        // 両方共数値が入っていればmagnitudeが1になるように計算する
+        float calcX = 0;
+        float calcY = 0;
+        if (Mathf.Abs(orgX) > 0 && Mathf.Abs(orgY) > 0)
+        {
+            float tmp = Mathf.Sqrt(orgX * orgX + orgY * orgY);
+            calcX = orgX / tmp;
+            calcY = orgY / tmp;
+        }
+        else
+        {
+            calcX = orgX;
+            calcY = orgY;
+        }
+
+        // 小さい数字は丸める
+        if (Mathf.Abs(calcX) < 0.02f)
+        {
+            calcX = 0;
+        }
+
+        if (Mathf.Abs(calcY) < 0.02f)
+        {
+            calcY = 0;
+        }
+
+        return new Vector2(calcX, calcY);
     }
 
     /** ********************************************************************************
@@ -337,6 +364,7 @@ public class PlayerController : MonoBehaviour
             {
                 case InputState.Chalk:
                     this.chalk.gameObject.SetActive(true);
+                    this.eraser.gameObject.SetActive(false);
                     prevColor = this.characterSprite.color;
                     this.characterSprite.color = new Color(prevColor.r, prevColor.g, prevColor.b, 0.5f);
 
@@ -344,6 +372,7 @@ public class PlayerController : MonoBehaviour
 
                 case InputState.Character:
                     this.chalk.gameObject.SetActive(false);
+                    this.eraser.gameObject.SetActive(false);
                     prevColor = this.characterSprite.color;
                     this.characterSprite.color = new Color(prevColor.r, prevColor.g, prevColor.b, 1.0f);
 
@@ -351,6 +380,7 @@ public class PlayerController : MonoBehaviour
 
                 case InputState.Eraser:
                     this.chalk.gameObject.SetActive(false);
+                    this.eraser.gameObject.SetActive(true);
                     prevColor = this.characterSprite.color;
                     this.characterSprite.color = new Color(prevColor.r, prevColor.g, prevColor.b, 0.5f);
 
