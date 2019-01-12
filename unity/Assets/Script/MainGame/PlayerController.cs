@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#define UNABLE_DOUBLE_JUMP
+
+using UnityEngine;
 using UniRx;
 using System.Collections;
 
@@ -55,9 +57,10 @@ public class PlayerController : MonoBehaviour
 
     private float chalkAmount = 0f;                 // 残量
     private bool canDrawing = false;                // 書き直し用フラグ
-    private const float LimitChalkAmount = 100f;    // チョーク量の上限
-    private const float ChargeChalkAmount = 0.1f;   // チョークの補充量
-    private const float MinimumChalkAmount = 20f;   // 最低限必要なチョーク量
+    private const float LimitChalkAmount = 50f;    // チョーク量の上限
+    private const float ChargeChalkAmount = 0.5f;   // チョークの補充量
+    private const float UseChalkAmount = 1f;        // チョークの使用量
+    private const float MinimumChalkAmount = 10f;   // 最低限必要なチョーク量
 
     // ゴールしたフラグ
     public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
@@ -188,7 +191,7 @@ public class PlayerController : MonoBehaviour
                     if (isDrawing && this.chalkAmount >= MinimumChalkAmount && canDrawing)
                     {
                         // 線を引く
-                        this.chalkAmount -= 1f;
+                        this.chalkAmount -= UseChalkAmount;
                         this.drawLine.DragLine(this.chalk.localPosition);
                     }
                     else
@@ -224,7 +227,7 @@ public class PlayerController : MonoBehaviour
 
                 break;
 
-            /****************************************************************************************************/
+                /****************************************************************************************************/
         }
 
         // 移動系処理
@@ -277,6 +280,10 @@ public class PlayerController : MonoBehaviour
      ***********************************************************************************/
     private void Move(float move, bool jump)
     {
+#if UNABLE_DOUBLE_JUMP
+        this.canJump2nd = false;
+#endif
+
         if (Mathf.Abs(move) > 0)
         {
             Quaternion rot = transform.rotation;
