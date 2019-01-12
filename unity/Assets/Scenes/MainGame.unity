@@ -456,7 +456,7 @@ Prefab:
         type: 2}
       propertyPath: eraser
       value: 
-      objectReference: {fileID: 1072674534}
+      objectReference: {fileID: 1210275096}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
   m_IsPrefabParent: 0
