@@ -191,16 +191,16 @@ public class InputManagerSetter
                 actionKey = "p";
                 break;
             case 2:
-                upKey = "up";
-                downKey = "down";
-                leftKey = "left";
-                rightKey = "right";
-                jumpKey = "/";
+                upKey = "g";
+                downKey = "b";
+                leftKey = "v";
+                rightKey = "n";
+                jumpKey = "space";
                 characterKey = "_";
                 eraserKey = "]";
                 chalkKey = ":";
-                changeStateKey = "_";
-                actionKey = ":";
+                changeStateKey = "h";
+                actionKey = "m";
                 break;
             case 3:
                 upKey = "[8]";
