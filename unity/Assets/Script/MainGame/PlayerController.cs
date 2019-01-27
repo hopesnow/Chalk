@@ -234,7 +234,7 @@ public class PlayerController : MonoBehaviour
                         this.canDrawing = false;
                         if (!drawLine.CheckLines())
                         {
-                            drawLine.ClearLines();//todo drawLine ここに丸が書かれているかの判定文
+                            // drawLine.ClearLines();//todo drawLine ここに丸が書かれているかの判定文
                         }
                     }
                 }

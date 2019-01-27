@@ -118,11 +118,20 @@ public class DrawPhysicsLine : MonoBehaviour
             for(int j = i+1; j < linePoints.Count; j++)
             {
                 if (3 <= Mathf.Abs(j - i) && ((linePoints[i] - linePoints[j]).magnitude < lineLength * 0.5f))
+                {
                     return true;
-
+                }
             }
         }
-        ClearLines();
+
+        // ClearLines();
+        if (newLine != null)
+        {
+            LineRenderer line = newLine.GetComponent<LineRenderer>();
+            line.startColor = Color.red;
+            line.endColor = Color.red;
+        }
+
         return false;
     }
 
