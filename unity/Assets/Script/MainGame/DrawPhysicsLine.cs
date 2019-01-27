@@ -109,6 +109,24 @@ public class DrawPhysicsLine : MonoBehaviour
     }
 
     /** ********************************************************************************
+     * @summary 線をチェックする
+     ***********************************************************************************/
+    public bool CheckLines()
+    {
+        for(int i=0; i < linePoints.Count; i++)
+        {
+            for(int j = i+1; j < linePoints.Count; j++)
+            {
+                if (3 <= Mathf.Abs(j - i) && ((linePoints[i] - linePoints[j]).magnitude < lineLength * 0.5f))
+                    return true;
+
+            }
+        }
+        ClearLines();
+        return false;
+    }
+
+    /** ********************************************************************************
      * @summary 線をクリアする
      ***********************************************************************************/
     public void ClearLines()
