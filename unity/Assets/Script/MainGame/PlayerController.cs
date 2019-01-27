@@ -124,6 +124,37 @@ public class PlayerController : MonoBehaviour
         }
 
         // 操作切り替え
+        if (Input.GetButtonDown(string.Format("Player{0} ChangeState", this.playerNo)))
+        {
+            bool changed = false;
+            // 順繰りになるように
+            switch (this.inputState)
+            {
+                case InputState.Character:
+                    changed = ChangeState(InputState.Chalk);
+                    break;
+
+                case InputState.Chalk:
+                    changed = ChangeState(InputState.Eraser);
+                    break;
+
+                case InputState.Eraser:
+                    changed = ChangeState(InputState.Character);
+                    break;
+                // 念の為
+                default:
+                    changed = ChangeState(InputState.Character);
+                    break;
+            }
+
+            // 切り替わったとき
+            if (changed)
+            {
+                return;
+            }
+        }
+
+        /*
         if (Input.GetButtonDown(string.Format("Player{0} Chalk", this.playerNo)))
         {
             // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
@@ -148,6 +179,7 @@ public class PlayerController : MonoBehaviour
                 return;
             }
         }
+        */
 
         // 操作状態
         switch (this.inputState)
@@ -187,6 +219,7 @@ public class PlayerController : MonoBehaviour
                     // 座標移動
                     float power = isDrawing ? this.chalkDrawSpeePower : 1.0f;   // 書いてるときは移動速度倍率をかける
                     this.chalk.localPosition = this.chalk.localPosition + new Vector3(calcChalk.x * chalkSpeed * power, calcChalk.y * chalkSpeed * power);
+                    this.eraser.localPosition = this.chalk.localPosition;
 
                     if (isDrawing && this.chalkAmount >= MinimumChalkAmount && canDrawing)
                     {
@@ -213,6 +246,7 @@ public class PlayerController : MonoBehaviour
                 if (calcEraser.x != 0f || calcEraser.y != 0f)
                 {
                     this.eraser.localPosition = this.eraser.localPosition + new Vector3(calcEraser.x * chalkSpeed, calcEraser.y * chalkSpeed);
+                    this.chalk.localPosition = this.eraser.localPosition;
                 }
 
                 // オブジェクトを消す処理

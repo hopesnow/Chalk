@@ -29,11 +29,10 @@ public class InputManagerSetter
  
         Debug.Log("インプットマネージャーの設定が完了しました。");
     }
- 
-    /// <summary>
-    /// グローバルな入力設定を追加する（OK、キャンセルなど）
-    /// </summary>
-    /// <param name="inputManagerGenerator">Input manager generator.</param>
+
+    /** ********************************************************************************
+     * @summary グローバルな入力設定を追加する（OK、キャンセルなど）
+     ***********************************************************************************/
     private static void AddGlobalInputSettings(InputManagerGenerator inputManagerGenerator)
     {
  
@@ -76,16 +75,14 @@ public class InputManagerSetter
         }
     }
 
-    /// <summary>
-    /// プレイヤーごとの入力設定を追加する
-    /// </summary>
-    /// <param name="inputManagerGenerator">Input manager generator.</param>
-    /// <param name="playerIndex">Player index.</param>
+    /** ********************************************************************************
+     * @summary プレイヤーごとの入力設定を追加する
+     ***********************************************************************************/
     private static void AddPlayerInputSettings(InputManagerGenerator inputManagerGenerator, int playerIndex)
     {
         if (playerIndex < 0 || playerIndex > 3) Debug.LogError("プレイヤーインデックスの値が不正です。");
-        string upKey = "", downKey = "", leftKey = "", rightKey = "", jumpKey = "", characterKey = "", eraserKey = "", chalkKey = "";
-        GetAxisKey(out upKey, out downKey, out leftKey, out rightKey, out jumpKey, out characterKey, out eraserKey, out chalkKey, playerIndex);
+        string upKey = "", downKey = "", leftKey = "", rightKey = "", jumpKey = "", characterKey = "", eraserKey = "", chalkKey = "", changeStateKey = "", actionKey = "";
+        GetAxisKey(out upKey, out downKey, out leftKey, out rightKey, out jumpKey, out characterKey, out eraserKey, out chalkKey, out changeStateKey, out actionKey, playerIndex);
  
         int joystickNum = playerIndex + 1;
         
@@ -103,28 +100,50 @@ public class InputManagerSetter
             inputManagerGenerator.AddAxis(InputAxis.CreateKeyAxis(name, downKey, upKey, "", ""));
         }
  
- 
         // チョーク
+        /*
         {
             var axis = new InputAxis();
             var name = string.Format("Player{0} Chalk", playerIndex);
             var button = string.Format("joystick {0} button 0", joystickNum);
             inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, button, chalkKey));
         }
+        */
+
         // 黒板消し
+        /*
         {
             var axis = new InputAxis();
             var name = string.Format("Player{0} Eraser", playerIndex);
             var button = string.Format("joystick {0} button 1", joystickNum);
             inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, button, eraserKey));
         }
+        */
+
         // キャラクター
+        /*
         {
             var axis = new InputAxis();
             var name = string.Format("Player{0} Character", playerIndex);
             var button = string.Format("joystick {0} button 3", joystickNum);
             inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, button, characterKey));
         }
+        */
+
+        // ステート切り替え
+        {
+            var name = string.Format("Player{0} ChangeState", playerIndex);
+            var button = string.Format("joystick {0} button 5", joystickNum);   // 5: R1
+            inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, button, changeStateKey));
+        }
+
+        // アクション
+        {
+            var name = string.Format("Player{0} Action", playerIndex);
+            var button = string.Format("joystick {0} button 0", joystickNum);
+            inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, button, actionKey));
+        }
+
         // ジャンプ
         {
             var axis = new InputAxis();
@@ -133,77 +152,81 @@ public class InputManagerSetter
             inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, button, jumpKey));
         }
     }
- 
-    /// <summary>
-    /// キーボードでプレイした場合、割り当たっているキーを取得する
-    /// </summary>
-    /// <param name="upKey">Up key.</param>
-    /// <param name="downKey">Down key.</param>
-    /// <param name="leftKey">Left key.</param>
-    /// <param name="rightKey">Right key.</param>
-    /// <param name="jumpKey">Attack key.</param>
-    /// <param name="playerIndex">Player index.</param>
-    private static void GetAxisKey(out string upKey, out string downKey, out string leftKey, out string rightKey, out string jumpKey, out string characterKey, out string eraserKey, out string chalkKey, int playerIndex)
+
+    /** ********************************************************************************
+     * @summary キーボードでプレイした場合、割り当たっているキーを取得する
+     ***********************************************************************************/
+    private static void GetAxisKey(out string upKey, out string downKey, out string leftKey, out string rightKey, out string jumpKey, out string characterKey, out string eraserKey, out string chalkKey, out string changeStateKey, out string actionKey, int playerIndex)
     {
         upKey = "";
         downKey = "";
         leftKey = "";
         rightKey = "";
         jumpKey = "";
- 
-        switch(playerIndex)
+
+        switch (playerIndex)
         {
-        case 0:
-            upKey = "w";
-            downKey = "s";
-            leftKey = "a";
-            rightKey = "d";
-            jumpKey = "f";
-            characterKey = "e";
-            eraserKey = "q";
-            chalkKey = "r";
-            break;
-        case 1:
-            upKey = "i";
-            downKey = "k";
-            leftKey = "j";
-            rightKey = "l";
-            jumpKey = ";";
-            characterKey = "o";
-            eraserKey = "u";
-            chalkKey = "p";
-            break;
-        case 2:
-            upKey = "up";
-            downKey = "down";
-            leftKey = "left";
-            rightKey = "right";
-            jumpKey = "/";
-            characterKey = "_";
-            eraserKey = "]";
-            chalkKey = ":";
-            break;
-        case 3:
-            upKey = "[8]";
-            downKey = "[5]";
-            leftKey = "[4]";
-            rightKey = "[6]";
-            jumpKey = "[9]";
-            characterKey = "c";
-            eraserKey = "e";
-            chalkKey = "q";
-            break;
-        default:
-            Debug.LogError("プレイヤーインデックスの値が不正です。");
-            upKey = "";
-            downKey = "";
-            leftKey = "";
-            rightKey = "";
-            jumpKey = "";
-            characterKey = "";
-            eraserKey = "";
-            chalkKey = "";
-            break;
+            case 0:
+                upKey = "w";
+                downKey = "s";
+                leftKey = "a";
+                rightKey = "d";
+                jumpKey = "f";
+                characterKey = "e";
+                eraserKey = "q";
+                chalkKey = "r";
+                changeStateKey = "e";
+                actionKey = "r";
+                break;
+            case 1:
+                upKey = "i";
+                downKey = "k";
+                leftKey = "j";
+                rightKey = "l";
+                jumpKey = ";";
+                characterKey = "o";
+                eraserKey = "u";
+                chalkKey = "p";
+                changeStateKey = "o";
+                actionKey = "p";
+                break;
+            case 2:
+                upKey = "up";
+                downKey = "down";
+                leftKey = "left";
+                rightKey = "right";
+                jumpKey = "/";
+                characterKey = "_";
+                eraserKey = "]";
+                chalkKey = ":";
+                changeStateKey = "_";
+                actionKey = ":";
+                break;
+            case 3:
+                upKey = "[8]";
+                downKey = "[5]";
+                leftKey = "[4]";
+                rightKey = "[6]";
+                jumpKey = "[9]";
+                characterKey = "c";
+                eraserKey = "e";
+                chalkKey = "q";
+                changeStateKey = "c";
+                actionKey = "q";
+                break;
+            default:
+                Debug.LogError("プレイヤーインデックスの値が不正です。");
+                upKey = "";
+                downKey = "";
+                leftKey = "";
+                rightKey = "";
+                jumpKey = "";
+                characterKey = "";
+                eraserKey = "";
+                chalkKey = "";
+                changeStateKey = "";
+                actionKey = "";
+                break;
         }
     }
 }

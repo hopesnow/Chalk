@@ -40,7 +40,7 @@ public class ErasePhysicsLine : MonoBehaviour {
     {
         if (collision.tag == "Line")
         {
-            Debug.Log("Erase Collision:" + collision.gameObject.name);
+            // Debug.Log("Erase Collision:" + collision.gameObject.name);
             if(isErase)
                 Destroy(collision.gameObject);
         }
