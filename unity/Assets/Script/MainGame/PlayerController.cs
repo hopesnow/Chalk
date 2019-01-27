@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
     private float chalkAmount = 0f;                 // 残量
     private bool canDrawing = false;                // 書き直し用フラグ
-    private const float LimitChalkAmount = 50f;    // チョーク量の上限
+    private const float LimitChalkAmount = 100f;    // チョーク量の上限
     private const float ChargeChalkAmount = 0.5f;   // チョークの補充量
     private const float UseChalkAmount = 1f;        // チョークの使用量
     private const float MinimumChalkAmount = 10f;   // 最低限必要なチョーク量
@@ -171,7 +171,7 @@ public class PlayerController : MonoBehaviour
             /****************************************************************************************************/
             // チョークの操作
             case InputState.Chalk:
-                if (Input.GetButtonDown(string.Format("Player{0} Chalk", playerNo)))
+                if (Input.GetButtonDown(string.Format("Player{0} Action", playerNo)))
                 {
                     this.drawLine.SetStartPos(this.chalk.localPosition);
                     this.canDrawing = true;
@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
                 // 変化がなければ行わない処理
                 if (calcChalk.x != 0f || calcChalk.y != 0f)
                 {
-                    var isDrawing = Input.GetButton(string.Format("Player{0} Chalk", playerNo));
+                    var isDrawing = Input.GetButton(string.Format("Player{0} Action", playerNo));
 
                     // 座標移動
                     float power = isDrawing ? this.chalkDrawSpeePower : 1.0f;   // 書いてるときは移動速度倍率をかける
@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 // オブジェクトを消す処理
-                if (Input.GetButtonDown(string.Format("Player{0} Eraser", playerNo)))
+                if (Input.GetButtonDown(string.Format("Player{0} Action", playerNo)))
                 {
                     this.eraser.GetComponent<ErasePhysicsLine>().isErase = true;
                 }

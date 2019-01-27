@@ -37,6 +37,7 @@ public class MainGameManager : MonoBehaviour
 
         Log("GameStart... !");
         Log("ESCキーでリセット");
+        Log("ELECOM DIRECT INPUT ONLY NOW.");
     }
 
     // 更新処理
