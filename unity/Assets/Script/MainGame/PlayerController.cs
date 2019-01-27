@@ -135,6 +135,7 @@ public class PlayerController : MonoBehaviour
                     break;
 
                 case InputState.Chalk:
+                    drawLine.CheckLines();
                     changed = ChangeState(InputState.Eraser);
                     break;
 
@@ -231,6 +232,10 @@ public class PlayerController : MonoBehaviour
                     {
                         // 燃料切れだったりしたら再度ボタンを押し直すまでかけないようにする
                         this.canDrawing = false;
+                        if (!drawLine.CheckLines())
+                        {
+                            drawLine.ClearLines();//todo drawLine ここに丸が書かれているかの判定文
+                        }
                     }
                 }
 
