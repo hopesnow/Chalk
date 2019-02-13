@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     private const float LimitChalkAmount = 100f;    // チョーク量の上限
     private const float ChargeChalkAmount = 0.5f;   // チョークの補充量
     private const float UseChalkAmount = 1f;        // チョークの使用量
-    private const float MinimumChalkAmount = 10f;   // 最低限必要なチョーク量
+    private const float MinimumChalkAmount = 0f;   // 最低限必要なチョーク量
 
     // ゴールしたフラグ
     public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
@@ -234,7 +234,7 @@ public class PlayerController : MonoBehaviour
                         this.canDrawing = false;
                         if (!drawLine.CheckLines())
                         {
-                            // drawLine.ClearLines();//todo drawLine ここに丸が書かれているかの判定文
+                            drawLine.ClearLines();//todo drawLine ここに丸が書かれているかの判定文
                         }
                     }
                 }

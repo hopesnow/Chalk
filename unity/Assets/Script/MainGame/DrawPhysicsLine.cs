@@ -124,7 +124,7 @@ public class DrawPhysicsLine : MonoBehaviour
             }
         }
 
-        // ClearLines();
+        ClearLines();
         if (newLine != null)
         {
             LineRenderer line = newLine.GetComponent<LineRenderer>();
