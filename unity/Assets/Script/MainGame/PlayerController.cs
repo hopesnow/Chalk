@@ -62,6 +62,9 @@ public class PlayerController : MonoBehaviour
     private const float UseChalkAmount = 1f;        // チョークの使用量
     private const float MinimumChalkAmount = 0f;   // 最低限必要なチョーク量
 
+    private float screenHeight = 3.6f;
+    private float screenWidth = 6.4f;
+
     // ゴールしたフラグ
     public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
 
@@ -82,6 +85,10 @@ public class PlayerController : MonoBehaviour
         this.chalkAmount = LimitChalkAmount;  // チョーク量初期値に
 
         ChangeState(InputState.Character);
+
+        // 画面端の計算
+        screenHeight = Camera.main.orthographicSize;
+        screenWidth = screenHeight / Screen.height * Screen.width;
     }
 
     /** ********************************************************************************
@@ -219,7 +226,8 @@ public class PlayerController : MonoBehaviour
 
                     // 座標移動
                     float power = isDrawing ? this.chalkDrawSpeePower : 1.0f;   // 書いてるときは移動速度倍率をかける
-                    this.chalk.localPosition = this.chalk.localPosition + new Vector3(calcChalk.x * chalkSpeed * power, calcChalk.y * chalkSpeed * power);
+
+                    this.chalk.localPosition = CalculateScreenEnd(this.chalk.localPosition + new Vector3(calcChalk.x * chalkSpeed * power, calcChalk.y * chalkSpeed * power));
                     this.eraser.localPosition = this.chalk.localPosition;
 
                     if (isDrawing && this.chalkAmount >= MinimumChalkAmount && canDrawing)
@@ -250,7 +258,7 @@ public class PlayerController : MonoBehaviour
                 // 変化がなければ行わない
                 if (calcEraser.x != 0f || calcEraser.y != 0f)
                 {
-                    this.eraser.localPosition = this.eraser.localPosition + new Vector3(calcEraser.x * chalkSpeed, calcEraser.y * chalkSpeed);
+                    this.eraser.localPosition = CalculateScreenEnd(this.eraser.localPosition + new Vector3(calcEraser.x * chalkSpeed, calcEraser.y * chalkSpeed));
                     this.chalk.localPosition = this.eraser.localPosition;
                 }
 
@@ -312,6 +320,31 @@ public class PlayerController : MonoBehaviour
         }
 
         return new Vector2(calcX, calcY);
+    }
+
+    /** ********************************************************************************
+     * @summary 画面端計算
+     ***********************************************************************************/
+    private Vector3 CalculateScreenEnd(Vector3 pos)
+    {
+        var x = pos.x;
+        var y = pos.y;
+        var z = pos.z;
+
+        // 右端判定
+        if (x > screenWidth)
+            x = screenWidth;
+        // 左端判定
+        if (x < -screenWidth)
+            x = -screenWidth;
+        // 上端判定
+        if (y > screenHeight)
+            y = screenHeight;
+        // 下端判定
+        if (y < -screenHeight)
+            y = -screenHeight;
+
+        return new Vector3(x, y, z);
     }
 
     /** ********************************************************************************
