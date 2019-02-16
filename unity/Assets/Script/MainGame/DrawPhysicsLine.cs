@@ -111,7 +111,7 @@ public class DrawPhysicsLine : MonoBehaviour
     /** ********************************************************************************
      * @summary 線をチェックする
      ***********************************************************************************/
-    public bool CheckLines()
+    public void CheckLines()
     {
         for(int i=0; i < linePoints.Count; i++)
         {
@@ -121,28 +121,18 @@ public class DrawPhysicsLine : MonoBehaviour
                 {
                     // 線として成り立っている場合
                     newLine.DrawComplete();
-                    return true;
+                    return;
                 }
             }
         }
 
         ClearLines();
-        /*// Debug処理
-        if (newLine != null)
-        {
-            LineRenderer line = newLine.GetComponent<LineRenderer>();
-            line.startColor = Color.red;
-            line.endColor = Color.red;
-        }
-        */
-
-        return false;
     }
 
     /** ********************************************************************************
      * @summary 線をチェックする
      ***********************************************************************************/
-    private bool judgeLineCross(float ax, float ay, float bx, float by, float cx, float cy, float dx, float dy)
+    private bool JudgeLineCross(float ax, float ay, float bx, float by, float cx, float cy, float dx, float dy)
     {
 
         var ta = (cx - dx) * (ay - cy) + (cy - dy) * (cx - ax);

@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using UniRx;
+using UniRx.Triggers;
 using System.Collections;
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(BoxCollider2D))]
@@ -39,7 +40,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform chalkMask;
 
     // 黒板消しオブジェクト
-    [SerializeField] private Transform eraser;
+    [SerializeField] private ErasePhysicsLine eraser;
+    [SerializeField] private Animator eraserAnim;
 
     [SerializeField] private int playerNo;
 
@@ -47,6 +49,8 @@ public class PlayerController : MonoBehaviour
     private BoxCollider2D mBoxcollier2D;
     private Rigidbody2D mRigidbody2D;
     private bool mIsGround;
+    private bool mIsVerticalNeutral = false;    // スティックをニュートラルに戻してるか
+    private const float StickDownPower = 0.9f;
     private const float mCenterY = 1.5f;
 
     private InputState inputState = InputState.None;       // 入力したときの状態
@@ -57,10 +61,11 @@ public class PlayerController : MonoBehaviour
 
     private float chalkAmount = 0f;                 // 残量
     private bool canDrawing = false;                // 書き直し用フラグ
-    private const float LimitChalkAmount = 100f;    // チョーク量の上限
-    private const float ChargeChalkAmount = 0.5f;   // チョークの補充量
+    private const float LimitChalkAmount = 200f;    // チョーク量の上限
+    private const float ChargeChalkAmount = 2f;   // チョークの補充量
     private const float UseChalkAmount = 1f;        // チョークの使用量
     private const float MinimumChalkAmount = 0f;   // 最低限必要なチョーク量
+    private bool isAvailable = true;
 
     private float screenHeight = 3.6f;
     private float screenWidth = 6.4f;
@@ -124,7 +129,7 @@ public class PlayerController : MonoBehaviour
         float moveVec = 0;
         bool jump = false;
 
-        // 書いてる最中は回復しない
+        // 書いてる最中は回復しないように
         if (!this.canDrawing)
         {
             // チョーク残量回復処理
@@ -133,6 +138,18 @@ public class PlayerController : MonoBehaviour
             {
                 this.chalkAmount = LimitChalkAmount;
             }
+        }
+
+        // スティックの状態更新
+        if (Mathf.Abs(Input.GetAxis(string.Format("Player{0} Vertical", playerNo))) <= 0.3f)
+        {
+            this.mIsVerticalNeutral = true;
+        }
+
+        // 操作不能のとき
+        if (!this.isAvailable)
+        {
+            return;
         }
 
         // 操作切り替え
@@ -147,7 +164,13 @@ public class PlayerController : MonoBehaviour
                     break;
 
                 case InputState.Chalk:
-                    drawLine.CheckLines();
+                    // 書き途中の線を引き切る
+                    if (this.canDrawing)
+                    {
+                        this.canDrawing = false;
+                        drawLine.CheckLines();
+                    }
+                    
                     changed = ChangeState(InputState.Eraser);
                     break;
 
@@ -208,6 +231,13 @@ public class PlayerController : MonoBehaviour
                     {
                         moveVec = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));
                         jump = Input.GetButtonDown(string.Format("Player{0} Jump", playerNo));
+
+                        // 上スティックでもジャンプする処理
+                        if (this.mIsVerticalNeutral && Input.GetAxis(string.Format("Player{0} Vertical", playerNo)) >= StickDownPower)
+                        {
+                            this.mIsVerticalNeutral = false;
+                            jump = true;
+                        }
                     }
                 }
 
@@ -218,23 +248,32 @@ public class PlayerController : MonoBehaviour
             case InputState.Chalk:
                 if (Input.GetButtonDown(string.Format("Player{0} Action", playerNo)))
                 {
+                    // 線のひきはじめ処理
                     this.drawLine.SetStartPos(this.chalk.localPosition);
                     this.canDrawing = true;
+                }
+                else if(Input.GetButtonUp(string.Format("Player{0} Action", playerNo)))
+                {
+                    // 線のひきおわり処理
+                    this.canDrawing = false;
+                    this.drawLine.CheckLines();
                 }
 
                 var calcChalk = CalculateToolMove();
 
                 // 変化がなければ行わない処理
+                bool isDrawing = false;
                 if (calcChalk.x != 0f || calcChalk.y != 0f)
                 {
-                    var isDrawing = Input.GetButton(string.Format("Player{0} Action", playerNo));
+                    isDrawing = Input.GetButton(string.Format("Player{0} Action", playerNo));
 
                     // 座標移動
                     float power = isDrawing ? this.chalkDrawSpeePower : 1.0f;   // 書いてるときは移動速度倍率をかける
 
                     this.chalk.localPosition = CalculateScreenEnd(this.chalk.localPosition + new Vector3(calcChalk.x * chalkSpeed * power, calcChalk.y * chalkSpeed * power));
-                    this.eraser.localPosition = this.chalk.localPosition;
+                    this.eraser.transform.localPosition = this.chalk.localPosition;
 
+                    // 線をひくか、完了するかのチェック
                     if (isDrawing && this.chalkAmount >= MinimumChalkAmount && canDrawing)
                     {
                         // 線を引く
@@ -245,10 +284,7 @@ public class PlayerController : MonoBehaviour
                     {
                         // 燃料切れだったりしたら再度ボタンを押し直すまでかけないようにする
                         this.canDrawing = false;
-                        if (!drawLine.CheckLines())
-                        {
-                            // drawLine.ClearLines();//todo drawLine ここに丸が書かれているかの判定文
-                        }
+                        this.drawLine.CheckLines();
                     }
                 }
 
@@ -258,20 +294,30 @@ public class PlayerController : MonoBehaviour
             // 黒板消しの操作
             case InputState.Eraser:
                 var calcEraser = CalculateToolMove();
-                this.eraser.GetComponent<ErasePhysicsLine>().isErase = false;
 
                 // 変化がなければ行わない
                 if (calcEraser.x != 0f || calcEraser.y != 0f)
                 {
-                    this.eraser.localPosition = CalculateScreenEnd(this.eraser.localPosition + new Vector3(calcEraser.x * chalkSpeed, calcEraser.y * chalkSpeed));
-                    this.chalk.localPosition = this.eraser.localPosition;
+                    this.eraser.transform.localPosition = CalculateScreenEnd(this.eraser.transform.localPosition + new Vector3(calcEraser.x * chalkSpeed, calcEraser.y * chalkSpeed));
+                    this.chalk.localPosition = this.eraser.transform.localPosition;
                 }
 
                 // アクションが押されたかチェック
                 if (Input.GetButtonDown(string.Format("Player{0} Action", playerNo)))
                 {
-                    // オブジェクトを消す処理
-                    this.eraser.GetComponent<ErasePhysicsLine>().isErase = true;
+                    // 消すアニメーション可能かチェック
+                    if (this.eraser.IsErasable)
+                    {
+                        this.isAvailable = false;
+                        this.eraserAnim.PlayAsObservable("Delete").Subscribe(_ =>
+                        {
+                            // アニメーション終了時の処理
+                            this.isAvailable = true;
+
+                            // オブジェクトを消す処理
+                            this.eraser.DeleteLine();
+                        });
+                    }
                 }
 
                 break;

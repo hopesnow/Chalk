@@ -1,128 +1,135 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
-public class ErasePhysicsLine : MonoBehaviour {
+public class ErasePhysicsLine : MonoBehaviour
+{
+    private Dictionary<int, ChalkLine> selectableLines = new Dictionary<int, ChalkLine>();
+    private ChalkLine selectedLine;
 
-    [SerializeField]
-    private List<Collider2D> lineList;
-    private Collider2D selectedLine;
-    private bool iserase;
-    public bool isErase
-    {
-        set
-        {
-            this.iserase = value;
-        }
-        get
-        {
-            return this.iserase;
-        }
-    }
+    public bool IsErasable { get { return this.selectedLine != null; } }    // 消すオブジェクトがあるかどうか(消せるかどうか)
 
-    // Use this for initialization
-    void Start ()
+    private void Update()
     {
-        lineList = new List<Collider2D>();
-        selectedLine = null;
-        isErase = false;
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
+        if (this.selectableLines.Count() > 0)
+        {
+            var log = new StringBuilder();
+            foreach (var lines in this.selectableLines)
+            {
+                log.AppendFormat("color: {0} / createdTime: {1}\n", lines.Value.Line.startColor, lines.Value.CreatedTime);
+            }
+
+            Debug.Log(log.ToString());
+        }
     }
 
     /** ********************************************************************************
-     * @summary 線を比較する
-     * lineListの中で一番新しいもの   
-     * タイムスタンプの新しいものにselectedLineを切り替える   
+     * @summary 選択状態の線を削除する
      ***********************************************************************************/
-    private void CompareSelectedLine()
+    public void DeleteLine()
     {
-        if(lineList.Count == 0)
+        if (this.selectedLine != null)
         {
-            selectedLine = null;
-            return;
-        }
-        long timeSelected = lineList[0].GetComponent<ChalkLine>().CreatedTime;
-        int num = 0;
-        for (int i = 0; i < lineList.Count; i++)
-        {
-            long timeCollision = lineList[i].GetComponent<ChalkLine>().CreatedTime;
-            if (timeCollision - timeSelected > 0)
+            var removeId = this.selectedLine.GetInstanceID();
+            this.selectedLine.DeleteLine();
+            this.selectedLine = null;
+            this.selectableLines.Remove(removeId);
+
+            // 消した後に次のやつを選択する
+            if (this.selectableLines.Count() > 0)
             {
-                num = i;
+                this.selectedLine = this.selectableLines.OrderByDescending(item => item.Value.CreatedTime).First().Value;
+                this.selectedLine.SelectLine();
             }
         }
-        if (selectedLine != null)
-        {
-            if (lineList[num] != selectedLine)
-                DeselectionLine(selectedLine.GetComponent<LineRenderer>());
-        }
-        selectedLine = lineList[num];
-        SelectionLine(selectedLine.GetComponent<LineRenderer>());
-    }
-
-    private void SelectionLine(LineRenderer line)
-    {
-        line.widthMultiplier = 2f;
-    }
-
-    private void DeselectionLine(LineRenderer line)
-    {
-        line.widthMultiplier = 1f;
     }
 
     /** ********************************************************************************
-     * @summary 線を比較する
-     * lineListの中で一番新しいもの   
-     * タイムスタンプの新しいものにselectedLineを切り替える   
+     * @summary 消す想定のラインを選択する
      ***********************************************************************************/
-    public void ClearLines()
+    private void CheckSelect(ChalkLine line)
     {
-        lineList = new List<Collider2D>();
-        selectedLine = null;
+        var id = line.GetInstanceID();
+
+        // 既にあればスキップする
+        if (this.selectableLines.ContainsKey(id))
+        {
+            return;
+        }
+
+        // まだ書いてる途中のときスキップする
+        if (line.Drawing)
+        {
+            return;
+        }
+
+        // 選択中のものを変更する
+        // Debug.Log();
+        this.selectableLines.Add(id, line);
+        if (this.selectedLine != null)
+        {
+            this.selectedLine.DeselectLine();
+        }
+
+        this.selectedLine = this.selectableLines.OrderByDescending(item => item.Value.CreatedTime).First().Value;
+        this.selectedLine.SelectLine();
     }
 
+    /** ********************************************************************************
+     * @summary 入ったときの処理
+     ***********************************************************************************/
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Line")
+        if (collision.tag == "Line")
         {
-            lineList.Add(collision);
-            CompareSelectedLine();
-            // collision.GetComponent<LineRenderer>().widthMultiplier = 2;
-
+            // 選択状態の更新
+            var line = collision.GetComponent<ChalkLine>();
+            CheckSelect(line);
         }
     }
 
+    /** ********************************************************************************
+     * @summary 滞在時の処理
+     ***********************************************************************************/
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Line")
         {
-            // Debug.Log("Erase Collision:" + collision.gameObject.name);
-            if (isErase && selectedLine != null)
-            {
-                if (!selectedLine.GetComponent<ChalkLine>().Drawing)
-                {
-                    DeselectionLine(selectedLine.GetComponent<LineRenderer>());
-                    lineList.Remove(selectedLine);
-                    CompareSelectedLine();
-                }
-            }
+            // 選択状態の更新
+            var line = collision.GetComponent<ChalkLine>();
+            CheckSelect(line);
         }
     }
 
+    /** ********************************************************************************
+     * @summary 出たときの処理
+     ***********************************************************************************/
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Line")
         {
-            DeselectionLine(collision.GetComponent<LineRenderer>());
-            lineList.Remove(collision);
-            CompareSelectedLine();
-            if(collision == selectedLine)
+            var removeId = collision.GetComponent<ChalkLine>().GetInstanceID();
+            this.selectableLines.Remove(removeId);
+
+            if (this.selectedLine != null && this.selectedLine.GetInstanceID() == removeId)
             {
-                selectedLine = null;
+                // 選択中のものがあれば一旦非選択状態にする
+                if (this.selectedLine != null)
+                {
+                    this.selectedLine.DeselectLine();
+                }
+
+                // 選択中のものを変える
+                if (this.selectableLines.Count() > 0)
+                {
+                    this.selectedLine = this.selectableLines.OrderByDescending(item => item.Value.CreatedTime).First().Value;
+                    this.selectedLine.SelectLine();
+                }
+                else
+                {
+                    this.selectedLine = null;
+                }
             }
         }
     }
