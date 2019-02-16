@@ -124,11 +124,15 @@ public class PlayerController : MonoBehaviour
         float moveVec = 0;
         bool jump = false;
 
-        // チョーク残量回復処理
-        this.chalkAmount += ChargeChalkAmount;
-        if (this.chalkAmount > LimitChalkAmount)
+        // 書いてる最中は回復しない
+        if (!this.canDrawing)
         {
-            this.chalkAmount = LimitChalkAmount;
+            // チョーク残量回復処理
+            this.chalkAmount += ChargeChalkAmount;
+            if (this.chalkAmount > LimitChalkAmount)
+            {
+                this.chalkAmount = LimitChalkAmount;
+            }
         }
 
         // 操作切り替え
