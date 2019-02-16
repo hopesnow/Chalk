@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ErasePhysicsLine : MonoBehaviour {
 
+    [SerializeField]
+    private List<Collider2D> lineList;
     private Collider2D selectedLine;
     private bool iserase;
     public bool isErase
@@ -21,6 +23,7 @@ public class ErasePhysicsLine : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        lineList = new List<Collider2D>();
         selectedLine = null;
         isErase = false;
 	}
@@ -28,37 +31,37 @@ public class ErasePhysicsLine : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (isErase&&selectedLine != null)
-        {
-            Destroy(selectedLine.gameObject);
-            selectedLine = null;
-        }
     }
 
     /** ********************************************************************************
      * @summary 線を比較する
-     * タイムスタンプの新しいものに切り替える   
+     * lineListの中で一番新しいもの   
+     * タイムスタンプの新しいものにselectedLineを切り替える   
      ***********************************************************************************/
-    private void CompareSelectedLine(Collider2D collider)
+    private void CompareSelectedLine()
     {
-        if(selectedLine != null)
+        if(lineList.Count == 0)
         {
-            //todo タイムスタンプ呼び出して比較
-            float timeSelected = selectedLine.density;//酷い仮実装
-            float timeCollision = collider.density;
-            //今触れた線の方が新しかったら
-            if(timeCollision - timeSelected > 0)
+            selectedLine = null;
+            return;
+        }
+        long timeSelected = lineList[0].GetComponent<ChalkLine>().CreatedTime;
+        int num = 0;
+        for (int i = 0; i < lineList.Count; i++)
+        {
+            long timeCollision = lineList[i].GetComponent<ChalkLine>().CreatedTime;
+            if (timeCollision - timeSelected > 0)
             {
-                DeselectionLine(selectedLine.GetComponent<LineRenderer>());
-                selectedLine = collider;
-                SelectionLine(selectedLine.GetComponent<LineRenderer>());
+                num = i;
             }
         }
-        else
+        if (selectedLine != null)
         {
-            selectedLine = collider;
-            SelectionLine(selectedLine.GetComponent<LineRenderer>());
+            if (lineList[num] != selectedLine)
+                DeselectionLine(selectedLine.GetComponent<LineRenderer>());
         }
+        selectedLine = lineList[num];
+        SelectionLine(selectedLine.GetComponent<LineRenderer>());
     }
 
     private void SelectionLine(LineRenderer line)
@@ -71,12 +74,24 @@ public class ErasePhysicsLine : MonoBehaviour {
         line.widthMultiplier = 1f;
     }
 
+    /** ********************************************************************************
+     * @summary 線を比較する
+     * lineListの中で一番新しいもの   
+     * タイムスタンプの新しいものにselectedLineを切り替える   
+     ***********************************************************************************/
+    public void ClearLines()
+    {
+        lineList = new List<Collider2D>();
+        selectedLine = null;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Line")
         {
-            CompareSelectedLine(collision);
-//            collision.GetComponent<LineRenderer>().widthMultiplier = 2;
+            lineList.Add(collision);
+            CompareSelectedLine();
+            // collision.GetComponent<LineRenderer>().widthMultiplier = 2;
 
         }
     }
@@ -86,8 +101,15 @@ public class ErasePhysicsLine : MonoBehaviour {
         if (collision.tag == "Line")
         {
             // Debug.Log("Erase Collision:" + collision.gameObject.name);
-            //if(isErase)
-                //Destroy(collision.gameObject);
+            if (isErase && selectedLine != null)
+            {
+                if (!selectedLine.GetComponent<ChalkLine>().Drawing)
+                {
+                    DeselectionLine(selectedLine.GetComponent<LineRenderer>());
+                    lineList.Remove(selectedLine);
+                    CompareSelectedLine();
+                }
+            }
         }
     }
 
@@ -95,7 +117,9 @@ public class ErasePhysicsLine : MonoBehaviour {
     {
         if (collision.tag == "Line")
         {
-            collision.GetComponent<LineRenderer>().widthMultiplier = 1;
+            DeselectionLine(collision.GetComponent<LineRenderer>());
+            lineList.Remove(collision);
+            CompareSelectedLine();
             if(collision == selectedLine)
             {
                 selectedLine = null;
