@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
                     break;
 
                 case InputState.Eraser:
-                    // TODO: 選択状態を解除する
+                    // 選択状態を解除する
                     this.eraser.ResetSelectAll();
 
                     changed = ChangeState(InputState.Character);
