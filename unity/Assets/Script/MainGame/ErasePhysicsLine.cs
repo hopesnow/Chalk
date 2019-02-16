@@ -10,20 +10,6 @@ public class ErasePhysicsLine : MonoBehaviour
 
     public bool IsErasable { get { return this.selectedLine != null; } }    // 消すオブジェクトがあるかどうか(消せるかどうか)
 
-    private void Update()
-    {
-        if (this.selectableLines.Count() > 0)
-        {
-            var log = new StringBuilder();
-            foreach (var lines in this.selectableLines)
-            {
-                log.AppendFormat("color: {0} / createdTime: {1}\n", lines.Value.Line.startColor, lines.Value.CreatedTime);
-            }
-
-            Debug.Log(log.ToString());
-        }
-    }
-
     /** ********************************************************************************
      * @summary 選択状態の線を削除する
      ***********************************************************************************/
@@ -46,6 +32,20 @@ public class ErasePhysicsLine : MonoBehaviour
     }
 
     /** ********************************************************************************
+     * @summary 選択状態を全て解除する
+     ***********************************************************************************/
+    public void ResetSelectAll()
+    {
+        if (this.selectedLine != null)
+        {
+            this.selectedLine.DeselectLine();
+            this.selectedLine = null;
+        }
+
+        this.selectableLines.Clear();
+    }
+
+    /** ********************************************************************************
      * @summary 消す想定のラインを選択する
      ***********************************************************************************/
     private void CheckSelect(ChalkLine line)
@@ -65,7 +65,6 @@ public class ErasePhysicsLine : MonoBehaviour
         }
 
         // 選択中のものを変更する
-        // Debug.Log();
         this.selectableLines.Add(id, line);
         if (this.selectedLine != null)
         {
