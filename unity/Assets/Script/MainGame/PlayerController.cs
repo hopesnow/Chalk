@@ -124,6 +124,7 @@ public class PlayerController : MonoBehaviour
         float moveVec = 0;
         bool jump = false;
 
+        // チョーク残量回復処理
         this.chalkAmount += ChargeChalkAmount;
         if (this.chalkAmount > LimitChalkAmount)
         {
@@ -242,7 +243,7 @@ public class PlayerController : MonoBehaviour
                         this.canDrawing = false;
                         if (!drawLine.CheckLines())
                         {
-                            drawLine.ClearLines();//todo drawLine ここに丸が書かれているかの判定文
+                            // drawLine.ClearLines();//todo drawLine ここに丸が書かれているかの判定文
                         }
                     }
                 }
@@ -262,9 +263,10 @@ public class PlayerController : MonoBehaviour
                     this.chalk.localPosition = this.eraser.localPosition;
                 }
 
-                // オブジェクトを消す処理
+                // アクションが押されたかチェック
                 if (Input.GetButtonDown(string.Format("Player{0} Action", playerNo)))
                 {
+                    // オブジェクトを消す処理
                     this.eraser.GetComponent<ErasePhysicsLine>().isErase = true;
                 }
 

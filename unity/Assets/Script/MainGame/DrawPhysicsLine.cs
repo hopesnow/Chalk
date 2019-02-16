@@ -6,7 +6,7 @@ using UnityEngine;
  ***********************************************************************************/
 public class DrawPhysicsLine : MonoBehaviour
 {
-    [SerializeField] private GameObject linePrefab;
+    [SerializeField] private ChalkLine linePrefab;
     [SerializeField] private float lineLength = 0.2f;
     [SerializeField] private float lineWidth = 0.1f;
     [SerializeField] private Color lineColor = Color.white;
@@ -14,7 +14,7 @@ public class DrawPhysicsLine : MonoBehaviour
 
     private List<Vector2> linePoints = new List<Vector2>();
     private Vector3 touchPos;
-    private GameObject newLine; // 現在引いてる線
+    private ChalkLine newLine; // 現在引いてる線
 
     /** ********************************************************************************
      * @summary 初期化処理
@@ -60,7 +60,7 @@ public class DrawPhysicsLine : MonoBehaviour
             if (newLine == null)
             {
                 newLine = Instantiate(linePrefab);
-                newLine.name = "Line" + linePoints.Count;
+                newLine.gameObject.name = "Line" + linePoints.Count;
             }
 
             LineRenderer line = newLine.GetComponent<LineRenderer>();// write line
@@ -119,18 +119,22 @@ public class DrawPhysicsLine : MonoBehaviour
             {
                 if (3 <= Mathf.Abs(j - i) && ((linePoints[i] - linePoints[j]).magnitude < lineLength * 0.5f))
                 {
+                    // 線として成り立っている場合
+                    newLine.DrawComplete();
                     return true;
                 }
             }
         }
 
         ClearLines();
+        /*// Debug処理
         if (newLine != null)
         {
             LineRenderer line = newLine.GetComponent<LineRenderer>();
             line.startColor = Color.red;
             line.endColor = Color.red;
         }
+        */
 
         return false;
     }
@@ -156,7 +160,11 @@ public class DrawPhysicsLine : MonoBehaviour
     public void ClearLines()
     {
         linePoints.Clear();
-        Destroy(newLine);
+        if (newLine != null)
+        {
+            Destroy(newLine.gameObject);
+            newLine = null;
+        }
     }
 
     /** ********************************************************************************
