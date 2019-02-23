@@ -45,6 +45,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private int playerNo;
 
+    [SerializeField]
+    private SpriteRenderer backGround;
+
     private Animator mAnimator;
     private BoxCollider2D mBoxcollier2D;
     private Rigidbody2D mRigidbody2D;
@@ -70,6 +73,11 @@ public class PlayerController : MonoBehaviour
     private float screenHeight = 3.6f;
     private float screenWidth = 6.4f;
 
+    private Vector3 _posTL;
+    private Vector3 _posBR;
+    [SerializeField]
+    private float bottomoffset;
+
     // ゴールしたフラグ
     public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
 
@@ -94,6 +102,14 @@ public class PlayerController : MonoBehaviour
         // 画面端の計算
         screenHeight = Camera.main.orthographicSize;
         screenWidth = screenHeight / Screen.height * Screen.width;
+        // 黒板端の計算
+        Sprite _sprite = backGround.sprite;
+        float _halfX = _sprite.bounds.extents.x;
+        float _halfY = _sprite.bounds.extents.y;
+        Vector3 _topleft = new Vector3(-_halfX, _halfY, 0f);
+        _posTL = backGround.transform.TransformPoint(_topleft);
+        Vector3 _bottomright = new Vector3(_halfX, -_halfY + bottomoffset, 0f);
+        _posBR = backGround.transform.TransformPoint(_bottomright);
     }
 
     /** ********************************************************************************
@@ -397,7 +413,23 @@ public class PlayerController : MonoBehaviour
         if (y < -screenHeight)
             y = -screenHeight;
 
+        // return new Vector3(x, y, z);
+        //
+        // 右端判定
+        if (x > _posBR.x)
+            x = _posBR.x;
+        // 左端判定
+        if (x < _posTL.x)
+            x = _posTL.x;
+        // 上端判定
+        if (y > _posTL.y)
+            y = _posTL.y;
+        // 下端判定
+        if (y < _posBR.y)
+            y = _posBR.y;
+
         return new Vector3(x, y, z);
+        //
     }
 
     /** ********************************************************************************
