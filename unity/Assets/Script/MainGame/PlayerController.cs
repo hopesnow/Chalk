@@ -527,7 +527,28 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        charaState = CharacterState.Invincible;
+        // charaState = CharacterState.Invincible;
+        Restart();
+    }
+
+    /** ********************************************************************************
+     * @summary リスタート処理
+     ***********************************************************************************/
+    private void Restart()
+    {
+        // 座標の初期化
+        this.transform.localPosition = this.initPos;
+        this.canJump2nd = true;
+
+        // 加速度の初期化
+        mRigidbody2D.velocity = Vector2.zero;
+
+        // Animator
+        this.mAnimator.applyRootMotion = false;
+        this.mAnimator.Play("Idle");
+
+        // キャラクターの状態初期化
+        this.charaState = CharacterState.Normal;
     }
 
     /** ********************************************************************************
