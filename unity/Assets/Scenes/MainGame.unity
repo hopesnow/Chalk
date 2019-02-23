@@ -175,17 +175,17 @@ Prefab:
     - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: m_Color.r
-      value: 0.32941177
+      value: 0.42745098
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: m_Color.g
-      value: 0.78039217
+      value: 0.9137255
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: m_Color.b
-      value: 0.45490196
+      value: 0.49019608
       objectReference: {fileID: 0}
     - target: {fileID: 61047003409107048, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
@@ -222,6 +222,18 @@ Prefab:
       propertyPath: eraserAnim
       value: 
       objectReference: {fileID: 2108747170}
+    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
   m_IsPrefabParent: 0
@@ -855,17 +867,17 @@ Prefab:
     - target: {fileID: 212628008505054034, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
       propertyPath: m_Color.r
-      value: 0.9411765
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
       propertyPath: m_Color.g
-      value: 0.5137255
+      value: 0.5882353
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
       propertyPath: m_Color.b
-      value: 0.8352941
+      value: 0.99215686
       objectReference: {fileID: 0}
     - target: {fileID: 61047003409107048, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
@@ -896,6 +908,18 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712610584146064, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712610584146064, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712610584146064, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
@@ -1778,9 +1802,9 @@ Transform:
   - {fileID: 110427176}
   - {fileID: 1472147605}
   - {fileID: 972154038}
+  - {fileID: 1404424887}
   - {fileID: 329771485}
   - {fileID: 862075964}
-  - {fileID: 1404424887}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2553,17 +2577,17 @@ Prefab:
     - target: {fileID: 212628008505054034, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
       propertyPath: m_Color.r
-      value: 0.4
+      value: 0.45882353
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
       propertyPath: m_Color.g
-      value: 0.7294118
+      value: 0.8862745
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
       propertyPath: m_Color.b
-      value: 0.9137255
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 61047003409107048, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
@@ -2600,6 +2624,18 @@ Prefab:
       propertyPath: eraserAnim
       value: 
       objectReference: {fileID: 1843647822}
+    - target: {fileID: 4712610584146064, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712610584146064, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712610584146064, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
   m_IsPrefabParent: 0
@@ -3054,17 +3090,17 @@ Prefab:
     - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: m_Color.r
-      value: 0.93333334
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: m_Color.g
-      value: 0.93333334
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: m_Color.b
-      value: 0.2784314
+      value: 0.28627452
       objectReference: {fileID: 0}
     - target: {fileID: 1350876489691220, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
       propertyPath: m_Name
@@ -3110,6 +3146,18 @@ Prefab:
       propertyPath: eraserAnim
       value: 
       objectReference: {fileID: 618437763}
+    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
   m_IsPrefabParent: 0
