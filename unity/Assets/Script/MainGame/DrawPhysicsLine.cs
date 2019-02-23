@@ -113,11 +113,12 @@ public class DrawPhysicsLine : MonoBehaviour
      ***********************************************************************************/
     public void CheckLines()
     {
-        for(int i=0; i < linePoints.Count; i++)
+        for(int i=0; i < linePoints.Count-1; i++)
         {
-            for(int j = i+1; j < linePoints.Count; j++)
+            for(int j = i+2; j < linePoints.Count-1; j++)
             {
-                if (3 <= Mathf.Abs(j - i) && ((linePoints[i] - linePoints[j]).magnitude < lineLength * 0.5f))
+                if (3 <= Mathf.Abs(j - i) && JudgeLineCross(linePoints[i].x, linePoints[i].y, linePoints[i+1].x, linePoints[i+1].y,
+                linePoints[j].x, linePoints[j].y, linePoints[j+1].x, linePoints[j+1].y))//((linePoints[i] - linePoints[j]).magnitude < lineLength * 0.5f))
                 {
                     // 線として成り立っている場合
                     newLine.DrawComplete();
@@ -134,14 +135,14 @@ public class DrawPhysicsLine : MonoBehaviour
      ***********************************************************************************/
     private bool JudgeLineCross(float ax, float ay, float bx, float by, float cx, float cy, float dx, float dy)
     {
-
+        // 線分abとcdが交差しているかの判断
         var ta = (cx - dx) * (ay - cy) + (cy - dy) * (cx - ax);
         var tb = (cx - dx) * (by - cy) + (cy - dy) * (cx - bx);
         var tc = (ax - bx) * (cy - ay) + (ay - by) * (ax - cx);
         var td = (ax - bx) * (dy - ay) + (ay - by) * (ax - dx);
 
-        return tc * td < 0 && ta * tb < 0;
-        // return tc * td <= 0 && ta * tb <= 0; // 端点を含む場合
+        // return tc * td < 0 && ta * tb < 0;
+        return tc * td <= 0 && ta * tb <= 0; // 端点を含む場合
     }
 
     /** ********************************************************************************
