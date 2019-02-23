@@ -110,6 +110,7 @@ public class PlayerController : MonoBehaviour
 
         // Animator
         this.mAnimator.applyRootMotion = false;
+        this.mAnimator.Play("Idle");
 
         // ゴールフラグの初期化
         IsGoal.Value = false;
@@ -227,20 +228,17 @@ public class PlayerController : MonoBehaviour
             // キャラクターの操作
             case InputState.Character:
 
-                // ダメージを受けていないかどうか
-                if (charaState != CharacterState.Damaged)
+                // ダメージを受けていないかどうか, ゴールしていないかどうか
+                if (charaState == CharacterState.Normal && !IsGoal.Value)
                 {
-                    if (!IsGoal.Value)
-                    {
-                        moveVec = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));
-                        jump = Input.GetButtonDown(string.Format("Player{0} Jump", playerNo));
+                    moveVec = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));
+                    jump = Input.GetButtonDown(string.Format("Player{0} Jump", playerNo));
 
-                        // 上スティックでもジャンプする処理
-                        if (this.mIsVerticalNeutral && Input.GetAxis(string.Format("Player{0} Vertical", playerNo)) >= StickDownPower)
-                        {
-                            this.mIsVerticalNeutral = false;
-                            jump = true;
-                        }
+                    // 上スティックでもジャンプする処理
+                    if (this.mIsVerticalNeutral && Input.GetAxis(string.Format("Player{0} Vertical", playerNo)) >= StickDownPower)
+                    {
+                        this.mIsVerticalNeutral = false;
+                        jump = true;
                     }
                 }
 
@@ -482,20 +480,21 @@ public class PlayerController : MonoBehaviour
      ***********************************************************************************/
     private IEnumerator INTERNAL_OnDamage()
     {
-        mAnimator.Play(mIsGround ? "Damage" : "AirDamage");
-        mAnimator.Play("Idle");
+        this.mAnimator.Play("Dead");
 
-        SendMessage("OnDamage", SendMessageOptions.DontRequireReceiver);
+        // 飛び跳ね処理
+        mRigidbody2D.velocity = new Vector2(transform.forward.x * backwardForce.x, transform.up.y * backwardForce.y);
 
-        mRigidbody2D.velocity = new Vector2(transform.right.x * backwardForce.x, transform.up.y * backwardForce.y);
+        yield return new WaitForSeconds(0.2f);
 
-        yield return new WaitForSeconds(.2f);
-
+        // 着地するまで待つ
         while (mIsGround == false)
         {
             yield return new WaitForFixedUpdate();
         }
-        mAnimator.SetTrigger("Invincible Mode");
+
+        yield return new WaitForSeconds(0.2f);
+
         charaState = CharacterState.Invincible;
     }
 
