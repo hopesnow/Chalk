@@ -175,17 +175,17 @@ Prefab:
     - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: m_Color.r
-      value: 0.42745098
+      value: 0.32941177
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: m_Color.g
-      value: 0.9137255
+      value: 0.78039217
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: m_Color.b
-      value: 0.49019608
+      value: 0.45490196
       objectReference: {fileID: 0}
     - target: {fileID: 61047003409107048, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
@@ -222,18 +222,11 @@ Prefab:
       propertyPath: eraserAnim
       value: 
       objectReference: {fileID: 2108747170}
-    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.4
-      objectReference: {fileID: 0}
+    - target: {fileID: 114231218680900334, guid: fee66f664edaf2c48a799cc70130c8ba,
+        type: 2}
+      propertyPath: backGround
+      value: 
+      objectReference: {fileID: 1291118448}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
   m_IsPrefabParent: 0
@@ -867,17 +860,17 @@ Prefab:
     - target: {fileID: 212628008505054034, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.9411765
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
       propertyPath: m_Color.g
-      value: 0.5882353
+      value: 0.5137255
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
       propertyPath: m_Color.b
-      value: 0.99215686
+      value: 0.8352941
       objectReference: {fileID: 0}
     - target: {fileID: 61047003409107048, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
@@ -909,18 +902,11 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.4
-      objectReference: {fileID: 0}
+    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
+        type: 2}
+      propertyPath: backGround
+      value: 
+      objectReference: {fileID: 1291118448}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
   m_IsPrefabParent: 0
@@ -2577,17 +2563,17 @@ Prefab:
     - target: {fileID: 212628008505054034, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
       propertyPath: m_Color.r
-      value: 0.45882353
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
       propertyPath: m_Color.g
-      value: 0.8862745
+      value: 0.7294118
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.9137255
       objectReference: {fileID: 0}
     - target: {fileID: 61047003409107048, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
@@ -2624,18 +2610,11 @@ Prefab:
       propertyPath: eraserAnim
       value: 
       objectReference: {fileID: 1843647822}
-    - target: {fileID: 4712610584146064, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.4
-      objectReference: {fileID: 0}
+    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
+        type: 2}
+      propertyPath: backGround
+      value: 
+      objectReference: {fileID: 1291118448}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
   m_IsPrefabParent: 0
@@ -3090,17 +3069,17 @@ Prefab:
     - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.93333334
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.93333334
       objectReference: {fileID: 0}
     - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: m_Color.b
-      value: 0.28627452
+      value: 0.2784314
       objectReference: {fileID: 0}
     - target: {fileID: 1350876489691220, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
       propertyPath: m_Name
@@ -3146,18 +3125,11 @@ Prefab:
       propertyPath: eraserAnim
       value: 
       objectReference: {fileID: 618437763}
-    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.4
-      objectReference: {fileID: 0}
+    - target: {fileID: 114231218680900334, guid: fee66f664edaf2c48a799cc70130c8ba,
+        type: 2}
+      propertyPath: backGround
+      value: 
+      objectReference: {fileID: 1291118448}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
   m_IsPrefabParent: 0
