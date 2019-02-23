@@ -326,13 +326,13 @@ public class PlayerController : MonoBehaviour
                     if (this.eraser.IsErasable)
                     {
                         this.isAvailable = false;
+
+                        // オブジェクトを消す処理
+                        this.eraser.DeleteLine();
                         this.eraserAnim.PlayAsObservable("Delete").Subscribe(_ =>
                         {
                             // アニメーション終了時の処理
                             this.isAvailable = true;
-
-                            // オブジェクトを消す処理
-                            this.eraser.DeleteLine();
                         });
                     }
                 }
