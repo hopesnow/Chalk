@@ -45,8 +45,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private int playerNo;
 
-    [SerializeField]
-    private SpriteRenderer backGround;
+    // 背景のオフセット取得用
+    [SerializeField] private SpriteRenderer backGroundBottom;
 
     private Animator mAnimator;
     private BoxCollider2D mBoxcollier2D;
@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 initPos = Vector3.zero; // リセット時の初期座標
 
+    // チョーク情報
     private float chalkAmount = 0f;                 // 残量
     private bool canDrawing = false;                // 書き直し用フラグ
     private const float LimitChalkAmount = 200f;    // チョーク量の上限
@@ -70,13 +71,10 @@ public class PlayerController : MonoBehaviour
     private const float MinimumChalkAmount = 0f;   // 最低限必要なチョーク量
     private bool isAvailable = true;
 
+    // 画面内判定用
     private float screenHeight = 3.6f;
     private float screenWidth = 6.4f;
-
-    private Vector3 _posTL;
-    private Vector3 _posBR;
-    [SerializeField]
-    private float bottomoffset;
+    private float bottomOffset = 0;
 
     // ゴールしたフラグ
     public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
@@ -102,14 +100,9 @@ public class PlayerController : MonoBehaviour
         // 画面端の計算
         screenHeight = Camera.main.orthographicSize;
         screenWidth = screenHeight / Screen.height * Screen.width;
+
         // 黒板端の計算
-        Sprite _sprite = backGround.sprite;
-        float _halfX = _sprite.bounds.extents.x;
-        float _halfY = _sprite.bounds.extents.y;
-        Vector3 _topleft = new Vector3(-_halfX, _halfY, 0f);
-        _posTL = backGround.transform.TransformPoint(_topleft);
-        Vector3 _bottomright = new Vector3(_halfX, -_halfY + bottomoffset, 0f);
-        _posBR = backGround.transform.TransformPoint(_bottomright);
+        this.bottomOffset = this.backGroundBottom.sprite.bounds.size.y;
     }
 
     /** ********************************************************************************
@@ -134,7 +127,6 @@ public class PlayerController : MonoBehaviour
         this.mAnimator.SetTrigger("Reset");
 
         // 入力方法の初期化
-        // this.inputState = InputState.Character;
         ChangeState(InputState.Character);
     }
 
@@ -409,27 +401,11 @@ public class PlayerController : MonoBehaviour
         // 上端判定
         if (y > screenHeight)
             y = screenHeight;
-        // 下端判定
-        if (y < -screenHeight)
-            y = -screenHeight;
-
-        // return new Vector3(x, y, z);
-        //
-        // 右端判定
-        if (x > _posBR.x)
-            x = _posBR.x;
-        // 左端判定
-        if (x < _posTL.x)
-            x = _posTL.x;
-        // 上端判定
-        if (y > _posTL.y)
-            y = _posTL.y;
-        // 下端判定
-        if (y < _posBR.y)
-            y = _posBR.y;
+        // 下端判定 (画面端の書けない部分を考慮)
+        if (y < -screenHeight + this.bottomOffset)
+            y = -screenHeight + this.bottomOffset;
 
         return new Vector3(x, y, z);
-        //
     }
 
     /** ********************************************************************************
@@ -527,7 +503,6 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        // charaState = CharacterState.Invincible;
         Restart();
     }
 
@@ -549,14 +524,6 @@ public class PlayerController : MonoBehaviour
 
         // キャラクターの状態初期化
         this.charaState = CharacterState.Normal;
-    }
-
-    /** ********************************************************************************
-     * @summary 無敵終了処理
-     ***********************************************************************************/
-    private void OnFinishedInvincibleMode()
-    {
-        charaState = CharacterState.Normal;
     }
 
     /** ********************************************************************************
