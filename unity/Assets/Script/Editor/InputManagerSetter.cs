@@ -111,14 +111,11 @@ public class InputManagerSetter
         */
 
         // 黒板消し
-        /*
         {
-            var axis = new InputAxis();
             var name = string.Format("Player{0} Eraser", playerIndex);
-            var button = string.Format("joystick {0} button 1", joystickNum);
+            var button = string.Format("joystick {0} button 4", joystickNum);   // 4: L1
             inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, button, eraserKey));
         }
-        */
 
         // キャラクター
         /*
@@ -146,7 +143,6 @@ public class InputManagerSetter
 
         // ジャンプ
         {
-            var axis = new InputAxis();
             var name = string.Format("Player{0} Jump", playerIndex);
             var button = string.Format("joystick {0} button 2", joystickNum);
             inputManagerGenerator.AddAxis(InputAxis.CreateButton(name, button, jumpKey));
