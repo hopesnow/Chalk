@@ -120,11 +120,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 3
   jumpPower: 400
+  chalkSpeed: 0.1
+  chalkDrawSpeePower: 0.25
   backwardForce: {x: -4.5, y: 5.4}
-  joystick: {fileID: 0}
+  characterSprite: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  chalk: {fileID: 0}
+  drawLine: {fileID: 0}
+  chalkMask: {fileID: 0}
+  eraser: {fileID: 0}
+  eraserAnim: {fileID: 0}
+  playerNo: 0
+  backGroundBottom: {fileID: 0}
 --- !u!212 &212628008505054034
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -159,7 +168,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: ea648756562522e42a16ef04204eeddb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
