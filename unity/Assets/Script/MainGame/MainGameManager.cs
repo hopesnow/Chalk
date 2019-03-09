@@ -38,6 +38,9 @@ public class MainGameManager : MonoBehaviour
             });
         }
 
+        // ステージを設定
+        SetStage(0);
+
         Log("GameStart... !");
         Log("ESCキーでリセット");
         Log("ELECOM DIRECT INPUT ONLY NOW.");
@@ -54,6 +57,9 @@ public class MainGameManager : MonoBehaviour
             {
                 player.Reset();
             }
+
+            // ステージをランダムで設定
+            this.SetStage();
 
             Log("GameReset... !");
         }
