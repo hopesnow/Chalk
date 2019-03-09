@@ -1,6 +1,7 @@
 ﻿using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class MainGameManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class MainGameManager : MonoBehaviour
     [SerializeField] private GameObject[] stages;
 
     [SerializeField] private Text textOrigin;
+    [SerializeField] private Image goalImage;
+    [SerializeField] private Image goalMark;
 
     /** ********************************************************************************
      * @summary 初期化処理
@@ -59,6 +62,14 @@ public class MainGameManager : MonoBehaviour
         {
             Debug.Log("Pause");
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CloseUp(new Vector3(5.22f, 1.336f, 0f));
+        }
+        if (Input.GetKeyDown(KeyCode.LeftCommand))
+        {
+            ResetMainCamera();
+        }
     }
 
     /** ********************************************************************************
@@ -97,5 +108,68 @@ public class MainGameManager : MonoBehaviour
 
         // ステージ生成
         Instantiate(this.stages[number], this.stageParent);
+    }
+
+    public void CloseUp(Vector3 goalPosition)
+    {
+        Sequence sequence = DOTween.Sequence();
+        float movetime = 0.750f;
+        goalPosition.z = mainCamera.transform.position.z;
+        goalImage.rectTransform.localScale = new Vector3(3f, 3f, 1f);
+
+        //ゴールイメージ表示
+        sequence.Append(goalImage.rectTransform.DOScale(new Vector3(1f, 1f, 1f), movetime).SetEase(Ease.InSine))
+        .Join(DOTween.ToAlpha(
+            () => goalImage.color,
+            (alpha) => goalImage.color = alpha,
+            1.0f,
+            movetime
+        ).SetEase(Ease.InSine))
+            .AppendInterval(1f)//1秒待機
+        .Append(DOTween.ToAlpha(//Image非表示
+            () => goalImage.color,
+            (alpha) => goalImage.color = alpha,
+            0f,
+            0f
+        ))
+            .Join(goalImage.rectTransform.DOScale(new Vector3(3f, 3f, 1f), 0f));
+        //ズームイン
+        sequence.Append( mainCamera.transform.DOMove(goalPosition, movetime).SetEase(Ease.InSine))
+        .Join(DOTween.To(
+            () => mainCamera.orthographicSize,
+            (size) => mainCamera.orthographicSize = size,
+            1.8f,
+            movetime
+        ).SetEase(Ease.InSine))
+        .AppendInterval(1f)
+        .Append(goalMark.rectTransform.DOPunchPosition(new Vector3(5f, -5f, 0f), movetime))
+        .Join(DOTween.ToAlpha(
+            () => goalMark.color,
+            (alpha) => goalMark.color = alpha,
+            1.0f,
+            0f
+        ))
+        .AppendInterval(1f)
+        .Join(DOTween.ToAlpha(
+            () => goalMark.color,
+            (alpha) => goalMark.color = alpha,
+            0f,
+            0f
+        ))
+        .OnComplete(() => {//Reset
+            foreach (var player in this.players)
+            {
+                player.Reset();
+            }
+            ResetMainCamera();
+            Log("GameReset... !");
+        })
+        .Play();
+    }
+
+    public void ResetMainCamera()
+    {
+        mainCamera.transform.position = new Vector3(0, 0, mainCamera.transform.position.z);
+        mainCamera.orthographicSize = 3.6f;
     }
 }
