@@ -180,7 +180,8 @@ public class PlayerController : MonoBehaviour
                         drawLine.CheckLines();
                     }
                     
-                    changed = ChangeState(InputState.Eraser);
+                    // changed = ChangeState(InputState.Eraser);
+                    changed = ChangeState(InputState.Character);
                     break;
 
                 case InputState.Eraser:
@@ -196,6 +197,17 @@ public class PlayerController : MonoBehaviour
             }
 
             // 切り替わったとき
+            if (changed)
+            {
+                return;
+            }
+        }
+
+        // 黒板消しはワンボタンで変更できるように
+        if (Input.GetButtonDown(string.Format("Player{0} Eraser", this.playerNo)))
+        {
+            bool changed = false;
+            changed = ChangeState(InputState.Eraser);
             if (changed)
             {
                 return;
