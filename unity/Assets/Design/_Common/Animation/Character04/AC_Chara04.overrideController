@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: AC_Chara04
+  m_Controller: {fileID: 9100000, guid: b266d2374891d4049a2d5c6ccaafc7ef, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: d6fce61fd71682e40822cf9dbb0b94c7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 423d5e5e5b4e6e14b83ebe83f02d7274, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c4503d31f7311304cb1cab61d6d87fdb, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7b45b9a7bf0a60b4bbbf34de00a2c479, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: c3ef052cb48534c0685dcb178748610e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3805ad14c83b82c4d8c86590370eb3b3, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f19dc8c85aca3474cae72ceff171609e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 380a5fc2b43835a4180e75964198d39b, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 77ed71524c53449cbb038d7aa6886d50, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7ea72dfec4fcf704fbd45580a5c3eb67, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: bea614b38db32416e99299ae68381db0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 9ab8e7d8539704b4387b6a481a8c76fc, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 73cdf727352707a459ac7db0f9c39542, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 34c835e6fe64e1049b5a514234e890dc, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 9a1d3a006085bf44a8de539876fa09ac, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8f46657c6de73c34cbc3839ea234f3bd, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 21c5001677b80e14e80a614a3c17ce7f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ecc4b255cd6382e4890f9ad0f4ae12fe, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: b1b5daece17854b12b0979a5f09c6e2b, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5b31530837889bd429675bfa7d704bef, type: 2}
