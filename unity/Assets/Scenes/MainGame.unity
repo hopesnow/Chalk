@@ -3390,6 +3390,7 @@ MonoBehaviour:
   - {fileID: 1951830612249458, guid: 2c1bcda47671a1e489be836ce0708a37, type: 2}
   - {fileID: 1425369899000558, guid: 4e2b44ee45f7b3a45a7cec92a2544303, type: 2}
   - {fileID: 1628653516540514, guid: 11ee385a511274afdb9be2fcf1f128e9, type: 2}
+  - {fileID: 1709005776254386, guid: 9df10a5f53f11d04b8901f279da92990, type: 2}
   textOrigin: {fileID: 1947422956}
   goalImage: {fileID: 20666072}
   goalMark: {fileID: 194758974}
