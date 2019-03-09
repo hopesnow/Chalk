@@ -1843,6 +1843,7 @@ Transform:
   - {fileID: 329771485}
   - {fileID: 862075964}
   - {fileID: 1404424887}
+  - {fileID: 1843520500}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3785,6 +3786,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 517576764}
   players: []
+  stageParent: {fileID: 1843520500}
+  stages:
+  - {fileID: 1951830612249458, guid: 2c1bcda47671a1e489be836ce0708a37, type: 2}
+  - {fileID: 1425369899000558, guid: 4e2b44ee45f7b3a45a7cec92a2544303, type: 2}
+  - {fileID: 1628653516540514, guid: 11ee385a511274afdb9be2fcf1f128e9, type: 2}
   textOrigin: {fileID: 1947422956}
 --- !u!4 &1769708977
 Transform:
@@ -3917,6 +3923,34 @@ SpriteMask:
   m_FrontSortingOrder: 0
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
+--- !u!1 &1843520499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1843520500}
+  m_Layer: 0
+  m_Name: StageParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1843520500
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1843520499}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 665950109}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1843647820
 GameObject:
   m_ObjectHideFlags: 0

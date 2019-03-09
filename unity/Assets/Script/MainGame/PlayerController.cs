@@ -76,6 +76,10 @@ public class PlayerController : MonoBehaviour
     private float screenWidth = 6.4f;
     private float bottomOffset = 0;
 
+    // 当たり判定変更用
+    private Vector2 collOffset;
+    private Vector2 collSize;
+
     // ゴールしたフラグ
     public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
 
@@ -86,9 +90,9 @@ public class PlayerController : MonoBehaviour
      ***********************************************************************************/
     private void Awake()
     {
-        mAnimator = GetComponent<Animator>();
-        mBoxcollier2D = GetComponent<BoxCollider2D>();
-        mRigidbody2D = GetComponent<Rigidbody2D>();
+        this.mAnimator = GetComponent<Animator>();
+        this.mBoxcollier2D = GetComponent<BoxCollider2D>();
+        this.mRigidbody2D = GetComponent<Rigidbody2D>();
 
         this.initPos = this.transform.localPosition;
         IsGoal.Value = false;
@@ -96,6 +100,10 @@ public class PlayerController : MonoBehaviour
         this.chalkAmount = LimitChalkAmount;  // チョーク量初期値に
 
         ChangeState(InputState.Character);
+
+        // 当たり判定の保存
+        this.collOffset = this.mBoxcollier2D.offset;
+        this.collSize = this.mBoxcollier2D.size;
 
         // 画面端の計算
         screenHeight = Camera.main.orthographicSize;
@@ -136,7 +144,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         float moveVec = 0;
-        bool jump = false;
+        bool jump = false;  // ジャンプ
+        bool squat = false; // しゃがみ
 
         // 書いてる最中は回復しないように
         if (!this.canDrawing)
@@ -214,33 +223,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        /*
-        if (Input.GetButtonDown(string.Format("Player{0} Chalk", this.playerNo)))
-        {
-            // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
-            if (ChangeState(InputState.Chalk))
-            {
-                return;
-            }
-        }
-        else if (Input.GetButtonDown(string.Format("Player{0} Character", playerNo)))
-        {
-            // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
-            if (ChangeState(InputState.Character))
-            {
-                return;
-            }
-        }
-        else if (Input.GetButtonDown(string.Format("Player{0} Eraser", playerNo)))
-        {
-            // 操作が切り替わる場合は切り替えてそこでUpdate処理終了
-            if (ChangeState(InputState.Eraser))
-            {
-                return;
-            }
-        }
-        */
-
         // 操作状態
         switch (this.inputState)
         {
@@ -253,6 +235,12 @@ public class PlayerController : MonoBehaviour
                 {
                     moveVec = Input.GetAxis(string.Format("Player{0} Horizontal", playerNo));
                     jump = Input.GetButtonDown(string.Format("Player{0} Jump", playerNo));
+
+                    // 下スティックでしゃがみ処理
+                    if (Input.GetAxis(string.Format("Player{0} Vertical", playerNo)) <= -StickDownPower)
+                    {
+                        squat = true;
+                    }
 
                     // 上スティックでもジャンプする処理
                     if (this.mIsVerticalNeutral && Input.GetAxis(string.Format("Player{0} Vertical", playerNo)) >= StickDownPower)
@@ -351,7 +339,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // 移動系処理
-        Move(moveVec, jump);
+        Move(moveVec, jump, squat);
 
         // 表示の更新
         this.chalkMask.localScale = new Vector3(1f, Mathf.Clamp(this.chalkAmount / LimitChalkAmount, 0f, 1f), 1f);
@@ -423,7 +411,7 @@ public class PlayerController : MonoBehaviour
     /** ********************************************************************************
      * @summary 移動処理
      ***********************************************************************************/
-    private void Move(float move, bool jump)
+    private void Move(float move, bool jump, bool squat)
     {
 #if UNABLE_DOUBLE_JUMP
         this.canJump2nd = false;
@@ -437,15 +425,28 @@ public class PlayerController : MonoBehaviour
 
         mRigidbody2D.velocity = new Vector2(move * maxSpeed, mRigidbody2D.velocity.y);
 
-        mAnimator.SetFloat("Horizontal", move);
-        mAnimator.SetFloat("Vertical", mRigidbody2D.velocity.y);
-        mAnimator.SetBool("isGround", mIsGround);
+        this.mAnimator.SetFloat("Horizontal", move);
+        this.mAnimator.SetFloat("Vertical", mRigidbody2D.velocity.y);
+        this.mAnimator.SetBool("isGround", mIsGround);
+        this.mAnimator.SetBool("isSquat", squat);
+
+        // しゃがみ中の当たり判定の切り替え
+        if (this.mIsGround && squat)
+        {
+            this.mBoxcollier2D.offset = new Vector2(this.collOffset.x, this.collOffset.y - this.collSize.y / 4);
+            this.mBoxcollier2D.size = new Vector2(this.collSize.x, this.collSize.y / 2);
+        }
+        else
+        {
+            this.mBoxcollier2D.offset = this.collOffset;
+            this.mBoxcollier2D.size = this.collSize;
+        }
 
         // ジャンプ可能か
         if (jump && (mIsGround || canJump2nd))
         {
             mAnimator.SetTrigger("Jump");
-            SendMessage("Jump", SendMessageOptions.DontRequireReceiver);
+            // SendMessage("Jump", SendMessageOptions.DontRequireReceiver);
 
             mRigidbody2D.velocity = new Vector2(mRigidbody2D.velocity.x, 0);    // 落下速度リセット
             mRigidbody2D.AddForce(Vector2.up * jumpPower);
