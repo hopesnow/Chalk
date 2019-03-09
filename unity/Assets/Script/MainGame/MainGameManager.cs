@@ -15,6 +15,9 @@ public class MainGameManager : MonoBehaviour
     [SerializeField] private Image goalImage;
     [SerializeField] private Image goalMark;
 
+    private int currentStageNumber = 0;
+    private int goalCount = 0;
+
     /** ********************************************************************************
      * @summary 初期化処理
      ***********************************************************************************/
@@ -24,7 +27,7 @@ public class MainGameManager : MonoBehaviour
         this.players = test;
 
         this.textOrigin.gameObject.SetActive(false);
-        this.mainCamera.orthographicSize = 3.6f;
+        ResetMainCamera();
 
         foreach (var player in this.players)
         {
@@ -33,7 +36,14 @@ public class MainGameManager : MonoBehaviour
             {
                 if (goal)
                 {
+                    this.goalCount++;
                     Log(string.Format("Player{0} Goal.", player.PlayerNo + 1));
+
+                    if (this.goalCount > this.players.Length - 2)
+                    {
+                        // 一人残してゴールしたとき
+                        this.CloseUp(new Vector3(5.22f, 1.336f, 0f));
+                    }
                 }
             });
         }
@@ -58,8 +68,14 @@ public class MainGameManager : MonoBehaviour
                 player.Reset();
             }
 
-            // ステージをランダムで設定
-            this.SetStage();
+            // 初期化処理
+            this.goalCount = 0;
+
+            // ステージを設定
+            var stageNum = this.currentStageNumber + 1;
+            if (stageNum > this.stages.Length - 1)
+                stageNum = 0;
+            this.SetStage(stageNum);
 
             Log("GameReset... !");
         }
@@ -68,10 +84,12 @@ public class MainGameManager : MonoBehaviour
         {
             Debug.Log("Pause");
         }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             CloseUp(new Vector3(5.22f, 1.336f, 0f));
         }
+
         if (Input.GetKeyDown(KeyCode.LeftCommand))
         {
             ResetMainCamera();
@@ -112,10 +130,15 @@ public class MainGameManager : MonoBehaviour
             number = Random.Range(0, this.stages.Length);   // stages.Lengthは含まない(intだから)
         }
 
+        this.currentStageNumber = number;
+
         // ステージ生成
         Instantiate(this.stages[number], this.stageParent);
     }
 
+    /** ********************************************************************************
+     * @summary ゴール演出
+     ***********************************************************************************/
     public void CloseUp(Vector3 goalPosition)
     {
         Sequence sequence = DOTween.Sequence();
@@ -167,12 +190,18 @@ public class MainGameManager : MonoBehaviour
             {
                 player.Reset();
             }
+
+            this.goalCount = 0;
+
             ResetMainCamera();
             Log("GameReset... !");
         })
         .Play();
     }
 
+    /** ********************************************************************************
+     * @summary カメラのリセット処理
+     ***********************************************************************************/
     public void ResetMainCamera()
     {
         mainCamera.transform.position = new Vector3(0, 0, mainCamera.transform.position.z);

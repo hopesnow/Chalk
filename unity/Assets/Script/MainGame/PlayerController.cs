@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
         // ゴールフラグの初期化
         IsGoal.Value = false;
         this.charaState = CharacterState.Normal;
-        this.mAnimator.SetTrigger("Reset");
+        // this.mAnimator.SetTrigger("Reset");
 
         // 入力方法の初期化
         ChangeState(InputState.Character);
@@ -498,7 +498,7 @@ public class PlayerController : MonoBehaviour
             // TODO: ゴール処理
             IsGoal.Value = true;
             this.charaState = CharacterState.Goal;
-            this.mAnimator.SetTrigger("Clear");
+            this.mAnimator.Play("Congrats");
         }
     }
 
