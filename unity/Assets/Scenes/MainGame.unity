@@ -172,82 +172,11 @@ Prefab:
       propertyPath: eraser
       value: 
       objectReference: {fileID: 2062757193}
-    - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0.42745098
-      objectReference: {fileID: 0}
-    - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.9137255
-      objectReference: {fileID: 0}
-    - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.49019608
-      objectReference: {fileID: 0}
-    - target: {fileID: 61047003409107048, guid: fee66f664edaf2c48a799cc70130c8ba,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 61047003409107048, guid: fee66f664edaf2c48a799cc70130c8ba,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 61047003409107048, guid: fee66f664edaf2c48a799cc70130c8ba,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: fee66f664edaf2c48a799cc70130c8ba,
-        type: 2}
-      propertyPath: jumpPower
-      value: 350
-      objectReference: {fileID: 0}
-    - target: {fileID: 50916404938107468, guid: fee66f664edaf2c48a799cc70130c8ba,
-        type: 2}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212628008505054034, guid: fee66f664edaf2c48a799cc70130c8ba,
-        type: 2}
-      propertyPath: m_SortingOrder
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 114231218680900334, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: eraserAnim
       value: 
       objectReference: {fileID: 2108747170}
-    - target: {fileID: 114231218680900334, guid: fee66f664edaf2c48a799cc70130c8ba,
-        type: 2}
-      propertyPath: backGround
-      value: 
-      objectReference: {fileID: 1291118448}
-    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: fee66f664edaf2c48a799cc70130c8ba,
-        type: 2}
-      propertyPath: bottomoffset
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1350876489691220, guid: fee66f664edaf2c48a799cc70130c8ba, type: 2}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 114231218680900334, guid: fee66f664edaf2c48a799cc70130c8ba,
         type: 2}
       propertyPath: backGroundBottom
@@ -818,17 +747,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 61047003409107048, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: joystick
-      value: 
-      objectReference: {fileID: 11400000, guid: b46577e5a0af2419591afdd1d9a367bc,
-        type: 2}
     - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
       propertyPath: chalk
@@ -841,33 +759,9 @@ Prefab:
       objectReference: {fileID: 1902790045}
     - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
-      propertyPath: characterSprite
+      propertyPath: chalkMask
       value: 
-      objectReference: {fileID: 1239302742}
-    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: chalkDrawSpeePower
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: chalkSpeed
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1350876489691220, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: chalkPos.x
-      value: -0.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: chalkPos.y
-      value: 0.22
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1791963645}
     - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
       propertyPath: eraser
@@ -875,90 +769,18 @@ Prefab:
       objectReference: {fileID: 1210275098}
     - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
-      propertyPath: chalkMask
-      value: 
-      objectReference: {fileID: 1791963645}
-    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: jumpPower
-      value: 350
-      objectReference: {fileID: 0}
-    - target: {fileID: 212628008505054034, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 212628008505054034, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.5882353
-      objectReference: {fileID: 0}
-    - target: {fileID: 212628008505054034, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 0.99215686
-      objectReference: {fileID: 0}
-    - target: {fileID: 61047003409107048, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 61047003409107048, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 61047003409107048, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 50916404938107468, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
       propertyPath: eraserAnim
       value: 
       objectReference: {fileID: 903042508}
-    - target: {fileID: 212628008505054034, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: m_SortingOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: backGround
-      value: 
-      objectReference: {fileID: 1291118448}
-    - target: {fileID: 4712610584146064, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-        type: 2}
-      propertyPath: bottomoffset
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1350876489691220, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 114231218680900334, guid: b17aa88f2e3a9445580d1da6e97a0cac,
         type: 2}
       propertyPath: backGroundBottom
       value: 
       objectReference: {fileID: 953262600}
+    - target: {fileID: 1350876489691220, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
+      propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b17aa88f2e3a9445580d1da6e97a0cac, type: 2}
   m_IsPrefabParent: 0
@@ -1078,7 +900,7 @@ GameObject:
   - component: {fileID: 315212247}
   - component: {fileID: 315212248}
   m_Layer: 5
-  m_Name: Scroll View
+  m_Name: Debug Scroll View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2579,11 +2401,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
-      propertyPath: playerNo
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
       propertyPath: chalk
       value: 
       objectReference: {fileID: 1239800009}
@@ -2594,29 +2411,9 @@ Prefab:
       objectReference: {fileID: 1581456439}
     - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
-      propertyPath: characterSprite
+      propertyPath: chalkMask
       value: 
-      objectReference: {fileID: 1750295527}
-    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: chalkDrawSpeePower
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: chalkSpeed
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: chalkPos.x
-      value: -0.12
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: chalkPos.y
-      value: 0.22
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1402480702}
     - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
       propertyPath: eraser
@@ -2624,90 +2421,9 @@ Prefab:
       objectReference: {fileID: 236536996}
     - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
-      propertyPath: chalkMask
-      value: 
-      objectReference: {fileID: 1402480702}
-    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: jumpPower
-      value: 350
-      objectReference: {fileID: 0}
-    - target: {fileID: 212628008505054034, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: m_Color.r
-      value: 0.45882353
-      objectReference: {fileID: 0}
-    - target: {fileID: 212628008505054034, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 0.8862745
-      objectReference: {fileID: 0}
-    - target: {fileID: 212628008505054034, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 61047003409107048, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: m_Offset.y
-      value: -0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 61047003409107048, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 61047003409107048, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 1.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 50916404938107468, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 50916404938107468, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 212628008505054034, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: m_SortingOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
       propertyPath: eraserAnim
       value: 
       objectReference: {fileID: 1843647822}
-    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: backGround
-      value: 
-      objectReference: {fileID: 1291118448}
-    - target: {fileID: 4712610584146064, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4712610584146064, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-        type: 2}
-      propertyPath: bottomoffset
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1350876489691220, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 114231218680900334, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
         type: 2}
       propertyPath: backGroundBottom
@@ -2716,11 +2432,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6938a36cbd78e9f4fb8ba848ea04c94a, type: 2}
   m_IsPrefabParent: 0
---- !u!212 &1239302742 stripped
-SpriteRenderer:
-  m_PrefabParentObject: {fileID: 212628008505054034, guid: b17aa88f2e3a9445580d1da6e97a0cac,
-    type: 2}
-  m_PrefabInternal: {fileID: 248767541}
 --- !u!1 &1239800008
 GameObject:
   m_ObjectHideFlags: 0
@@ -3507,11 +3218,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
---- !u!212 &1750295527 stripped
-SpriteRenderer:
-  m_PrefabParentObject: {fileID: 212628008505054034, guid: 6938a36cbd78e9f4fb8ba848ea04c94a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1231320872}
 --- !u!1 &1769708975
 GameObject:
   m_ObjectHideFlags: 0
