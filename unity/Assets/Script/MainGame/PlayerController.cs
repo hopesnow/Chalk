@@ -122,6 +122,12 @@ public class PlayerController : MonoBehaviour
         this.transform.localPosition = this.initPos;
         this.canJump2nd = true;
 
+        // 書いたオブジェクトの初期化
+        foreach (Transform line in this.drawLine.transform)
+        {
+            Destroy(line.gameObject);
+        }    
+
         // 加速度の初期化
         mRigidbody2D.velocity = Vector2.zero;
 
