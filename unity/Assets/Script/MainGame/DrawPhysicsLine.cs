@@ -75,7 +75,6 @@ public class DrawPhysicsLine : MonoBehaviour
 
             // 線のその他情報の設定
             Rigidbody2D rigid2D = newLine.GetComponent<Rigidbody2D>();
-            rigid2D.gravityScale = 0f;
             newLine.transform.parent = this.transform;
             PolygonCollider2D polygon = newLine.GetComponent<PolygonCollider2D>();
             linePoints.Add(endPos);

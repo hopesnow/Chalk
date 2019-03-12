@@ -113,11 +113,8 @@ public class ErasePhysicsLine : MonoBehaviour
 
             if (this.selectedLine != null && this.selectedLine.GetInstanceID() == removeId)
             {
-                // 選択中のものがあれば一旦非選択状態にする
-                if (this.selectedLine != null)
-                {
-                    this.selectedLine.DeselectLine();
-                }
+                // 非選択状態にする
+                this.selectedLine.DeselectLine();
 
                 // 選択中のものを変える
                 if (this.selectableLines.Count() > 0)
