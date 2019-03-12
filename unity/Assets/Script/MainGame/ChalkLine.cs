@@ -16,6 +16,14 @@ public class ChalkLine : MonoBehaviour
     public LineRenderer Line { get { return this.lineRenderer; } }
 
     /** ********************************************************************************
+     * @summary 初期化処理
+     ***********************************************************************************/
+    public void Start()
+    {
+        this.defaultColor = this.lineRenderer.startColor;
+    }
+
+    /** ********************************************************************************
      * @summary 線をひくのを完了したら呼ぶ
      ***********************************************************************************/
     public void DrawComplete()
@@ -41,8 +49,6 @@ public class ChalkLine : MonoBehaviour
      ***********************************************************************************/
     public void SelectLine()
     {
-        // this.lineRenderer.widthMultiplier = 2f;
-        this.defaultColor = this.lineRenderer.startColor;
         this.lineRenderer.startColor = Color.red;
         this.lineRenderer.endColor = Color.red;
     }
@@ -52,7 +58,6 @@ public class ChalkLine : MonoBehaviour
      ***********************************************************************************/
     public void DeselectLine()
     {
-        // this.lineRenderer.widthMultiplier = 1f;
         this.lineRenderer.startColor = this.defaultColor;
         this.lineRenderer.endColor = this.defaultColor;
     }
