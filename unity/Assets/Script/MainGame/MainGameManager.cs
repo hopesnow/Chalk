@@ -63,13 +63,8 @@ public class MainGameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("DebugReset"))
         {
-            foreach (var player in this.players)
-            {
-                player.Reset();
-            }
-
             // 初期化処理
-            this.goalCount = 0;
+            Reset();
 
             // ステージを設定
             var stageNum = this.currentStageNumber + 1;
@@ -146,57 +141,31 @@ public class MainGameManager : MonoBehaviour
         goalPosition.z = mainCamera.transform.position.z;
         goalImage.rectTransform.localScale = new Vector3(3f, 3f, 1f);
 
-        //ゴールイメージ表示
-        sequence.Append(goalImage.rectTransform.DOScale(new Vector3(1f, 1f, 1f), movetime).SetEase(Ease.InSine))
-        .Join(DOTween.ToAlpha(
-            () => goalImage.color,
-            (alpha) => goalImage.color = alpha,
-            1.0f,
-            movetime
-        ).SetEase(Ease.InSine))
-            .AppendInterval(1f)//1秒待機
-        .Append(DOTween.ToAlpha(//Image非表示
-            () => goalImage.color,
-            (alpha) => goalImage.color = alpha,
-            0f,
-            0f
-        ))
+        // ゴールイメージ表示
+        sequence
+            .Append(goalImage.rectTransform.DOScale(new Vector3(1f, 1f, 1f), movetime).SetEase(Ease.InSine))
+            .Join(DOTween.ToAlpha(() => goalImage.color, (alpha) => goalImage.color = alpha, 1.0f, movetime).SetEase(Ease.InSine))
+            .AppendInterval(1f)
+            .Append(DOTween.ToAlpha(() => goalImage.color, (alpha) => goalImage.color = alpha, 0f, 0f))
             .Join(goalImage.rectTransform.DOScale(new Vector3(3f, 3f, 1f), 0f));
-        //ズームイン
-        sequence.Append( mainCamera.transform.DOMove(goalPosition, movetime).SetEase(Ease.InSine))
-        .Join(DOTween.To(
-            () => mainCamera.orthographicSize,
-            (size) => mainCamera.orthographicSize = size,
-            1.8f,
-            movetime
-        ).SetEase(Ease.InSine))
-        .AppendInterval(1f)
-        .Append(goalMark.rectTransform.DOPunchPosition(new Vector3(5f, -5f, 0f), movetime))
-        .Join(DOTween.ToAlpha(
-            () => goalMark.color,
-            (alpha) => goalMark.color = alpha,
-            1.0f,
-            0f
-        ))
-        .AppendInterval(1f)
-        .Join(DOTween.ToAlpha(
-            () => goalMark.color,
-            (alpha) => goalMark.color = alpha,
-            0f,
-            0f
-        ))
-        .OnComplete(() => {//Reset
-            foreach (var player in this.players)
-            {
-                player.Reset();
-            }
 
-            this.goalCount = 0;
-
+        // ズームイン
+        sequence
+            .Append(mainCamera.transform.DOMove(goalPosition, movetime).SetEase(Ease.InSine))
+            .Join(DOTween.To(() => mainCamera.orthographicSize, (size) => mainCamera.orthographicSize = size, 1.8f, movetime).SetEase(Ease.InSine))
+            .AppendInterval(1f)
+            .Append(goalMark.rectTransform.DOPunchPosition(new Vector3(5f, -5f, 0f), movetime))
+            .Join(DOTween.ToAlpha(() => goalMark.color, (alpha) => goalMark.color = alpha, 1.0f, 0f))
+            .AppendInterval(1f)
+            .Join(DOTween.ToAlpha(() => goalMark.color, (alpha) => goalMark.color = alpha, 0f, 0f))
+            .OnComplete(() =>
+        {
+            // Reset
+            Reset();
             ResetMainCamera();
-            Log("GameReset... !");
-        })
-        .Play();
+        });
+
+        sequence.Play();
     }
 
     /** ********************************************************************************
@@ -206,5 +175,18 @@ public class MainGameManager : MonoBehaviour
     {
         mainCamera.transform.position = new Vector3(0, 0, mainCamera.transform.position.z);
         mainCamera.orthographicSize = 3.6f;
+    }
+
+    /** ********************************************************************************
+     * @summary プレイヤーのリセット処理
+     ***********************************************************************************/
+    private void Reset()
+    {
+        foreach (var player in this.players)
+        {
+            player.Reset();
+        }
+
+        this.goalCount = 0;
     }
 }
