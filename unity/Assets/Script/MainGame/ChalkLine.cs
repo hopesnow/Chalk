@@ -10,6 +10,7 @@ public class ChalkLine : MonoBehaviour
     private long createdTime = 0;
 
     private Color defaultColor = Color.white;
+    private int selectedCount = 0;  // 選択されている数
 
     public bool Drawing { get { return this.drawing; } }
     public long CreatedTime { get { return this.createdTime; } }
@@ -49,8 +50,13 @@ public class ChalkLine : MonoBehaviour
      ***********************************************************************************/
     public void SelectLine()
     {
-        this.lineRenderer.startColor = Color.red;
-        this.lineRenderer.endColor = Color.red;
+        this.selectedCount++;
+
+        if (this.selectedCount > 0)
+        {
+            this.lineRenderer.startColor = Color.red;
+            this.lineRenderer.endColor = Color.red;
+        }
     }
 
     /** ********************************************************************************
@@ -58,7 +64,12 @@ public class ChalkLine : MonoBehaviour
      ***********************************************************************************/
     public void DeselectLine()
     {
-        this.lineRenderer.startColor = this.defaultColor;
-        this.lineRenderer.endColor = this.defaultColor;
+        this.selectedCount--;
+
+        if (this.selectedCount < 1)
+        {
+            this.lineRenderer.startColor = this.defaultColor;
+            this.lineRenderer.endColor = this.defaultColor;
+        }
     }
 }
