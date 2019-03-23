@@ -42,7 +42,8 @@ public class ChalkLine : MonoBehaviour
      ***********************************************************************************/
     public void DeleteLine()
     {
-        Destroy(this.gameObject);
+        // オブジェクトが同フレームで残ってOnTriggerExit2Dが呼ばれないように
+        DestroyImmediate(this.gameObject);
     }
 
     /** ********************************************************************************
