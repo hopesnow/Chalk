@@ -1,5 +1,6 @@
 ﻿#define UNABLE_DOUBLE_JUMP
 
+using DG.Tweening;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
@@ -518,7 +519,7 @@ public class CharacterController : MonoBehaviour
             // TODO: ゴール処理
             IsGoal.Value = true;
             this.charaState = CharacterState.Goal;
-            this.mAnimator.Play("Congrats");
+            // this.mAnimator.Play("Congrats");
         }
     }
 

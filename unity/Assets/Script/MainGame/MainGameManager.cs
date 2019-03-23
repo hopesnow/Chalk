@@ -21,6 +21,7 @@ public class MainGameManager : MonoBehaviour
     private PlayerController[] players;
     private int currentStageNumber = 0;
     private int goalCount = 0;
+    private StageController currentStage;
 
     /** ********************************************************************************
      * @summary 初期化処理
@@ -44,6 +45,16 @@ public class MainGameManager : MonoBehaviour
                 {
                     this.goalCount++;
                     Log(string.Format("Player{0} Goal.", player.Characer.PlayerNo + 1));
+
+                    // ゴールアニメーション
+                    var seq = DOTween.Sequence();
+                    seq.SetDelay(0.5f);
+                    seq.Append(player.Characer.transform
+                          .DOMoveX(this.currentStage.GoalPos[goalCount - 1].x, 0.5f).SetEase(Ease.OutSine)
+                          .OnComplete(() =>
+                    {
+                        player.Characer.GetComponent<Animator>().Play("Congrats");
+                    }));
 
                     if (this.goalCount > this.players.Length - 2)
                     {
@@ -112,7 +123,8 @@ public class MainGameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            CloseUp(new Vector3(5.22f, 1.336f, 0f));
+            // CloseUp(new Vector3(5.22f, 1.336f, 0f));
+            CloseUp(this.currentStage.ZoomPos);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftCommand))
@@ -158,7 +170,7 @@ public class MainGameManager : MonoBehaviour
         this.currentStageNumber = number;
 
         // ステージ生成
-        var currentStage = Instantiate(this.stages[number], this.stageParent);
+        this.currentStage = Instantiate(this.stages[number], this.stageParent);
 
         // 座標の設定
         var startPos = currentStage.StartPos;
@@ -222,6 +234,7 @@ public class MainGameManager : MonoBehaviour
         foreach (var player in this.players)
         {
             player.Characer.Reset();
+            player.ChangeChara(Random.Range(0, 4));
         }
 
         this.goalCount = 0;

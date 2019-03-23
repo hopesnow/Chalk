@@ -1087,7 +1087,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 953262598}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.38, z: 0}
+  m_LocalPosition: {x: 0, y: -3.361, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1291118447}
@@ -1190,7 +1190,7 @@ Transform:
   m_GameObject: {fileID: 1291118446}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1.31}
   m_Children:
   - {fileID: 953262599}
   m_Father: {fileID: 487112112}
@@ -1365,6 +1365,7 @@ MonoBehaviour:
   - {fileID: 114582192963972344, guid: 4e2b44ee45f7b3a45a7cec92a2544303, type: 2}
   - {fileID: 114213927377864230, guid: 11ee385a511274afdb9be2fcf1f128e9, type: 2}
   - {fileID: 114606942245964766, guid: 9df10a5f53f11d04b8901f279da92990, type: 2}
+  - {fileID: 114959511394445078, guid: e674a801557894ae3b16ec931db2df76, type: 2}
   textOrigin: {fileID: 1947422956}
   goalImage: {fileID: 20666072}
   goalMark: {fileID: 194758974}

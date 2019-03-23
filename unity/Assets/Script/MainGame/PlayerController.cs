@@ -30,10 +30,18 @@ public class PlayerController : MonoBehaviour
         this.eraserSprite.sprite = this.eraserSprites[playerNo];
 
         // キャラクターNoごとのリソース差し替え
-        this.charaSprite.sprite = this.charaSprites[charaNo];
-        this.charaAnimator.runtimeAnimatorController = this.charaAnimators[charaNo];
+        this.ChangeChara(charaNo);
 
         // その他設定
         this.chara.SetBottomOffset(bottomOffset);
+    }
+
+    /** ********************************************************************************
+     * @summary キャラクタのみ変更処理
+     ***********************************************************************************/
+    public void ChangeChara(int charaNo)
+    {
+        this.charaSprite.sprite = this.charaSprites[charaNo];
+        this.charaAnimator.runtimeAnimatorController = this.charaAnimators[charaNo];
     }
 }
