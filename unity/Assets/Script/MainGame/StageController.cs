@@ -12,6 +12,7 @@ public class StageController : MonoBehaviour
     public Vector3[] StartPos { get { return this.startObj.Select(l => l.position).ToArray(); } }
     public Vector3[] GoalPos { get { return this.goalObj.Select(l => l.position).ToArray(); } }
     public Vector3 ZoomPos { get { return this.zoomObj.position; } }
+    public SpriteRenderer GoalSprite { get{ return this.goalSprite; } }
 
     /** ********************************************************************************
      * @summary 初期化処理

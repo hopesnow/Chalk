@@ -171,6 +171,7 @@ public class MainGameManager : MonoBehaviour
 
         // ステージ生成
         this.currentStage = Instantiate(this.stages[number], this.stageParent);
+        this.currentStage.Init();
 
         // 座標の設定
         var startPos = currentStage.StartPos;
@@ -203,10 +204,10 @@ public class MainGameManager : MonoBehaviour
             .Append(mainCamera.transform.DOMove(goalPosition, movetime).SetEase(Ease.InSine))
             .Join(DOTween.To(() => mainCamera.orthographicSize, (size) => mainCamera.orthographicSize = size, 1.8f, movetime).SetEase(Ease.InSine))
             .AppendInterval(1f)
-            .Append(goalMark.rectTransform.DOPunchPosition(new Vector3(5f, -5f, 0f), movetime))
-            .Join(DOTween.ToAlpha(() => goalMark.color, (alpha) => goalMark.color = alpha, 1.0f, 0f))
-            .AppendInterval(1f)
-            .Join(DOTween.ToAlpha(() => goalMark.color, (alpha) => goalMark.color = alpha, 0f, 0f))
+            .Append(this.currentStage.GoalSprite.transform.DOPunchPosition(new Vector3(0.05f, -0.005f, 0f), movetime))
+            .Join(DOTween.ToAlpha(() => this.currentStage.GoalSprite.color, (alpha) => this.currentStage.GoalSprite.color = alpha, 1.0f, 0f))
+            .AppendInterval(2f)
+            .Append(DOTween.ToAlpha(() => this.currentStage.GoalSprite.color, (alpha) => this.currentStage.GoalSprite.color = alpha, 0f, 0f))
             .OnComplete(() =>
         {
             // Reset
