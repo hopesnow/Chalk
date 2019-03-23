@@ -38,7 +38,7 @@ public class MainGameManager : MonoBehaviour
             var player = Instantiate(this.playerPrefab, this.playerParent);
             this.players[i] = player;
             player.gameObject.name = string.Format("Player{0}", i + 1);
-            player.Init(i, Random.Range(0, 4), this.bottomSprite.sprite.bounds.size.y);
+            player.Init(i, i, this.bottomSprite.sprite.bounds.size.y);
             player.Characer.IsGoal.ObserveEveryValueChanged(x => x.Value).Subscribe(goal =>
             {
                 if (goal)
@@ -47,19 +47,36 @@ public class MainGameManager : MonoBehaviour
                     Log(string.Format("Player{0} Goal.", player.Characer.PlayerNo + 1));
 
                     // ゴールアニメーション
+                    var goalNumber = this.goalCount;
+                    var goalPosX = this.currentStage.GoalPos[goalNumber - 1].x;
+                    var diff = goalPosX - player.Characer.transform.position.x;
                     var seq = DOTween.Sequence();
-                    seq.SetDelay(0.5f);
-                    seq.Append(player.Characer.transform
-                          .DOMoveX(this.currentStage.GoalPos[goalCount - 1].x, 0.5f).SetEase(Ease.OutSine)
-                          .OnComplete(() =>
+                    seq.OnUpdate(() =>
                     {
-                        player.Characer.GetComponent<Animator>().Play("Congrats");
-                    }));
+                        // 歩く処理
+                        player.Characer.GetAnimator.SetBool("isGround", true);
+                        player.Characer.GetAnimator.SetFloat("Horizontal", diff);
+                    });
+                    seq.AppendInterval(0.5f);
+                    seq.Append(player.Characer.transform.DOMoveX(goalPosX, diff).SetEase(Ease.Linear));
+                    seq.AppendCallback(() =>
+                    {
+                        if (goalNumber < this.players.Length)
+                        {
+                            player.Characer.GetAnimator.Play("Congrats");
+                        }
+                        else
+                        {
+                            player.Characer.GetAnimator.SetFloat("Horizontal", 0);
+                        }
+                    });
+                    seq.Play();
 
+                    // ズームアップ判定
                     if (this.goalCount > this.players.Length - 2)
                     {
                         // 一人残してゴールしたとき
-                        this.CloseUp(new Vector3(5.22f, 1.336f, 0f));
+                        this.CloseUp(this.currentStage.ZoomPos);
                     }
                 }
             });
@@ -123,8 +140,7 @@ public class MainGameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // CloseUp(new Vector3(5.22f, 1.336f, 0f));
-            CloseUp(this.currentStage.ZoomPos);
+            this.CloseUp(this.currentStage.ZoomPos);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftCommand))
@@ -138,7 +154,7 @@ public class MainGameManager : MonoBehaviour
      ***********************************************************************************/
     public void Log(string str)
     {
-        Debug.LogFormat("{0}", str);
+        // Debug.LogFormat("{0}", str);
 
         this.textOrigin.gameObject.SetActive(true);
 
@@ -235,7 +251,6 @@ public class MainGameManager : MonoBehaviour
         foreach (var player in this.players)
         {
             player.Characer.Reset();
-            player.ChangeChara(Random.Range(0, 4));
         }
 
         this.goalCount = 0;

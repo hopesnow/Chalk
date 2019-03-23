@@ -82,6 +82,7 @@ public class CharacterController : MonoBehaviour
     public ReactiveProperty<bool> IsGoal = new ReactiveProperty<bool>();
 
     public int PlayerNo { get { return this.playerNo; } set { this.playerNo = value; } }
+    public Animator GetAnimator { get { return this.mAnimator; } }
 
     /** ********************************************************************************
      * @summary 初期化処理
@@ -159,7 +160,6 @@ public class CharacterController : MonoBehaviour
         // ゴールフラグの初期化
         IsGoal.Value = false;
         this.charaState = CharacterState.Normal;
-        // this.mAnimator.SetTrigger("Reset");
 
         // 入力方法の初期化
         ChangeState(InputState.Character);
@@ -452,9 +452,14 @@ public class CharacterController : MonoBehaviour
 
         mRigidbody2D.velocity = new Vector2(move * maxSpeed, mRigidbody2D.velocity.y);
 
-        this.mAnimator.SetFloat("Horizontal", move);
+        // ゴールしたときは処理しない
+        if (!IsGoal.Value)
+        {
+            this.mAnimator.SetBool("isGround", mIsGround);
+            this.mAnimator.SetFloat("Horizontal", move);
+        }
+
         this.mAnimator.SetFloat("Vertical", mRigidbody2D.velocity.y);
-        this.mAnimator.SetBool("isGround", mIsGround);
         this.mAnimator.SetBool("isSquat", squat);
 
         // しゃがみ中の当たり判定の切り替え
@@ -470,7 +475,7 @@ public class CharacterController : MonoBehaviour
         }
 
         // ジャンプ可能か
-        if (jump && (mIsGround || canJump2nd))
+        if (jump && (mIsGround || canJump2nd) && !squat)
         {
             mAnimator.SetTrigger("Jump");
             // SendMessage("Jump", SendMessageOptions.DontRequireReceiver);
@@ -519,7 +524,6 @@ public class CharacterController : MonoBehaviour
             // TODO: ゴール処理
             IsGoal.Value = true;
             this.charaState = CharacterState.Goal;
-            // this.mAnimator.Play("Congrats");
         }
     }
 
