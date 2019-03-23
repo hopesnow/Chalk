@@ -6,15 +6,19 @@ using DG.Tweening;
 public class MainGameManager : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private PlayerController[] players;
+    [SerializeField] private Transform playerParent;
+    [SerializeField] private PlayerController playerPrefab;
 
     [SerializeField] private Transform stageParent;
-    [SerializeField] private GameObject[] stages;
+    [SerializeField] private StageController[] stages;
 
     [SerializeField] private Text textOrigin;
     [SerializeField] private Image goalImage;
     [SerializeField] private Image goalMark;
 
+    [SerializeField] private SpriteRenderer bottomSprite;
+
+    private PlayerController[] players;
     private int currentStageNumber = 0;
     private int goalCount = 0;
 
@@ -23,11 +27,36 @@ public class MainGameManager : MonoBehaviour
      ***********************************************************************************/
     private void Start()
     {
-        PlayerController[] test = FindObjectsOfType<PlayerController>();
-        this.players = test;
-
         this.textOrigin.gameObject.SetActive(false);
         ResetMainCamera();
+
+        // プレイヤーの初期化
+        this.players = new PlayerController[4];
+        for (int i = 0; i < 4; i++)
+        {
+            var player = Instantiate(this.playerPrefab, this.playerParent);
+            this.players[i] = player;
+            player.gameObject.name = string.Format("Player{0}", i + 1);
+            player.Init(i, Random.Range(0, 4), this.bottomSprite.sprite.bounds.size.y);
+            player.Characer.IsGoal.ObserveEveryValueChanged(x => x.Value).Subscribe(goal =>
+            {
+                if (goal)
+                {
+                    this.goalCount++;
+                    Log(string.Format("Player{0} Goal.", player.Characer.PlayerNo + 1));
+
+                    if (this.goalCount > this.players.Length - 2)
+                    {
+                        // 一人残してゴールしたとき
+                        this.CloseUp(new Vector3(5.22f, 1.336f, 0f));
+                    }
+                }
+            });
+        }
+
+        /*
+        CharacterController[] test = FindObjectsOfType<CharacterController>();
+        this.players = test;
 
         foreach (var player in this.players)
         {
@@ -47,6 +76,7 @@ public class MainGameManager : MonoBehaviour
                 }
             });
         }
+        */
 
         // ステージを設定
         SetStage(0);
@@ -128,7 +158,14 @@ public class MainGameManager : MonoBehaviour
         this.currentStageNumber = number;
 
         // ステージ生成
-        Instantiate(this.stages[number], this.stageParent);
+        var currentStage = Instantiate(this.stages[number], this.stageParent);
+
+        // 座標の設定
+        var startPos = currentStage.StartPos;
+        for (int i = 0; i < this.players.Length;i++)
+        {
+            this.players[i].Characer.SetInitPos(startPos[i]);
+        }
     }
 
     /** ********************************************************************************
@@ -184,7 +221,7 @@ public class MainGameManager : MonoBehaviour
     {
         foreach (var player in this.players)
         {
-            player.Reset();
+            player.Characer.Reset();
         }
 
         this.goalCount = 0;

@@ -7,6 +7,7 @@ public class EnvironmentManager : MonoBehaviour
 
     [SerializeField] private Camera uiCamera;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private Camera debugCamera;
 
     public static Action LoadCompleteEvent;
 
@@ -46,6 +47,7 @@ public class EnvironmentManager : MonoBehaviour
 	// 初期化処理
 	private void Awake()
     {
+        Destroy(this.debugCamera.gameObject);
         DontDestroyOnLoad(this.gameObject);
 	}
 }
