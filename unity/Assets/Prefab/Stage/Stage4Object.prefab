@@ -518,9 +518,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1012397777287578}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.78, y: 0.38, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.788, y: 0.116, z: 0}
+  m_LocalScale: {x: 0.72940415, y: 0.72940415, z: 0.72940415}
   m_Children: []
   m_Father: {fileID: 4768602571371974}
   m_RootOrder: 6
@@ -698,7 +698,7 @@ MonoBehaviour:
   - {fileID: 4024621282434296}
   zoomObj: {fileID: 4038103275452268}
   goalSprite: {fileID: 212336915785581726}
-  zoomSize: 1.8
+  zoomSize: 1.2
 --- !u!212 &212118918854970052
 SpriteRenderer:
   m_ObjectHideFlags: 1
