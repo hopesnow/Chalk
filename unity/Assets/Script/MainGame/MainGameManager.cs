@@ -202,6 +202,7 @@ public class MainGameManager : MonoBehaviour
      ***********************************************************************************/
     public void CloseUp(Vector3 goalPosition, float zoomSize = 1.8f)
     {
+        this.currentStage.DisableGoalArea();
         if (zoomSize <= 0) zoomSize = 0.01f;
         Sequence sequence = DOTween.Sequence();
         float movetime = 0.750f;
@@ -253,6 +254,7 @@ public class MainGameManager : MonoBehaviour
         {
             player.Characer.Reset();
         }
+        this.currentStage.Reset();
 
         this.goalCount = 0;
     }

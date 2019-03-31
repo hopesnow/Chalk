@@ -698,6 +698,7 @@ MonoBehaviour:
   - {fileID: 4919140090042822}
   zoomObj: {fileID: 4395138306449188}
   goalSprite: {fileID: 212063404688709382}
+  goalArea: {fileID: 61754410317214930}
   zoomSize: 1.2
 --- !u!212 &212009860727046284
 SpriteRenderer:
