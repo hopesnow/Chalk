@@ -8,11 +8,13 @@ public class StageController : MonoBehaviour
 
     [SerializeField] private Transform zoomObj;
     [SerializeField] private SpriteRenderer goalSprite;
+    [SerializeField] private float zoomSize;
 
     public Vector3[] StartPos { get { return this.startObj.Select(l => l.position).ToArray(); } }
     public Vector3[] GoalPos { get { return this.goalObj.Select(l => l.position).ToArray(); } }
     public Vector3 ZoomPos { get { return this.zoomObj.position; } }
     public SpriteRenderer GoalSprite { get{ return this.goalSprite; } }
+    public float ZoomSize { get { return this.zoomSize; } }
 
     /** ********************************************************************************
      * @summary 初期化処理

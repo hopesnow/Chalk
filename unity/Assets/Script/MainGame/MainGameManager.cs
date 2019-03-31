@@ -76,7 +76,7 @@ public class MainGameManager : MonoBehaviour
                     if (this.goalCount > this.players.Length - 2)
                     {
                         // 一人残してゴールしたとき
-                        this.CloseUp(this.currentStage.ZoomPos);
+                        this.CloseUp(this.currentStage.ZoomPos, this.currentStage.ZoomSize);
                     }
                 }
             });
@@ -200,8 +200,9 @@ public class MainGameManager : MonoBehaviour
     /** ********************************************************************************
      * @summary ゴール演出
      ***********************************************************************************/
-    public void CloseUp(Vector3 goalPosition)
+    public void CloseUp(Vector3 goalPosition, float zoomSize = 1.8f)
     {
+        if (zoomSize <= 0) zoomSize = 0.01f;
         Sequence sequence = DOTween.Sequence();
         float movetime = 0.750f;
         goalPosition.z = mainCamera.transform.position.z;
@@ -218,7 +219,7 @@ public class MainGameManager : MonoBehaviour
         // ズームイン
         sequence
             .Append(mainCamera.transform.DOMove(goalPosition, movetime).SetEase(Ease.InSine))
-            .Join(DOTween.To(() => mainCamera.orthographicSize, (size) => mainCamera.orthographicSize = size, 1.8f, movetime).SetEase(Ease.InSine))
+            .Join(DOTween.To(() => mainCamera.orthographicSize, (size) => mainCamera.orthographicSize = size, zoomSize, movetime).SetEase(Ease.InSine))
             .AppendInterval(1f)
             .Append(this.currentStage.GoalSprite.transform.DOPunchPosition(new Vector3(0.05f, -0.005f, 0f), movetime))
             .Join(DOTween.ToAlpha(() => this.currentStage.GoalSprite.color, (alpha) => this.currentStage.GoalSprite.color = alpha, 1.0f, 0f))
