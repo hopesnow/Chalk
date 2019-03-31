@@ -140,7 +140,7 @@ public class MainGameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            this.CloseUp(this.currentStage.ZoomPos);
+            this.CloseUp(this.currentStage.ZoomPos, this.currentStage.ZoomSize);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftCommand))
