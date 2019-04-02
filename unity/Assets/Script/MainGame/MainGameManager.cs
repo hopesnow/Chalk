@@ -44,7 +44,11 @@ public class MainGameManager : MonoBehaviour
                 if (goal)
                 {
                     this.goalCount++;
-                    Log(string.Format("Player{0} Goal.", player.Characer.PlayerNo + 1));
+                    Log(string.Format("Player{0} Goal. Rank:{1}", player.Characer.PlayerNo + 1, this.goalCount));
+
+                    // 最後の人だけ何もしない
+                    if (this.goalCount > this.players.Length - 1)
+                        return;
 
                     // ゴールアニメーション
                     var goalNumber = this.goalCount;
@@ -58,24 +62,22 @@ public class MainGameManager : MonoBehaviour
                         player.Characer.GetAnimator.SetFloat("Horizontal", diff);
                     });
                     seq.AppendInterval(0.5f);
+                    // 順位の位置に移動
                     seq.Append(player.Characer.transform.DOMoveX(goalPosX, diff).SetEase(Ease.Linear));
                     seq.AppendCallback(() =>
                     {
-                        if (goalNumber < this.players.Length)
-                        {
-                            player.Characer.GetAnimator.Play("Congrats");
-                        }
-                        else
-                        {
-                            player.Characer.GetAnimator.SetFloat("Horizontal", 0);
-                        }
+                        // 移動終わったら喜びモーション
+                        player.Characer.GetAnimator.Play("Congrats");
                     });
                     seq.Play();
 
-                    // ズームアップ判定
+                    // 最下位が決まったら
                     if (this.goalCount > this.players.Length - 2)
                     {
-                        // 一人残してゴールしたとき
+                        // ゴールエリア無効化
+                        this.currentStage.DisableGoalArea();
+                        
+                        // ズームアップ判定
                         this.CloseUp(this.currentStage.ZoomPos, this.currentStage.ZoomSize);
                     }
                 }
@@ -202,7 +204,6 @@ public class MainGameManager : MonoBehaviour
      ***********************************************************************************/
     public void CloseUp(Vector3 goalPosition, float zoomSize = 1.8f)
     {
-        this.currentStage.DisableGoalArea();
         if (zoomSize <= 0) zoomSize = 0.01f;
         Sequence sequence = DOTween.Sequence();
         float movetime = 0.750f;
